@@ -5,7 +5,7 @@ namespace models;
 use core\db\MySQL;
 use PDOException;
 
-class AdminModel
+class AuthModel
 {
     private $db = null;
 
