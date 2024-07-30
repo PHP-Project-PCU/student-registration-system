@@ -1,39 +1,9 @@
-<?php
-include ('../../../autoload.php');
-use controllers\AuthController;
-use core\helpers\HTTP;
-
-session_start();
-
-if (isset($_SESSION['admin'])) {
-    HTTP::redirect('/');
-}
-
-
-if (isset($_POST['userName']) and isset($_POST['password'])) {
-    $username = $_POST['userName'];
-    $password = md5($_POST['password']);
-    $admin = new AuthController(null, $username, $password);
-    $success = $admin->adminLogin();
-    if ($success) {
-
-        $_SESSION['admin'] = $admin->adminLogin();
-
-
-
-        HTTP::redirect("/");
-
-    }
-}
-
-?>
-
 <!DOCTYPE html>
 <html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - Windmill Dashboard</title>
+    <title>Create account - Windmill Dashboard</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
@@ -55,13 +25,13 @@ if (isset($_POST['userName']) and isset($_POST['password'])) {
             <img
               aria-hidden="true"
               class="object-cover w-full h-full dark:hidden"
-              src="http://ucsp.edu/utils/assets/img/login-office.jpeg"
+              src="http://ucsp.edu/utils/assets/img/create-account-office.jpeg"
               alt="Office"
             />
             <img
               aria-hidden="true"
               class="hidden object-cover w-full h-full dark:block"
-              src="http://ucsp.edu/utils/assets/img/login-office-dark.jpeg"
+              src="http://ucsp.edu/utils/assets/img/create-account-office-dark.jpeg"
               alt="Office"
             />
           </div>
@@ -70,14 +40,13 @@ if (isset($_POST['userName']) and isset($_POST['password'])) {
               <h1
                 class="mb-4 text-xl font-semibold text-gray-700 dark:text-gray-200"
               >
-                Login
+                Create account
               </h1>
               <label class="block text-sm">
-                <span class="text-gray-700 dark:text-gray-400">Username</span>
+                <span class="text-gray-700 dark:text-gray-400">Email</span>
                 <input
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                  placeholder="adminmyo"
-                  type = 'text' name='userName'
+                  placeholder="Jane Doe"
                 />
               </label>
               <label class="block mt-4 text-sm">
@@ -86,17 +55,39 @@ if (isset($_POST['userName']) and isset($_POST['password'])) {
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                   placeholder="***************"
                   type="password"
-                  name = 'password'
+                />
+              </label>
+              <label class="block mt-4 text-sm">
+                <span class="text-gray-700 dark:text-gray-400">
+                  Confirm password
+                </span>
+                <input
+                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                  placeholder="***************"
+                  type="password"
                 />
               </label>
 
+              <div class="flex mt-6 text-sm">
+                <label class="flex items-center dark:text-gray-400">
+                  <input
+                    type="checkbox"
+                    class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                  />
+                  <span class="ml-2">
+                    I agree to the
+                    <span class="underline">privacy policy</span>
+                  </span>
+                </label>
+              </div>
+
               <!-- You should use a button here, as the anchor is only used for the example  -->
-              <button
+              <a
                 class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                type = 'submit'
+                href="./login.php"
               >
-                Log In
-                </button>
+                Create account
+              </a>
 
               <hr class="my-8" />
 
@@ -134,17 +125,9 @@ if (isset($_POST['userName']) and isset($_POST['password'])) {
               <p class="mt-4">
                 <a
                   class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
-                  href="./forgot-password.php"
+                  href="./login.php"
                 >
-                  Forgot your password?
-                </a>
-              </p>
-              <p class="mt-1">
-                <a
-                  class="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline"
-                  href="./create-account.php"
-                >
-                  Create account
+                  Already have an account? Login
                 </a>
               </p>
             </div>
@@ -154,48 +137,3 @@ if (isset($_POST['userName']) and isset($_POST['password'])) {
     </div>
   </body>
 </html>
-
-
-<!-- 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
-    <script src="http://ucsp.edu/utils/tailwindcss/tailwindcss.js"></script>
-</head>
-
-<body class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
-        <div>
-            <h2 class="text-3xl font-extrabold text-center text-gray-900">Sign In</h2>
-        </div>
-        <form class="mt-8 space-y-6" action="./" method="post">
-            <input type="hidden" name="remember" value="true">
-            <div class="rounded-md shadow-sm -space-y-px">
-                <div>
-                    <label for="user-name" class="sr-only">User name</label>
-                    <input id="user-name" name="userName" type="text" autocomplete="text" required
-                        class="relative block w-full px-3 py-2 border border-gray-300 rounded-none appearance-none rounded-t-md placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                        placeholder="example@001">
-                </div>
-                <div>
-                    <label for="password" class="sr-only">Password</label>
-                    <input id="password" name="password" type="password" autocomplete="current-password" required
-                        class="relative block w-full px-3 py-2 border border-gray-300 rounded-none appearance-none rounded-b-md placeholder-gray-500 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                        placeholder="Password">
-                </div>
-            </div>
-            <div>
-                <button type="submit"
-                    class="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md group hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Sign In
-                </button>
-            </div>
-        </form>
-    </div>
-</body>
-
-</html> -->
