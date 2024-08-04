@@ -2,7 +2,7 @@
 
 namespace core\db;
 
-class Config
+class DBConfig
 {
     static $DB_HOST = 'localhost';
     static $DB_USER = 'root';
