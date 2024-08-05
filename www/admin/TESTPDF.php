@@ -1,14 +1,16 @@
 <?php
 
 // Include the main TCPDF library (search for installation path).
-require_once('PDF/vendor/autoload.php');
+require_once ('../../vendor/autoload.php');
 
 
 
 // Extend the TCPDF class to create custom Header
-class MYPDF extends TCPDF {
+class MYPDF extends TCPDF
+{
     // Page header
-    public function Header() {
+    public function Header()
+    {
         // Logo
         $logo = 'http://ucsp.edu/utils/assets/img/logo.jpg';  // Update this path to the location of your logo file
         $this->Image($logo, 10, 10, 30, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
@@ -66,7 +68,7 @@ class MYPDF extends TCPDF {
         $this->Cell(40, 6.5, 'Semester', 0, 0, 'L');
         $this->Cell(0, 6.5, ': V', 0, 1, 'L');
 
-        
+
     }
 }
 
@@ -84,7 +86,7 @@ $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 $pdf->setPrintHeader(true);
 
 // set header and footer fonts
-$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+$pdf->setHeaderFont(array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
 // $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 
 // set default monospaced font
@@ -305,6 +307,3 @@ $pdf->writeHTML($html, true, false, true, false, '');
 
 // output the PDF
 $pdf->Output('sample.pdf', 'I');
-
-
-
