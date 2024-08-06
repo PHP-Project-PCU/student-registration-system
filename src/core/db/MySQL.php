@@ -1,7 +1,7 @@
 <?php
 namespace core\db;
 
-use core\db\Config;
+use core\db\DBConfig;
 use PDO;
 use PDOException;
 
@@ -15,10 +15,10 @@ class MySQL
 
     public function __construct(
     ) {
-        $this->dbHost = Config::$DB_HOST;
-        $this->dbUser = Config::$DB_USER;
-        $this->dbName = Config::$DB_NAME;
-        $this->dbPass = Config::$DB_PASS;
+        $this->dbHost = DBConfig::$DB_HOST;
+        $this->dbUser = DBConfig::$DB_USER;
+        $this->dbName = DBConfig::$DB_NAME;
+        $this->dbPass = DBConfig::$DB_PASS;
         $this->db = null;
     }
 
