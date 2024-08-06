@@ -42,9 +42,9 @@ function fn() {
     activateMenu();
 }
 
-document.oncontextmenu=()=>{
-return false;
-}
+// document.oncontextmenu=()=>{
+// return false;
+// }
 
 //Menu
 /*********************/
