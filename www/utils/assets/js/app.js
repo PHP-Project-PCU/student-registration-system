@@ -389,3 +389,93 @@ try{
 }catch(err){
 
 }
+
+
+/*********************/
+/*       NRC         */
+/*********************/
+
+function setupNrcDropdowns(nrcCodeSelectId, nrcNameSelectId, jsonData) {
+    const nrcCodeSelect = document.getElementById(nrcCodeSelectId);
+    const nrcNameSelect = document.getElementById(nrcNameSelectId);
+
+    const uniqueNrcCodes = [...new Set(jsonData.data.map(item => item.nrc_code))];
+
+    uniqueNrcCodes.forEach(code => {
+        let optionCode = document.createElement('option');
+        optionCode.value = code;
+        optionCode.textContent = code;
+        nrcCodeSelect.appendChild(optionCode);
+    });
+
+    function updateNrcNameOptions(selectedCode) {
+        nrcNameSelect.innerHTML = '';
+
+        const filteredNames = jsonData.data.filter(item => item.nrc_code === selectedCode);
+
+        filteredNames.forEach(item => {
+            let optionName = document.createElement('option');
+            optionName.value = item.name_mm;
+            optionName.textContent = item.name_mm;
+            nrcNameSelect.appendChild(optionName);
+        });
+    }
+
+    nrcCodeSelect.addEventListener('change', (event) => {
+        updateNrcNameOptions(event.target.value);
+    });
+
+    if (uniqueNrcCodes.length > 0) {
+        nrcCodeSelect.value = uniqueNrcCodes[0];
+        updateNrcNameOptions(uniqueNrcCodes[0]);
+    }
+}
+
+
+
+/*********************/
+/*       States      */
+/*********************/
+function setupRegionTownshipSelect(regionSelectId, townshipSelectId, jsonData) {
+    const regionSelect = document.getElementById(regionSelectId);
+    const townshipSelect = document.getElementById(townshipSelectId);
+
+    // Populate the region dropdown
+    jsonData.data.forEach(region => {
+        let optionRegion = document.createElement('option');
+        optionRegion.value = region.eng;
+        optionRegion.textContent = region.mm;
+        regionSelect.appendChild(optionRegion);
+    });
+
+    // Function to update township dropdown based on selected region
+    function updateTownshipOptions(selectedRegion) {
+        // Clear current options in the township dropdown
+        townshipSelect.innerHTML = '';
+
+        // Find the selected region's districts and townships
+        const selectedRegionData = jsonData.data.find(region => region.eng === selectedRegion);
+
+        if (selectedRegionData) {
+            selectedRegionData.districts.forEach(district => {
+                district.townships.forEach(township => {
+                    let optionTownship = document.createElement('option');
+                    optionTownship.value = township.eng;
+                    optionTownship.textContent = township.mm;
+                    townshipSelect.appendChild(optionTownship);
+                });
+            });
+        }
+    }
+
+    // Event listener to update townships when a region is selected
+    regionSelect.addEventListener('change', (event) => {
+        updateTownshipOptions(event.target.value);
+    });
+
+    // Initialize townships dropdown with the first region's townships
+    if (jsonData.data.length > 0) {
+        regionSelect.value = jsonData.data[0].eng;
+        updateTownshipOptions(jsonData.data[0].eng);
+    }
+}
