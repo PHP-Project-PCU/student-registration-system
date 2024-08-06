@@ -6,7 +6,7 @@
     <title>UCSPyay - University of Computer Studies, Pyay</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="UCSPyay - University of Computer Studies, Pyay">
-    <meta name="keywords" content="agency, application, business, clean, creative, cryptocurrency, it solutions, modern, multipurpose, nft marketplace, portfolio, saas, software, tailwind css">
+    <meta name="keywords" content="myanmar, university, business, technology, creative, cryptocurrency, it solutions, ai, pyay, computer university">
     <meta name="author" content="UCSPyay">
     <meta name="website" content="https://ucspyay.edu.mm/">
     <meta name="email" content="admin@ucspyay.edu.mm">
@@ -205,7 +205,7 @@
                     <div class="grid grid-cols-1 md:text-start text-center justify-center">
                         <div class="relative">
                             <!-- <img src="assets/images/saas/home.png" alt=""> -->
-                            <img src="assets/images/ucspyay/uc-build-1.jpg" alt="School Image" class="rounded-md ">
+                            <img src="utils/assets/img/ucspyay/uc-build-1.jpg" alt="School Image" class="rounded-md ">
                             <div class="absolute bottom-2/4 translate-y-2/4 start-0 end-0 text-center">
                                 <a href="#!" data-type="youtube" data-id="hZ0oCAOi5hw" class="lightbox size-20 rounded-full shadow-lg dark:shadow-gray-800 inline-flex items-center justify-center bg-white dark:bg-slate-900 text-indigo-600 dark:text-white">
                                     <i class="mdi mdi-play inline-flex items-center justify-center text-2xl"></i>
@@ -258,7 +258,7 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 mt-8 gap-[30px]">
             <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden wow animate__animated animate__fadeInUp" data-wow-delay=".3s">
-                <img src="assets/images/blog/01.jpg" alt="">
+                <img src="utils/assets/img/ucspyay/UCSPyay-logo.jpg" alt="">
 
                 <div class="content p-6">
                     <a href="blog-detail.html" class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">Design your apps in your own way</a>
@@ -271,7 +271,7 @@
             </div>
 
             <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden wow animate__animated animate__fadeInUp" data-wow-delay=".5s">
-                <img src="assets/images/blog/02.jpg" alt="">
+                <img src="utils/assets/img/ucspyay/UCSPyay-logo.jpg" alt="">
 
                 <div class="content p-6">
                     <a href="blog-detail.html" class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">How apps is changing the IT world</a>
@@ -284,7 +284,7 @@
             </div>
 
             <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden wow animate__animated animate__fadeInUp" data-wow-delay=".7s">
-                <img src="assets/images/blog/03.jpg" alt="">
+                <img src="utils/assets/img/ucspyay/UCSPyay-logo.jpg" alt="">
 
                 <div class="content p-6">
                     <a href="blog-detail.html" class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">Smartest Applications for Business</a>
@@ -309,8 +309,8 @@
                         <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
                             <div class="lg:col-span-4 md:col-span-12">
                                 <a href="#" class="text-[22px] focus:outline-none">
-                                    <img src="assets/images/ucspyay/UCSPyay-logo.jpg" width="100" class="hidden sm:block rounded-lg" alt="UCSPyay">
-                                    <img src="assets/images/ucspyay/UCSPyay-logo.jpg" width="50" class="sm:hidden rounded-lg" alt="UCSPyay">
+                                    <img src="utils/assets/img/ucspyay/UCSPyay-logo.jpg" width="100" class="hidden sm:block rounded-lg" alt="UCSPyay">
+                                    <img src="utils/assets/img/ucspyay/UCSPyay-logo.jpg" width="50" class="sm:hidden rounded-lg" alt="UCSPyay">
                                 </a>
                                 <p class="mt-6 text-gray-300">Start working with Tailwind CSS that can provide everything you need to generate awareness, drive traffic, connect.</p>
                                 <ul class="list-none mt-6">
