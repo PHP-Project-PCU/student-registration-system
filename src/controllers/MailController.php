@@ -5,7 +5,7 @@ namespace controllers;
 use core\helpers\Constants;
 
 // Load Composer's autoloader
-require_once (Constants::$BASE_URL . '\vendor\autoload.php');
+require_once(Constants::$BASE_PATH . '\vendor\autoload.php');
 
 
 /*
