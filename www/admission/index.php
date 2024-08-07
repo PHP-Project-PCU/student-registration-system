@@ -215,8 +215,8 @@
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="student_nationality">လူမျိုး</label>
-                                        <input name="student_nationality" id="student_nationality" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                        <label for="student_ethnicity">လူမျိုး</label>
+                                        <input name="student_ethnicity" id="student_ethnicity" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-6">
@@ -224,32 +224,35 @@
                                     <input name="student_religion" id="student_religion" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                 </div>
                                 <div class="lg:col-span-6">
-                                    <label for="student_region">မွေးဖွားရာဇာတိ</label>
-                                    <input name="student_region" id="student_region" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                    <label for="student_birth_place">မွေးဖွားရာဇာတိ</label>
+                                    <input name="student_birth_place" id="student_birth_place" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                 </div>
                                 <div class="lg:col-span-6">
+                                    <label for="student_nationality">နိုင်ငံခြားသား</label>
+                                    <select id="student_nationality" name="student_fath_nationality" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                        <option>တိုင်းရင်းသား</option>
+                                        <option>နိုင်ငံခြားသား</option>
+                                    </select>
+                                </div>
+                                <div class="lg:col-span-12">
                                     <div class="text-start">
                                         <label for="student_dob">မွေးသက္ကရာဇ်</label>
                                         <input name="student_dob" id="student_dob" type="date" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-3">
-                                    <label for="nrc">နိုင်ငံသား စိစစ်ရေးအမှတ်</label>
-                                    <select id="nrc" name="nrc_code" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                                        <option>၁/</option>
-                                        <option>CS</option>
-                                        <option>CT</option>
+                                    <label for="student_nrc_code">နိုင်ငံသား စိစစ်ရေးအမှတ်</label>
+                                    <select id="student_nrc_code" name="student_nrc_code" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                     </select>
                                 </div>
                                 <div class="lg:col-span-3">
-                                    <label for="">&nbsp;</label>
-                                    <select id="" name="nrc_name" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                                        <option>သကန</option>
+                                    <label for="student_nrc_name">&nbsp;</label>
+                                    <select id="student_nrc_name" name="student_nrc_name" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                     </select>
                                 </div>
                                 <div class="lg:col-span-3">
-                                    <label for="">&nbsp;</label>
-                                    <select id="" name="nrc_type" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                    <label for="studen_nrc_type">&nbsp;</label>
+                                    <select id="studen_nrc_type" name="student_nrc_type" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                         <option>(သ)</option>
                                         <option>(သီ)</option>
                                         <option>(နိုင်)</option>
@@ -258,19 +261,17 @@
                                     </select>
                                 </div>
                                 <div class="lg:col-span-3">
-                                    <label for="nrc_num">&nbsp;</label>
-                                    <input name="nrc_num" id="nrc_num" type="num" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="xxxxxx">
+                                    <label for="student_nrc_num">&nbsp;</label>
+                                    <input name="student_nrc_num" id="student_nrc_num" type="num" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="xxxxxx">
                                 </div>
                                 <div class="lg:col-span-4">
                                     <label for="student_region">နေရပ်လိပ်စာ အပြည့်အစုံ</label>
                                     <select id="student_region" name="student_region" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                                        <option>ပဲခူးတိုင်းဒေသကြီး</option>
                                     </select>
                                 </div>
                                 <div class="lg:col-span-4">
                                     <label for="student_township">&nbsp;</label>
                                     <select id="student_township" name="student_township" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                                        <option>မြို့နယ်ရွေးချယ်ရန်</option>
                                     </select>
                                 </div>
                                 <div class="lg:col-span-4">
@@ -279,7 +280,7 @@
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="student_email">Email လိပ်စာ:</label>
+                                        <label for="student_email">Email လိပ်စာ</label>
                                         <input name="student_email" id="student_email" type="email" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Email :">
                                     </div>
                                 </div>
@@ -287,7 +288,7 @@
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
                                         <label for="student_phone_num">ဖုန်းနံပါတ်</label>
-                                        <input name="student_phone_num" id="student_phone_num" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Phone No. :">
+                                        <input name="student_phone_num" id="student_phone_num" type="number" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Phone No. :">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-12">
@@ -308,7 +309,7 @@
                                 <div class="lg:col-span-4">
                                     <div class="text-start">
                                         <label for="matriculation_exam_center">စာစစ်ဌာန</label>
-                                        <input name="matriculation_exam_center" id="matriculation_exam_center" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                        <input name="matriculation_exam_center" id="matriculation_exam_center" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-12">
@@ -323,7 +324,7 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <select id="major" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                                    <select id="exam_name" name="exam_name" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                                         <option>ပထမနှစ်စာမေးပွဲ</option>
                                                         <option>ဒုတိယနှစ်စာမေးပွဲ</option>
                                                         <option>တတိယနှစ်စာမေးပွဲ</option>
@@ -331,20 +332,20 @@
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <select id="major" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                                    <select id="exam_major" name="exam_major" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                                         <option>CST</option>
                                                         <option>CS</option>
                                                         <option>CT</option>
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input name="text" id="phonenumber" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                                    <input name="exam_roll_num" id="exam_roll_num" type="number" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                                 </td>
                                                 <td>
-                                                    <input name="text" id="phonenumber" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                                    <input name="exam_year" id="exam_year" type="number" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                                 </td>
                                                 <td>
-                                                    <select id="major" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                                    <select id="exam_status" name="exam_status" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                                         <option>အောင်</option>
                                                         <option>ရှုံး</option>
                                                     </select>
@@ -363,47 +364,50 @@
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="name">အမည်(မြန်မာစာဖြင့်)</label>
-                                        <input name="name" id="name" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                        <label for="student_fath_name_my">အမည်(မြန်မာစာဖြင့်)</label>
+                                        <input name="student_fath_name_my" id="student_fath_name_my" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="name">အမည်(အင်္ဂလိပ်စာဖြင့်)</label>
-                                        <input name="name" id="name" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                        <label for="student_fath_name_en">အမည်(အင်္ဂလိပ်စာဖြင့်)</label>
+                                        <input name="student_fath_name_en" id="student_fath_name_en" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="name">လူမျိုး</label>
-                                        <input name="name" id="name" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                        <label for="student_fath_ethnicity">လူမျိုး</label>
+                                        <input name="student_fath_ethnicity" id="student_fath_ethnicity" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-6">
-                                    <label for="major">ကိုးကွယ်သည့်ဘာသာ</label>
-                                    <input name="name" id="name" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                    <label for="student_fath_religion">ကိုးကွယ်သည့်ဘာသာ</label>
+                                    <input name="student_fath_religion" id="student_fath_religion" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                 </div>
-                                <div class="lg:col-span-12">
-                                    <label for="major">မွေးဖွားရာဇာတိ</label>
-                                    <input name="name" id="name" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                <div class="lg:col-span-6">
+                                    <label for="student_fath_birth_place">မွေးဖွားရာဇာတိ</label>
+                                    <input name="student_fath_birth_place" id="student_fath_birth_place" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                 </div>
-                                <div class="lg:col-span-3">
-                                    <label for="major">နိုင်ငံသား စိစစ်ရေးအမှတ်</label>
-                                    <select id="major" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                                        <option>၁/</option>
-                                        <option>CS</option>
-                                        <option>CT</option>
+                                <div class="lg:col-span-6">
+                                    <label for="student_fath_nationality">နိုင်ငံခြားသား</label>
+                                    <select id="student_fath_nationality" name="student_fath_nationality" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                        <option>တိုင်းရင်းသား</option>
+                                        <option>နိုင်ငံခြားသား</option>
                                     </select>
                                 </div>
                                 <div class="lg:col-span-3">
-                                    <label for="major">&nbsp;</label>
-                                    <select id="major" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                                        <option>မြို့</option>
+                                    <label for="student_fath_nrc_code">နိုင်ငံသား စိစစ်ရေးအမှတ်</label>
+                                    <select id="student_fath_nrc_code" name="student_fath_nrc_code" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                     </select>
                                 </div>
                                 <div class="lg:col-span-3">
-                                    <label for="major">&nbsp;</label>
-                                    <select id="major" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                    <label for="student_fath_nrc_name">&nbsp;</label>
+                                    <select id="student_fath_nrc_name" name="student_fath_nrc_name" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                    </select>
+                                </div>
+                                <div class="lg:col-span-3">
+                                    <label for="student_fath_nrc_type">&nbsp;</label>
+                                    <select id="student_fath_nrc_type" name="student_fath_nrc_type" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                         <option>(သ)</option>
                                         <option>(သီ)</option>
                                         <option>(နိုင်)</option>
@@ -412,41 +416,35 @@
                                     </select>
                                 </div>
                                 <div class="lg:col-span-3">
-                                    <label for="number">&nbsp;</label>
-                                    <input name="number" id="" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="xxxxxx">
+                                    <label for="student_fath_nrc_num">&nbsp;</label>
+                                    <input name="student_fath_nrc_num" id="student_fath_nrc_num" type="number" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="xxxxxx">
                                 </div>
-                                <div class="lg:col-span-4">
-                                    <label for="major">နေရပ်လိပ်စာ အပြည့်အစုံ</label>
-                                    <select id="major" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                                        <option>ပဲခူးတိုင်းဒေသကြီး</option>
+                                <div class="lg:col-span-6">
+                                    <label for="student_fath_region">နေရပ်လိပ်စာ အပြည့်အစုံ</label>
+                                    <select id="student_fath_region" name="student_fath_region" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                     </select>
                                 </div>
-                                <div class="lg:col-span-4">
-                                    <label for="major">&nbsp;</label>
-                                    <select id="major" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                                        <option>မြို့နယ်ရွေးချယ်ရန်</option>
+                                <div class="lg:col-span-6">
+                                    <label for="student_fath_township">&nbsp;</label>
+                                    <select id="student_fath_township" name="student_fath_township" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                     </select>
-                                </div>
-                                <div class="lg:col-span-4">
-                                    <label for="major">&nbsp;</label>
-                                    <input name="text" id="" type="email" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="လိပ်စာအပြည့်အစုံ">
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="job">အလုပ်အကိုင်</label>
-                                        <input name="job" id="email" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                        <label for="student_fath_job">အလုပ်အကိုင်</label>
+                                        <input name="student_fath_job" id="student_fath_job" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="subject">ဖုန်းနံပါတ်</label>
-                                        <input name="number" id="phonenumber" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Phone No. :">
+                                        <label for="student_fath_phone_num">ဖုန်းနံပါတ်</label>
+                                        <input name="student_fath_phone_num" id="student_fath_phone_num" type="number" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Phone No. :">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-12">
                                     <div class="text-start">
-                                        <label for="fatherAddress">အဘအုပ်ထိန်းသူ၏လိပ်စာအပြည့်အစုံ</label>
-                                        <textarea name="fatherAddress" id="fatherAddress" class="form-input mt-3 w-full py-2 px-3 h-28 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder=""></textarea>
+                                        <label for="student_fath_address">အဘအုပ်ထိန်းသူ၏လိပ်စာအပြည့်အစုံ</label>
+                                        <textarea name="student_fath_address" id="student_fath_address" class="form-input mt-3 w-full py-2 px-3 h-28 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder=""></textarea>
                                     </div>
                                 </div>
                                 <!-- Mother Information -->
@@ -455,47 +453,50 @@
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="name">အမည်(မြန်မာစာဖြင့်)</label>
-                                        <input name="name" id="name" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                        <label for="student_moth_name_my">အမည်(မြန်မာစာဖြင့်)</label>
+                                        <input name="student_moth_name_my" id="student_moth_name_my" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="name">အမည်(အင်္ဂလိပ်စာဖြင့်)</label>
-                                        <input name="name" id="name" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                        <label for="student_moth_name_en">အမည်(အင်္ဂလိပ်စာဖြင့်)</label>
+                                        <input name="student_moth_name_en" id="student_moth_name_en" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="name">လူမျိုး</label>
-                                        <input name="name" id="name" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                        <label for="student_moth_ethnicity">လူမျိုး</label>
+                                        <input name="student_moth_ethnicity" id="student_moth_ethnicity" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-6">
-                                    <label for="major">ကိုးကွယ်သည့်ဘာသာ</label>
-                                    <input name="name" id="name" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                    <label for="student_moth_religion">ကိုးကွယ်သည့်ဘာသာ</label>
+                                    <input name="student_moth_religion" id="student_moth_religion" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                 </div>
-                                <div class="lg:col-span-12">
-                                    <label for="major">မွေးဖွားရာဇာတိ</label>
-                                    <input name="name" id="name" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                <div class="lg:col-span-6">
+                                    <label for="student_moth_birth_place">မွေးဖွားရာဇာတိ</label>
+                                    <input name="student_moth_birth_place" id="student_moth_birth_place" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                 </div>
-                                <div class="lg:col-span-3">
-                                    <label for="major">နိုင်ငံသား စိစစ်ရေးအမှတ်</label>
-                                    <select id="major" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                                        <option>၁/</option>
-                                        <option>CS</option>
-                                        <option>CT</option>
+                                <div class="lg:col-span-6">
+                                    <label for="student_moth_nationality">နိုင်ငံခြားသား</label>
+                                    <select id="student_moth_nationality" name="student_moth_nationality" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                        <option>တိုင်းရင်းသား</option>
+                                        <option>နိုင်ငံခြားသား</option>
                                     </select>
                                 </div>
                                 <div class="lg:col-span-3">
-                                    <label for="major">&nbsp;</label>
-                                    <select id="major" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                                        <option>မြို့</option>
+                                    <label for="student_moth_nrc_code">နိုင်ငံသား စိစစ်ရေးအမှတ်</label>
+                                    <select id="student_moth_nrc_code" name="student_moth_nrc_num_code" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                     </select>
                                 </div>
                                 <div class="lg:col-span-3">
-                                    <label for="major">&nbsp;</label>
-                                    <select id="major" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                    <label for="student_moth_nrc_name">&nbsp;</label>
+                                    <select id="student_moth_nrc_name" name="student_moth_nrc_name" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                    </select>
+                                </div>
+                                <div class="lg:col-span-3">
+                                    <label for="student_moth_nrc_type">&nbsp;</label>
+                                    <select id="student_moth_nrc_type" name="student_moth_nrc_type" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                         <option>(သ)</option>
                                         <option>(သီ)</option>
                                         <option>(နိုင်)</option>
@@ -504,81 +505,74 @@
                                     </select>
                                 </div>
                                 <div class="lg:col-span-3">
-                                    <label for="number">&nbsp;</label>
-                                    <input name="number" id="" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="xxxxxx">
+                                    <label for="student_moth_nrc_num">&nbsp;</label>
+                                    <input name="student_moth_nrc_num" id="student_moth_nrc_num" type="number" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="xxxxxx">
                                 </div>
-                                <div class="lg:col-span-4">
-                                    <label for="major">နေရပ်လိပ်စာ အပြည့်အစုံ</label>
-                                    <select id="major" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                                        <option>ပဲခူးတိုင်းဒေသကြီး</option>
+                                <div class="lg:col-span-6">
+                                    <label for="student_moth_region">နေရပ်လိပ်စာ အပြည့်အစုံ</label>
+                                    <select id="student_moth_region" name="student_moth_region" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                     </select>
                                 </div>
-                                <div class="lg:col-span-4">
-                                    <label for="major">&nbsp;</label>
-                                    <select id="major" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                                        <option>မြို့နယ်ရွေးချယ်ရန်</option>
+                                <div class="lg:col-span-6">
+                                    <label for="student_moth_township">&nbsp;</label>
+                                    <select id="student_moth_township" name="student_moth_township" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                     </select>
-                                </div>
-                                <div class="lg:col-span-4">
-                                    <label for="major">&nbsp;</label>
-                                    <input name="text" id="" type="email" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="လိပ်စာအပြည့်အစုံ">
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="job">အလုပ်အကိုင်</label>
-                                        <input name="job" id="email" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                        <label for="student_moth_job">အလုပ်အကိုင်</label>
+                                        <input name="student_moth_job" id="student_moth_job" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                     </div>
                                 </div>
-
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="subject">ဖုန်းနံပါတ်</label>
-                                        <input name="number" id="phonenumber" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Phone No. :">
+                                        <label for="student_moth_phone_num">ဖုန်းနံပါတ်</label>
+                                        <input name="student_moth_phone_num" id="student_moth_phone_num" type="number" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Phone No. :">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-12">
                                     <div class="text-start">
-                                        <label for="motherAddress">အမိအုပ်ထိန်းသူ၏လိပ်စာအပြည့်အစုံ</label>
-                                        <textarea name="motherAddress" id="motherAddress" class="form-input mt-3 w-full py-2 px-3 h-28 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder=""></textarea>
+                                        <label for="student_moth_address">အမိအုပ်ထိန်းသူ၏လိပ်စာအပြည့်အစုံ</label>
+                                        <textarea name="student_moth_address" id="student_moth_address" class="form-input mt-3 w-full py-2 px-3 h-28 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder=""></textarea>
                                     </div>
                                 </div>
                                 <!-- Supporter Information -->
                                 <div class="bg-sky-200 p-5 rounded-md lg:col-span-12 ">
-                                    <label for="subject" class="font-semibold">ကျောင်းနေရန်အထောက်အပံ့ပြုမည့်ပုဂ္ဂိုလ်</label>
+                                    <label for="" class="font-semibold">ကျောင်းနေရန်အထောက်အပံ့ပြုမည့်ပုဂ္ဂိုလ်</label>
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="">အမည်</label>
-                                        <input name="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                        <label for="gurdian_name">အမည်</label>
+                                        <input name="gurdian_name" id="gurdian_name" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="subject">ဆွေမျိုးတော်စပ်ပုံ</label>
-                                        <input name="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                        <label for="gurdian_relation">ဆွေမျိုးတော်စပ်ပုံ</label>
+                                        <input name="gurdian_relation" id="gurdian_relation" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="subject">အလုပ်အကိုင်</label>
-                                        <input name="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                        <label for="gurdian_job">အလုပ်အကိုင်</label>
+                                        <input name="gurdian_job" id="gurdian_job" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="subject">ဆက်သွယ်ရန်လိပ်စာ</label>
-                                        <input name="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                        <label for="gurdian_address">ဆက်သွယ်ရန်လိပ်စာ</label>
+                                        <input name="gurdian_address" id="gurdian_address" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="subject">ဖုန်းနံပါတ်</label>
-                                        <input name="number" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Phone No. :">
+                                        <label for="gurdian_phone_num">ဖုန်းနံပါတ်</label>
+                                        <input name="gurdian_phone_num" type="number" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Phone No. :">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-12">
                                     <div class="text-start">
-                                        <label for="subject">ပညာသင်ထောက်ပံ့ကြေးပေးရန်မေတ္တာရပ်ခံခြင်းပြု/မပြု</label>
+                                        <label for="scholar">ပညာသင်ထောက်ပံ့ကြေးပေးရန်မေတ္တာရပ်ခံခြင်းပြု/မပြု</label>
                                         <div class="mt-3 w-full py-2 px-3 h-10">
                                             <input name="scholar" type="radio" value="1"> ပြု
                                             <input name="scholar" type="radio" value="0"> မပြု
@@ -719,10 +713,31 @@
     <script src="./../utils/assets/libs/feather-icons/feather.min.js"></script>
     <script src="./../utils/assets/js/plugins.init.js"></script>
     <script src="./../utils/assets/js/app.js"></script>
+    <script>
+        // Fetch NRC
+        fetch('./../utils/assets/json/nrc.json')
+            .then(response => response.json())
+            .then(data => {
+                setupNrcDropdowns('student_nrc_code', 'student_nrc_name', data);
+                setupNrcDropdowns('student_fath_nrc_code', 'student_fath_nrc_name', data);
+                setupNrcDropdowns('student_moth_nrc_code', 'student_moth_nrc_name', data);
+            })
+            .catch(error => console.error('Error fetching the JSON data:', error));
+
+
+        // Fetch states
+        fetch('./../utils/assets/json/states.json')
+            .then(response => response.json())
+            .then(data => {
+                setupRegionTownshipSelect('student_region', 'student_township', data);
+                setupRegionTownshipSelect('student_fath_region', 'student_fath_township', data);
+                setupRegionTownshipSelect('student_moth_region', 'student_moth_township', data);
+            })
+            .catch(error => console.error('Error fetching the JSON data:', error));
+    </script>
+
 
     <!-- JAVASCRIPTS -->
 </body>
-
-<!-- Mirrored from shreethemes.in/techwind/landing/page-job-apply.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 25 Mar 2024 01:46:20 GMT -->
 
 </html>
