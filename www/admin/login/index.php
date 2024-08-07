@@ -8,23 +8,23 @@ session_start();
 
 
 if (isset($_SESSION['admin'])) {
-  HTTP::redirect('/');
-  exit();
+    HTTP::redirect('/');
+    exit();
 }
 
 if (isset($_POST['userName']) and isset($_POST['password'])) {
-  $username = $_POST['userName'];
-  $password = md5($_POST['password']);
-  $admin = new AuthController(null, $username, $password);
-  $success = $admin->adminLogin();
-  if ($success) {
+    $username = $_POST['userName'];
+    $password = md5($_POST['password']);
+    $admin = new AuthController(null, $username, $password);
+    $success = $admin->adminLogin();
+    if ($success) {
 
-    $_SESSION['admin'] = true;
+        $_SESSION['admin'] = true;
 
-    HTTP::redirect("/");
-    exit();
+        HTTP::redirect("/");
+        exit();
 
-  }
+    }
 }
 
 
@@ -39,9 +39,9 @@ if (isset($_POST['userName']) and isset($_POST['password'])) {
     <title>Login - UCSPYAY ADMIN Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
-    <link rel="stylesheet" href="http://ucsp.edu/utils/assets/css/tailwind.output.css" />
-    <script src="http://ucsp.edu/utils/assets/js/alpine.min.js" defer></script>
-    <script src="http://ucsp.edu/utils/assets/js/init-alpine.js"></script>
+    <link rel="stylesheet" href="http://ucspyay.edu.mm/utils/assets/css/tailwind.output.css" />
+    <script src="http://ucspyay.edu.mm/utils/assets/js/alpine.min.js" defer></script>
+    <script src="http://ucspyay.edu.mm/utils/assets/js/init-alpine.js"></script>
 </head>
 
 <body>
@@ -50,9 +50,9 @@ if (isset($_POST['userName']) and isset($_POST['password'])) {
             <div class="flex flex-col overflow-y-auto md:flex-row">
                 <div class="h-32 md:h-auto md:w-1/2">
                     <img aria-hidden="true" class="object-cover w-full h-full dark:hidden"
-                        src="http://ucsp.edu/utils/assets/img/login-office.jpeg" alt="Office" />
+                        src="http://ucspyay.edu.mm/utils/assets/img/login-office.jpeg" alt="Office" />
                     <img aria-hidden="true" class="hidden object-cover w-full h-full dark:block"
-                        src="http://ucsp.edu/utils/assets/img/login-office-dark.jpeg" alt="Office" />
+                        src="http://ucspyay.edu.mm/utils/assets/img/login-office-dark.jpeg" alt="Office" />
                 </div>
                 <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
                     <form action="" method="post">
