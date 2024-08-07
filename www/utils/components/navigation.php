@@ -11,7 +11,7 @@ echo $homeURL;
 
 <!-- Start Navbar -->
 <nav id="topnav" class="defaultscroll is-sticky nav-sticky">
-    <div class="container relative">
+    <div class="container relative flex justify-between">
         <!-- Logo container-->
         <a class="logo flex items-center gap-2 justify-center " href="<?php echo $homeURL ?>">
             <div class="">
@@ -57,7 +57,7 @@ echo $homeURL;
                     <a href="javascript:void(0)">Academic</a><span class="menu-arrow"></span>
                     <ul class="submenu">
                         <li class="has-submenu parent-menu-item"><a href="javascript:void(0)"> Academic Programs
-                            </a><span class="submenu-arrow"></span>
+                            </a><span class="submenu-arrow "></span>
                             <ul class="submenu">
                                 <li><a href="<?php echo $homeURL ?>b-c-sc" class="sub-menu-item">B.C.Sc</a></li>
                                 <li><a href="<?php echo $homeURL ?>b-c-tech" class="sub-menu-item">B.C.Tech</a></li>

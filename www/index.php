@@ -4,7 +4,9 @@
 <?php
 include("./utils/components/links.php");
 include("./utils/components/navigation.php");
-
+$heroVideoFilePath = "utils/assets/img/ucspyay/cu-short.mp4";
+$youtubeCoverImgPath = "utils/assets/img/ucspyay/uc-build-1.jpg";
+$ucspLogoImgPath = "utils/assets/img/ucspyay/ucsp-logo-light.jpg";
 ?>
 
 <body class="font-nunito text-base text-black dark:text-white dark:bg-slate-900 scroll-smooth">
@@ -12,7 +14,7 @@ include("./utils/components/navigation.php");
     <section class="relative overflow-hidden py-16">
         <!-- Video Background -->
         <video autoplay muted loop class="absolute inset-0 w-full h-full object-cover z-0">
-            <source src="utils/assets/img/ucspyay/cu-short.mp4" type="video/mp4">
+            <source src="<?= $heroVideoFilePath ?>" type="video/mp4">
             Your browser does not support the video tag.
         </video>
         <!-- Overlay (Optional) -->
@@ -88,7 +90,7 @@ include("./utils/components/navigation.php");
                 <div class="relative z-1">
                     <div class="grid grid-cols-1 md:text-start text-center justify-center">
                         <div class="relative">
-                            <img src="utils/assets/img/ucspyay/uc-build-1.jpg" alt="School Image" class="rounded-md z-10">
+                            <img src="<?= $youtubeCoverImgPath ?>" alt="School Image" class="rounded-md z-10">
                             <div class="absolute bottom-2/4 translate-y-2/4 start-0 end-0 text-center">
                                 <a href="#!" data-type="youtube" data-id="hZ0oCAOi5hw" class="lightbox size-20 rounded-full shadow-lg dark:shadow-gray-800 inline-flex items-center justify-center bg-white dark:bg-slate-900 text-indigo-600 dark:text-white">
                                     <i class="mdi mdi-play inline-flex items-center justify-center text-2xl"></i>
@@ -147,7 +149,7 @@ include("./utils/components/navigation.php");
 
         <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 mt-8 gap-[30px]">
             <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden wow animate__animated animate__fadeInUp" data-wow-delay=".7s">
-                <img src="utils/assets/img/ucspyay/ucsp-logo-light.jpg" alt="">
+                <img src="<?= $ucspLogoImgPath ?>" alt="">
                 <div class="content p-6">
                     <a href="blog-detail.html" class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">Smartest Applications for Business</a>
                     <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and benefit </p>
@@ -157,7 +159,7 @@ include("./utils/components/navigation.php");
                 </div>
             </div>
             <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden wow animate__animated animate__fadeInUp" data-wow-delay=".7s">
-                <img src="utils/assets/img/ucspyay/ucsp-logo-light.jpg" alt="">
+                <img src="<?= $ucspLogoImgPath ?>" alt="">
                 <div class="content p-6">
                     <a href="blog-detail.html" class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">Smartest Applications for Business</a>
                     <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and benefit </p>
@@ -167,7 +169,7 @@ include("./utils/components/navigation.php");
                 </div>
             </div>
             <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden wow animate__animated animate__fadeInUp" data-wow-delay=".7s">
-                <img src="utils/assets/img/ucspyay/ucsp-logo-light.jpg" alt="">
+                <img src="<?= $ucspLogoImgPath ?>" alt="">
                 <div class="content p-6">
                     <a href="blog-detail.html" class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">Smartest Applications for Business</a>
                     <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and benefit </p>

@@ -25,7 +25,7 @@ if ($currentPath === '/www' || $currentPath === '/') {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <!-- favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <link rel="shortcut icon" href="<?php echo $relativePath; ?>utils/assets/img/ucspyay/ucsp-logo-light.jpg">
 
     <!-- Css -->
     <link href="<?php echo $relativePath; ?>utils/assets/libs/animate.css/animate.min.css" rel="stylesheet">

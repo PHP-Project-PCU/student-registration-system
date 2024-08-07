@@ -5,31 +5,43 @@
 include("./../utils/components/links.php");
 include("./../utils/components/navigation.php");
 $academicYear = "၂၀၂၄ - ၂၀၂၅";
+$heroImageFile = "../utils/assets/img/ucspyay/ucsp-front-build.jpg";
+$guideVideoUrl = "";
 ?>
 
 <body class="font-nunito text-base text-black dark:text-white dark:bg-slate-900 scroll-smooth">
     <!-- Start Hero -->
-    <section class="relative table w-full py-36 lg:py-44 bg-[url('../../assets/images/job/job.html')] bg-no-repeat bg-center bg-cover">
-        <div class="absolute inset-0 bg-black opacity-80"></div>
-        <div class="container relative">
-            <div class="grid grid-cols-1 pb-8 text-center mt-12">
-                <h3 class="mb-4 md:text-2xl text-xl md:leading-normal leading-normal font-medium text-white">( <?php echo $academicYear; ?> )ပညာသင်နှစ်</h3>
-                <h3 class="mb-4 md:text-4xl text-3xl md:leading-normal leading-normal font-medium text-white">
-                    ကျောင်းသား/ကျောင်းသူများပညာသင်ခွင့်လျှောက်လွှာ</h3>
+    <section class="relative table w-full py-36 lg:py-44 bg-no-repeat bg-cover">
+        <!-- Background image with fixed position and blur effect -->
+        <div class="absolute w-full inset-0 bg-[url('<?= $heroImageFile ?>')] bg-no-repeat bg-center bg-cover bg-fixed backdrop-blur-lg"></div>
 
+        <!-- Dark overlay for better text contrast -->
+        <div class="absolute inset-0 bg-black opacity-80"></div>
+
+        <!-- Content container -->
+        <div class="relative container">
+            <div class="grid grid-cols-1 p-8 text-center mt-12 rounded-md border border-white transparent">
+                <h3 class="mb-4 md:text-2xl text-xl md:leading-normal leading-normal font-bold text-white">
+                    ( <?= $academicYear; ?> ) ပညာသင်နှစ်
+                </h3>
+                <h3 class="mb-4 md:text-4xl text-3xl md:leading-normal leading-normal font-bold text-white">
+                    " ကျောင်းသား/ကျောင်းသူများပညာသင်ခွင့်လျှောက်လွှာ "
+                </h3>
             </div>
             <!--end grid-->
         </div>
         <!--end container-->
     </section>
+
+
     <!--end section-->
-    <div class="relative">
+    <!-- <div class="relative">
         <div class="shape absolute sm:-bottom-px -bottom-[2px] start-0 end-0 overflow-hidden text-white dark:text-slate-900">
             <svg class="w-full h-auto scale-[2.0] origin-top" viewBox="0 0 2880 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0 48H1437.5H2880V0H2160C1442.5 52 720 0 720 0H0V48Z" fill="currentColor"></path>
             </svg>
         </div>
-    </div>
+    </div> -->
     <!-- End Hero -->
 
     <!-- Start Section-->
@@ -38,8 +50,9 @@ $academicYear = "၂၀၂၄ - ၂၀၂၅";
             <div class="grid lg:grid-cols-12 grid-cols-1" id="reserve-form">
                 <div class="lg:col-start-2 lg:col-span-10">
                     <div class="rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
-                        <form>
-                            <div class="grid lg:grid-cols-12 gap-6">
+                        <form action="" method="POST" enctype="multipart/form-data">
+                            <p><a href="<?= $guideVideoUrl ?>" class=" mb-8 text-indigo-600 cursor-pointer" target="_blank">လျှောက်လွှာဖြည့်နည်းလမ်းညွှန်(ကြည့်မည်)</a></p>
+                            <div class="grid lg:grid-cols-12 gap-6 pt-4">
                                 <div class="lg:col-span-6">
                                     <label for="year">သင်တန်းနှစ်</label>
                                     <select id="year" name="year" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
@@ -61,7 +74,7 @@ $academicYear = "၂၀၂၄ - ၂၀၂၅";
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
                                         <label for="roll_num">ခုံအမှတ်</label>
-                                        <input name="roll_num" id="roll_num" type="number" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="PaKaPaTa-" value="PaKaPaTa-">
+                                        <input name="roll_num" id="roll_num" type="number" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="xxxxxx" value="PaKaPaTa-">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-6">
@@ -77,7 +90,7 @@ $academicYear = "၂၀၂၄ - ၂၀၂၅";
                                     </div>
                                 </div>
                                 <!-- Student Information -->
-                                <div class="bg-sky-200 p-5 rounded-md  lg:col-span-12 ">
+                                <div class="bg-indigo-300 p-5 rounded-md  lg:col-span-12 ">
                                     <label for="subject" class="font-semibold">ကျောင်းသား/သူအချက်အလက်</label>
                                 </div>
                                 <div class="lg:col-span-6">
@@ -113,10 +126,23 @@ $academicYear = "၂၀၂၄ - ၂၀၂၅";
                                         <option>နိုင်ငံခြားသား</option>
                                     </select>
                                 </div>
-                                <div class="lg:col-span-12">
+                                <div class="lg:col-span-4">
                                     <div class="text-start">
                                         <label for="student_dob">မွေးသက္ကရာဇ်</label>
                                         <input name="student_dob" id="student_dob" type="date" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="lg:col-span-4">
+                                    <div class="text-start">
+                                        <label for="student_email">Email လိပ်စာ</label>
+                                        <input name="student_email" id="student_email" type="email" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Email :">
+                                    </div>
+                                </div>
+
+                                <div class="lg:col-span-4">
+                                    <div class="text-start">
+                                        <label for="student_phone_num">ဖုန်းနံပါတ်</label>
+                                        <input name="student_phone_num" id="student_phone_num" type="number" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Phone No. :">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-3">
@@ -156,19 +182,6 @@ $academicYear = "၂၀၂၄ - ၂၀၂၅";
                                 <div class="lg:col-span-4">
                                     <label for="student_current_address">&nbsp;</label>
                                     <input name="student_current_address" id="student_current_address" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="လိပ်စာအပြည့်အစုံ">
-                                </div>
-                                <div class="lg:col-span-6">
-                                    <div class="text-start">
-                                        <label for="student_email">Email လိပ်စာ</label>
-                                        <input name="student_email" id="student_email" type="email" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Email :">
-                                    </div>
-                                </div>
-
-                                <div class="lg:col-span-6">
-                                    <div class="text-start">
-                                        <label for="student_phone_num">ဖုန်းနံပါတ်</label>
-                                        <input name="student_phone_num" id="student_phone_num" type="number" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Phone No. :">
-                                    </div>
                                 </div>
                                 <div class="lg:col-span-12">
                                     <label for="">တက္ကသိုလ်ဝင်တန်းအောင်မြင်သည့်</label>
@@ -238,7 +251,7 @@ $academicYear = "၂၀၂၄ - ၂၀၂၅";
                                 </div>
 
                                 <!-- Father Information -->
-                                <div class="bg-sky-200 p-5 rounded-md lg:col-span-12 ">
+                                <div class="bg-indigo-300 p-5 rounded-md lg:col-span-12 ">
                                     <label for="subject" class="font-semibold">အဘအုပ်ထိန်းသူ၏အချက်အလက်</label>
                                 </div>
                                 <div class="lg:col-span-6">
@@ -327,8 +340,8 @@ $academicYear = "၂၀၂၄ - ၂၀၂၅";
                                     </div>
                                 </div>
                                 <!-- Mother Information -->
-                                <div class="bg-sky-200 p-5 rounded-md lg:col-span-12 ">
-                                    <label for="subject" class="font-semibold">အမိအုပ်ထိန်းသူ၏အချက်အလက်</label>
+                                <div class="bg-indigo-300 p-5 rounded-md lg:col-span-12 ">
+                                    <label for="" class="font-semibold">အမိအုပ်ထိန်းသူ၏အချက်အလက်</label>
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
@@ -416,37 +429,37 @@ $academicYear = "၂၀၂၄ - ၂၀၂၅";
                                     </div>
                                 </div>
                                 <!-- Supporter Information -->
-                                <div class="bg-sky-200 p-5 rounded-md lg:col-span-12 ">
+                                <div class="bg-indigo-300 p-5 rounded-md lg:col-span-12 ">
                                     <label for="" class="font-semibold">ကျောင်းနေရန်အထောက်အပံ့ပြုမည့်ပုဂ္ဂိုလ်</label>
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="gurdian_name">အမည်</label>
-                                        <input name="gurdian_name" id="gurdian_name" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                        <label for="guardian_name">အမည်</label>
+                                        <input name="guardian_name" id="guardian_name" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="gurdian_relation">ဆွေမျိုးတော်စပ်ပုံ</label>
-                                        <input name="gurdian_relation" id="gurdian_relation" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                        <label for="guardian_relation">ဆွေမျိုးတော်စပ်ပုံ</label>
+                                        <input name="guardian_relation" id="guardian_relation" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="gurdian_job">အလုပ်အကိုင်</label>
-                                        <input name="gurdian_job" id="gurdian_job" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                        <label for="guardian_job">အလုပ်အကိုင်</label>
+                                        <input name="guardian_job" id="guardian_job" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="gurdian_address">ဆက်သွယ်ရန်လိပ်စာ</label>
-                                        <input name="gurdian_address" id="gurdian_address" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                        <label for="guardian_address">ဆက်သွယ်ရန်လိပ်စာ</label>
+                                        <input name="guardian_address" id="guardian_address" type="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-6">
                                     <div class="text-start">
-                                        <label for="gurdian_phone_num">ဖုန်းနံပါတ်</label>
-                                        <input name="gurdian_phone_num" type="number" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Phone No. :">
+                                        <label for="guardian_phone_num">ဖုန်းနံပါတ်</label>
+                                        <input name="guardian_phone_num" type="number" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="Phone No. :">
                                     </div>
                                 </div>
                                 <div class="lg:col-span-12">
@@ -459,74 +472,102 @@ $academicYear = "၂၀၂၄ - ၂၀၂၅";
                                     </div>
                                 </div>
 
-                                <div class="bg-sky-200 p-5 rounded-md lg:col-span-12 ">
+                                <div class="bg-indigo-300 p-5 rounded-md lg:col-span-12 ">
                                     <label for="subject" class="font-semibold">လိုအပ်သောစာရွက်စာတမ်းများ</label>
                                 </div>
                                 <div class="lg:col-span-6">
                                     <label for="passport_photo">လိုင်စင်ဓာတ်ပုံ (1" x 1.25") ဆိုဒ် ၁ ပုံ (၆လ အတွင်း
                                         ရိုက်ထားသောပုံ) </label>
-                                    <input name="passport_photo" class="form-input mt-3 w-full py-1 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" id="resumefile" type="file">
+                                    <input name="passport_photo" id="" type="file" class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
                                 </div>
                                 <div class="lg:col-span-6">
                                     <label for="one_inch_photo">(1" x 1") ဆိုဒ် ၁ ပုံ (၆လ အတွင်း ရိုက်ထားသောပုံ)
                                     </label>
-                                    <input name="one_inch_photo" class="form-input mt-3 w-full py-1 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" id="" type="file">
+                                    <input name="one_inch_photo" id="" type="file" class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
                                 </div>
                                 <div class="lg:col-span-6">
                                     <label for="student_nrc_photo_front">ကျောင်းသားမှတ်ပုံတင်(ရှေ့ဘက်)</label>
-                                    <input name="student_nrc_photo_front" class="form-input mt-3 w-full py-1 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" id="resumefile" type="file">
+                                    <input name="student_nrc_photo_front" id="" type="file" class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
                                 </div>
                                 <div class="lg:col-span-6">
                                     <label for="student_nrc_photo_back">ကျောင်းသားမှတ်ပုံတင်(နောက်ဘက်)</label>
-                                    <input name="student_nrc_photo_back" class="form-input mt-3 w-full py-1 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" id="resumefile" type="file">
+                                    <input name="student_nrc_photo_back" id="" type="file" class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
                                 </div>
                                 <div class="lg:col-span-6">
                                     <label for="father_nrc_photo_front">အဘမှတ်ပုံတင်(ရှေ့ဘက်)</label>
-                                    <input name="father_nrc_photo_front" class="form-input mt-3 w-full py-1 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" id="resumefile" type="file">
+                                    <input name="father_nrc_photo_front" id="" type="file" class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
                                 </div>
                                 <div class="lg:col-span-6">
                                     <label for="father_nrc_photo_back">အဘမှတ်ပုံတင်(နောက်ဘက်)</label>
-                                    <input name="father_nrc_photo_back" class="form-input mt-3 w-full py-1 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" id="resumefile" type="file">
+                                    <input name="father_nrc_photo_back" id="" type="file" class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
                                 </div>
                                 <div class="lg:col-span-6">
                                     <label for="mother_nrc_photo_front">အမိမှတ်ပုံတင်(ရှေ့ဘက်)</label>
-                                    <input name="mother_nrc_photo_front" class="form-input mt-3 w-full py-1 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" id="resumefile" type="file">
+                                    <input name="mother_nrc_photo_front" id="" type="file" class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
                                 </div>
                                 <div class="lg:col-span-6">
                                     <label for="mother_nrc_photo_back">အမိမှတ်ပုံတင်(နောက်ဘက်)</label>
-                                    <input name="mother_nrc_photo_back" class="form-input mt-3 w-full py-1 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" id="resumefile" type="file">
+                                    <input name="mother_nrc_photo_back" id="" type="file" class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
                                 </div>
                                 <div class="lg:col-span-6">
                                     <label for="covid_photo">ကိုဗစ်ကာကွယ်ဆေးထိုးပြီးကြောင်းထောက်ခံချက်</label>
-                                    <input name="covid_photo" class="form-input mt-3 w-full py-1 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" id="resumefile" type="file">
+                                    <input name="covid_photo" id="" type="file" class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
                                 </div>
                                 <div class="lg:col-span-6">
                                     <label for="matriculation_certificate">၁၀ တန်းအောင်လက်မှတ်</label>
-                                    <input name="matriculation_certificate" class="form-input mt-3 w-full py-1 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" id="resumefile" type="file">
+                                    <input name="matriculation_certificate" id="" type="file" class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
                                 </div>
                                 <div class="lg:col-span-6">
                                     <label for="matriculation_mark_photo">၁၀ တန်းအမှတ်စာရင်း</label>
-                                    <input name="matriculation_mark_photo" class="form-input mt-3 w-full py-1 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" id="resumefile" type="file">
+                                    <input name="matriculation_mark_photo" id="" type="file" class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
                                 </div>
                                 <div class="lg:col-span-6">
                                     <label for="house_registratoin_photo_front">အိမ်ထောင်စုစာရင်း(ရှေ့ဘက်)</label>
-                                    <input name="house_registratoin_photo_front" class="form-input mt-3 w-full py-1 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" id="resumefile" type="file">
+                                    <input name="house_registratoin_photo_front" id="" type="file" class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
                                 </div>
                                 <div class="lg:col-span-6">
                                     <label for="house_registratoin_photo_back">အိမ်ထောင်စုစာရင်း(နောက်ဘက်)</label>
-                                    <input name="house_registratoin_photo_back" class="form-input mt-3 w-full py-1 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" id="resumefile" type="file">
+                                    <input name="house_registratoin_photo_back" id="" type="file" class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
                                 </div>
                                 <div class="lg:col-span-6">
                                     <label for="quarter_approved_letter">ရပ်ကွက်ထောက်ခံစာ</label>
-                                    <input name="quarter_approved_letter" class="form-input mt-3 w-full py-1 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" id="resumefile" type="file">
+                                    <input name="quarter_approved_letter" id="" type="file" class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
                                 </div>
                                 <div class="lg:col-span-6">
                                     <label for="police_approved_letter">ရဲစခန်းထောက်ခံစာ</label>
-                                    <input name="police_approved_letter" class="form-input mt-3 w-full py-1 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" id="resumefile" type="file">
+                                    <input name="police_approved_letter" id="" type="file" class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
                                 </div>
-                            </div>
-                            <button type="submit" id="submit" name="send" class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mt-4">Show
-                                preview</button>
+
+                                <div class="bg-indigo-300 p-5 rounded-md lg:col-span-12 ">
+                                    <label for="subject" class="font-semibold">ကျောင်းလခပေးသွင်းခြင်း</label>
+                                </div>
+                                <div class="lg:col-span-6">
+                                    <label for="payment_screenshot">ငွေသွင်းပြီးကြောင်း Screenshot</label>
+                                    <input name="payment_screenshot" class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer" id="" type="file">
+                                </div>
+                                <div class="lg:col-span-12">
+                                    <div id="accordion-collapse" data-accordion="collapse" class="grid md:grid-cols-2 grid-cols-1 mt-8 md:gap-[30px]">
+                                        <div>
+                                            <div class="relative shadow dark:shadow-gray-800 rounded-md overflow-hidden">
+                                                <h2 class="text-base font-semibold" id="accordion-collapse-heading-1">
+                                                    <button type="button" class="flex justify-between items-center p-5 w-full font-medium text-start" data-accordion-target="#accordion-collapse-body-1" aria-expanded="false" aria-controls="accordion-collapse-body-1">
+                                                        <span>ငွေပေးချေရန် QR</span>
+                                                        <svg data-accordion-icon class="size-4 rotate-0 shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                                                        </svg>
+                                                    </button>
+                                                </h2>
+                                                <div id="accordion-collapse-body-1" class="hidden" aria-labelledby="accordion-collapse-heading-1">
+                                                    <div class="p-5">
+                                                        <img src="../utils/assets/img/ucspyay/qrcode.jpg" alt="QR Code">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" id="submit" name="send" class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mt-4">Show
+                                        preview</button>
+                                </div>
                         </form>
                         <!--end form-->
                     </div>

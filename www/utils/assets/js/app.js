@@ -170,7 +170,7 @@ if (document.getElementById("navigation")) {
 
 window.addEventListener('scroll', (ev) => {
     ev.preventDefault();
-    windowScroll();
+    // windowScroll();
 })
 /*********************/
 /*    Back To TOp    */
