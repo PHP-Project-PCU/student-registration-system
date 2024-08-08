@@ -1,21 +1,22 @@
 <?php
 include "C:/xampp/htdocs/student-registration-system/www/utils/assets/constants/StudentAdmissionConstants.php";
 
-$ucspResponsiveImageFilePath = StudentAdmissionConstants::$BASE_URL . "/utils/assets/img/ucspyay/ucsp.png";
-$ucspImageFilePath = StudentAdmissionConstants::$BASE_URL."/utils/assets/img/ucspyay/UCSPyay-logo.jpg";
+$ucspLogoDark = StudentAdmissionConstants::$BASE_URL . "/utils/assets/img/ucspyay/ucsp-logo-dark.png";
+$ucspLogoLight = StudentAdmissionConstants::$BASE_URL . "/utils/assets/img/ucspyay/ucsp-logo-light.jpg";
+$currentPath = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
+$baseURL = StudentAdmissionConstants::$BASE_URL . '/';
+$homeURL =  (trim($currentPath, '/') === 'www' ? '' : str_replace(trim($currentPath, '/'), '', $baseURL));
+echo $homeURL;
 ?>
 
 <!-- Start Navbar -->
 <nav id="topnav" class="defaultscroll is-sticky nav-sticky">
-    <div class="container relative">
+    <div class="container relative flex justify-between">
         <!-- Logo container-->
-        <a class="logo flex items-center gap-2 justify-center " href="index.html">
+        <a class="logo flex items-center gap-2 justify-center " href="<?php echo $homeURL ?>">
             <div class="">
-                <img src="<?php echo $ucspResponsiveImageFilePath ?>" width="60" class="inline-block dark:hidden"
-                    alt="">
-                <img src="<?php echo $ucspImageFilePath ?>" width="60" class="hidden dark:inline-block rounded-lg"
-                    alt="">
-
+                <img src="<?php echo $ucspLogoDark ?>" width="60" class="inline-block dark:hidden" alt="">
+                <img src="<?php echo $ucspLogoLight ?>" width="60" class="hidden dark:inline-block rounded-lg" alt="">
             </div>
             <div class="">
                 <p class="text-sm font-bold">UCSPyay</p>
@@ -50,53 +51,50 @@ $ucspImageFilePath = StudentAdmissionConstants::$BASE_URL."/utils/assets/img/ucs
         <div id="navigation">
             <!-- Navigation Menu-->
             <ul class="navigation-menu">
-                <li><a href="index.html" class="sub-menu-item">Home</a></li>
+                <li><a href="<?php echo $homeURL ?>" class="sub-menu-item">Home</a></li>
 
                 <li class="has-submenu parent-parent-menu-item">
                     <a href="javascript:void(0)">Academic</a><span class="menu-arrow"></span>
                     <ul class="submenu">
                         <li class="has-submenu parent-menu-item"><a href="javascript:void(0)"> Academic Programs
-                            </a><span class="submenu-arrow"></span>
+                            </a><span class="submenu-arrow "></span>
                             <ul class="submenu">
-                                <li><a href="page-aboutus.html" class="sub-menu-item">B.C.Sc</a></li>
-                                <li><a href="page-services.html" class="sub-menu-item">B.C.Tech</a></li>
+                                <li><a href="<?php echo $homeURL ?>b-c-sc" class="sub-menu-item">B.C.Sc</a></li>
+                                <li><a href="<?php echo $homeURL ?>b-c-tech" class="sub-menu-item">B.C.Tech</a></li>
                             </ul>
                         </li>
-                        <li><a href="food-recipe.html" class="sub-menu-item">Academic Calender</a></li>
-
+                        <li><a href="academic-calender" class="sub-menu-item">Academic Calender</a></li>
                         <li><a href="https://lms.ucspyay.edu.mm" target="_blank" class="sub-menu-item">LMS Moodle</a>
                         </li>
-
-
                     </ul>
                 </li>
 
                 <li class="has-submenu parent-menu-item">
                     <a href="javascript:void(0)">Faculties</a><span class="menu-arrow"></span>
                     <ul class="submenu">
-                        <li><a href="ui-components.html" class="sub-menu-item"> Faculty of Computer System and
+                        <li><a href="<?php echo $homeURL ?>faculty-of-computer-system-and-technologies" class="sub-menu-item"> Faculty of Computer System and
                                 Technologies </a></li>
-                        <li><a href="documentation.html" class="sub-menu-item">Faculty of Computer Science</a></li>
-                        <li><a href="changelog.html" class="sub-menu-item">Faculty of Computing</a></li>
-                        <li><a href="widget.html" class="sub-menu-item">Faculty of Information Science</a></li>
-                        <li><a href="widget.html" class="sub-menu-item">Faculty of IT Supporting and Maintenance</a>
+                        <li><a href="<?php echo $homeURL ?>faculty-of-computer-science" class="sub-menu-item">Faculty of Computer Science</a></li>
+                        <li><a href="<?php echo $homeURL ?>faculty-of-computing" class="sub-menu-item">Faculty of Computing</a></li>
+                        <li><a href="<?php echo $homeURL ?>faculty-of-information-science" class="sub-menu-item">Faculty of Information Science</a></li>
+                        <li><a href="<?php echo $homeURL ?>faculty-of-it-Supporting-and-maintenance" class="sub-menu-item">Faculty of IT Supporting and Maintenance</a>
                         </li>
-                        <li><a href="widget.html" class="sub-menu-item">Myanmar</a></li>
-                        <li><a href="widget.html" class="sub-menu-item">English</a></li>
-                        <li><a href="widget.html" class="sub-menu-item">Physics</a></li>
-                        <li><a href="widget.html" class="sub-menu-item">Adminstration</a></li>
-                        <li><a href="widget.html" class="sub-menu-item">Finance</a></li>
-                        <li><a href="widget.html" class="sub-menu-item">Student affiair</a></li>
+                        <li><a href="<?php echo $homeURL ?>myanmar" class="sub-menu-item">Myanmar</a></li>
+                        <li><a href="<?php echo $homeURL ?>english" class="sub-menu-item">English</a></li>
+                        <li><a href="<?php echo $homeURL ?>physics" class="sub-menu-item">Physics</a></li>
+                        <li><a href="<?php echo $homeURL ?>adminstration" class="sub-menu-item">Adminstration</a></li>
+                        <li><a href="<?php echo $homeURL ?>finance" class="sub-menu-item">Finance</a></li>
+                        <li><a href="<?php echo $homeURL ?>student-affiair" class="sub-menu-item">Student affiair</a></li>
                     </ul>
                 </li>
 
-                <li><a href="contact-one.html" class="sub-menu-item">Projects</a></li>
+                <li><a href="<?php echo $homeURL ?>projects" class="sub-menu-item">Projects</a></li>
 
-                <li><a href="contact-one.html" class="sub-menu-item">News</a></li>
+                <li><a href="<?php echo $homeURL ?>news" class="sub-menu-item">News</a></li>
 
-                <li><a href="contact-one.html" class="sub-menu-item">Library</a></li>
+                <li><a href="https://ucspyay.librarika.com" target="_blank" class="sub-menu-item">Library</a></li>
 
-                <li><a href="contact-one.html" class="sub-menu-item">About us</a></li>
+                <li><a href="<?php echo $homeURL ?>about" class="sub-menu-item">About us</a></li>
             </ul>
             <!--end navigation menu-->
         </div>
