@@ -39,7 +39,7 @@ function fn() {
         }, 350);
     }
     // Menus
-    activateMenu();
+    // activateMenu();
 }
 
 // document.oncontextmenu=()=>{
@@ -88,57 +88,57 @@ function getClosest(elem, selector) {
 
 };
 
-function activateMenu() {
-    var menuItems = document.getElementsByClassName("sub-menu-item");
-    if (menuItems) {
+// function activateMenu() {
+//     var menuItems = document.getElementsByClassName("sub-menu-item");
+//     if (menuItems) {
 
-        var matchingMenuItem = null;
-        for (var idx = 0; idx < menuItems.length; idx++) {
-            if (menuItems[idx].href === window.location.href) {
-                matchingMenuItem = menuItems[idx];
-            }
-        }
+//         var matchingMenuItem = null;
+//         for (var idx = 0; idx < menuItems.length; idx++) {
+//             if (menuItems[idx].href === window.location.href) {
+//                 matchingMenuItem = menuItems[idx];
+//             }
+//         }
 
-        if (matchingMenuItem) {
-            matchingMenuItem.classList.add('active');
+//         if (matchingMenuItem) {
+//             matchingMenuItem.classList.add('active');
          
          
-            var immediateParent = getClosest(matchingMenuItem, 'li');
+//             var immediateParent = getClosest(matchingMenuItem, 'li');
       
-            if (immediateParent) {
-                immediateParent.classList.add('active');
-            }
+//             if (immediateParent) {
+//                 immediateParent.classList.add('active');
+//             }
             
-            var parent = getClosest(immediateParent, '.child-menu-item');
-            if(parent){
-                parent.classList.add('active');
-            }
+//             var parent = getClosest(immediateParent, '.child-menu-item');
+//             if(parent){
+//                 parent.classList.add('active');
+//             }
 
-            var parent = getClosest(parent || immediateParent , '.parent-menu-item');
+//             var parent = getClosest(parent || immediateParent , '.parent-menu-item');
         
-            if (parent) {
-                parent.classList.add('active');
+//             if (parent) {
+//                 parent.classList.add('active');
 
-                var parentMenuitem = parent.querySelector('.menu-item');
-                if (parentMenuitem) {
-                    parentMenuitem.classList.add('active');
-                }
+//                 var parentMenuitem = parent.querySelector('.menu-item');
+//                 if (parentMenuitem) {
+//                     parentMenuitem.classList.add('active');
+//                 }
 
-                var parentOfParent = getClosest(parent, '.parent-parent-menu-item');
-                if (parentOfParent) {
-                    parentOfParent.classList.add('active');
-                }
-            } else {
-                var parentOfParent = getClosest(matchingMenuItem, '.parent-parent-menu-item');
-                if (parentOfParent) {
-                    parentOfParent.classList.add('active');
-                }
-            }
-        }
-    }
-}
+//                 var parentOfParent = getClosest(parent, '.parent-parent-menu-item');
+//                 if (parentOfParent) {
+//                     parentOfParent.classList.add('active');
+//                 }
+//             } else {
+//                 var parentOfParent = getClosest(matchingMenuItem, '.parent-parent-menu-item');
+//                 if (parentOfParent) {
+//                     parentOfParent.classList.add('active');
+//                 }
+//             }
+//         }
+//     }
+// }
 /*********************/
-/*  Clickable manu   */
+/*  Clickable menu   */
 /*********************/
 if (document.getElementById("navigation")) {
     var elements = document.getElementById("navigation").getElementsByTagName("a");
@@ -170,7 +170,7 @@ if (document.getElementById("navigation")) {
 
 window.addEventListener('scroll', (ev) => {
     ev.preventDefault();
-    windowScroll();
+    // windowScroll();
 })
 /*********************/
 /*    Back To TOp    */
