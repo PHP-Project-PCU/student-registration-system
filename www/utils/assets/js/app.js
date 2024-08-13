@@ -329,66 +329,92 @@ try {
 /*********************/
 /* LTR & RTL Mode */
 /*********************/
-try{
-    const htmlTag = document.getElementsByTagName("html")[0]
-    function changeLayout(e){
-        e.preventDefault()
-        const switcherRtl = document.getElementById("switchRtl")
-        if(switcherRtl.innerText === "LTR"){
-            htmlTag.dir = "ltr"
-        }
-        else{
-            htmlTag.dir = "rtl"
-        }
+// try{
+//     const htmlTag = document.getElementsByTagName("html")[0]
+//     function changeLayout(e){
+//         e.preventDefault()
+//         const switcherRtl = document.getElementById("switchRtl")
+//         if(switcherRtl.innerText === "LTR"){
+//             htmlTag.dir = "ltr"
+//         }
+//         else{
+//             htmlTag.dir = "rtl"
+//         }
         
-    }
-    const switcherRtl = document.getElementById("switchRtl")
-    switcherRtl?.addEventListener("click" ,changeLayout )
-}
-catch(err){}
+//     }
+//     const switcherRtl = document.getElementById("switchRtl")
+//     switcherRtl?.addEventListener("click" ,changeLayout )
+// }
+// catch(err){}
 
-try{
-    function addNewRow(){
-         // Get the table by its ID
-    var table = document.getElementById("examTable");
 
-    // Create a new row element
-    var newRow = table.insertRow();
+/*********************/
+/* ADD New Row in Exam Tbl */
+/*********************/
+// try{
+//     function addNewRow(){
+//          // Get the table by its ID
+//     var table = document.getElementById("examTable");
 
-    // Create cells in the new row
-    var cell1 = newRow.insertCell(0);
-    var cell2 = newRow.insertCell(1);
-    var cell3 = newRow.insertCell(2);
-    var cell4 = newRow.insertCell(3);
-    var cell5 = newRow.insertCell(4);
+//     // Create a new row element
+//     var newRow = table.insertRow();
 
-    // Add content to the new cells
-    cell1.innerHTML = `
-        <select class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-            <option>ပထမနှစ်စာမေးပွဲ</option>
-            <option>ဒုတိယနှစ်စာမေးပွဲ</option>
-            <option>တတိယနှစ်စာမေးပွဲ</option>
-            <option>စတုတ္ထနှစ်စာမေးပွဲ</option>
-        </select>`;
-    cell2.innerHTML = `
-        <select class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-            <option>CST</option>
-            <option>CS</option>
-            <option>CT</option>
-        </select>`;
-    cell3.innerHTML = `
-        <input name="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">`;
-    cell4.innerHTML = `
-        <input name="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">`;
-    cell5.innerHTML = `
-        <select class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-            <option>အောင်</option>
-            <option>ရှုံး</option>
-        </select>`;
-}
-}catch(err){
+//     // Create cells in the new row
+//     var cell1 = newRow.insertCell(0);
+//     var cell2 = newRow.insertCell(1);
+//     var cell3 = newRow.insertCell(2);
+//     var cell4 = newRow.insertCell(3);
+//     var cell5 = newRow.insertCell(4);
 
-}
+//     // Add content to the new cells
+//     cell1.innerHTML = `
+//         <select class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+//             <option>ပထမနှစ်စာမေးပွဲ</option>
+//             <option>ဒုတိယနှစ်စာမေးပွဲ</option>
+//             <option>တတိယနှစ်စာမေးပွဲ</option>
+//             <option>စတုတ္ထနှစ်စာမေးပွဲ</option>
+//         </select>`;
+//     cell2.innerHTML = `
+//         <select class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+//             <option>CST</option>
+//             <option>CS</option>
+//             <option>CT</option>
+//         </select>`;
+//     cell3.innerHTML = `
+//         <input name="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">`;
+//     cell4.innerHTML = `
+//         <input name="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">`;
+//     cell5.innerHTML = `
+//         <select class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+//             <option>အောင်</option>
+//             <option>ရှုံး</option>
+//         </select>`;
+// }
+// }catch(err){
+
+// }
+
+
+/*********************/
+/*       Years       */
+/*********************/
+
+// function setupYearsDropdowns(yearId, jsonData) {
+//     const yearIdSelect = document.getElementById(yearId);
+
+//     const years = [...new Set(jsonData.years.map(item => item.name))];
+//     const yearID = [...new Set(jsonData.years.map(item => item.id))];
+
+//     // console.log(yearID);
+
+//     years.forEach(code => {
+//         let optionCode = document.createElement('option');
+//         yearID.forEach
+//         optionCode.value = code;
+//         optionCode.textContent = code;
+//         yearIdSelect.appendChild(optionCode);
+//     });
+// }
 
 
 /*********************/
