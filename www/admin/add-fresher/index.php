@@ -62,7 +62,6 @@ if (isset($_POST['submit'])) {
         }
 
         // Debugging: Output the final data array
-        print_r($data);
 
         $fresherController = new FresherController($data);
         $fresherController->setFreshers();

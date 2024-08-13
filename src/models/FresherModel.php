@@ -3,7 +3,6 @@
 namespace models;
 
 use core\db\MySQL;
-use core\helpers\Response;
 use PDOException;
 
 class FresherModel
