@@ -75,7 +75,7 @@ function getClosest(elem, selector) {
             function (s) {
                 var matches = (this.document || this.ownerDocument).querySelectorAll(s),
                     i = matches.length;
-                while (--i >= 0 && matches.item(i) !== this) {}
+                while (--i >= 0 && matches.item(i) !== this) { }
                 return i > -1;
             };
     }
@@ -98,24 +98,23 @@ function getClosest(elem, selector) {
 //                 matchingMenuItem = menuItems[idx];
 //             }
 //         }
-
 //         if (matchingMenuItem) {
 //             matchingMenuItem.classList.add('active');
-         
-         
+
+
 //             var immediateParent = getClosest(matchingMenuItem, 'li');
-      
+
 //             if (immediateParent) {
 //                 immediateParent.classList.add('active');
 //             }
-            
+
 //             var parent = getClosest(immediateParent, '.child-menu-item');
 //             if(parent){
 //                 parent.classList.add('active');
 //             }
 
 //             var parent = getClosest(parent || immediateParent , '.parent-menu-item');
-        
+
 //             if (parent) {
 //                 parent.classList.add('active');
 
@@ -182,7 +181,7 @@ window.onscroll = function () {
 
 function scrollFunction() {
     var mybutton = document.getElementById("back-to-top");
-    if(mybutton!=null){
+    if (mybutton != null) {
         if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
             mybutton.classList.add("block");
             mybutton.classList.remove("hidden");
@@ -232,7 +231,7 @@ try {
 try {
     new WOW().init();
 } catch (error) {
-    
+
 }
 
 /*************************/
@@ -296,7 +295,7 @@ try {
         }, 200);
     }
 } catch (error) {
-    
+
 }
 
 
@@ -304,10 +303,10 @@ try {
 /* Dark & Light Mode */
 /*********************/
 try {
-    function changeTheme(e){
+    function changeTheme(e) {
         e.preventDefault()
         const htmlTag = document.getElementsByTagName("html")[0]
-        
+
         if (htmlTag.className.includes("dark")) {
             htmlTag.className = 'light'
         } else {
@@ -316,13 +315,13 @@ try {
     }
 
     const switcher = document.getElementById("theme-mode")
-    switcher?.addEventListener("click" ,changeTheme )
-    
+    switcher?.addEventListener("click", changeTheme)
+
     const chk = document.getElementById('chk');
 
-    chk.addEventListener('change',changeTheme);
+    chk.addEventListener('change', changeTheme);
 } catch (err) {
-    
+
 }
 
 
@@ -340,7 +339,7 @@ try {
 //         else{
 //             htmlTag.dir = "rtl"
 //         }
-        
+
 //     }
 //     const switcherRtl = document.getElementById("switchRtl")
 //     switcherRtl?.addEventListener("click" ,changeLayout )
