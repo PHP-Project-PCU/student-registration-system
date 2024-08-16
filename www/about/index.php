@@ -78,15 +78,18 @@ $heroImageFile = "../utils/assets/img/ucspyay/ucsp-front-build.jpg";
 
                             </div>
                         </div>
+
                         <div class="hidden" id="degree" role="tabpanel" aria-labelledby="degree-tab">
                             <div class="relative md:py-24 py-16">
                                 <div class="container relative">
-                                    <p class="text-red-900">
-                                        ➢ Bechelor of Computer Science (B.C.Sc)<br><br>
-
-                                        ➢ Bechelor of Computer Technology (B.C.Tech)
-                                    </p>
-
+                                    <ul>
+                                        <li class="hover:text-indigo-600">
+                                            <a href="<?php echo $homeURL ?>faculty-of-computer-system-and-technologies"> ➢ Bechelor of Computer Science (B.C.Sc)</a> <br><br>
+                                        </li>
+                                        <li class="hover:text-indigo-600">
+                                            <a href="<?php echo $homeURL ?>faculty-of-computer-system-and-technologies"> ➢ Bechelor of Computer Technology (B.C.Tech)</a>
+                                        </li>
+                                    </ul>
                                 </div>
 
                             </div>
@@ -106,35 +109,35 @@ $heroImageFile = "../utils/assets/img/ucspyay/ucsp-front-build.jpg";
                                     </li>
 
                                     <li class="hover:text-indigo-600">
-                                        <a href="'faculty-of-computing'">➢ Faculty of Computing</a>
+                                        <a href="<?php echo $homeURL ?>faculty-of-computing">➢ Faculty of Computing</a>
                                     </li>
 
                                     <li class="hover:text-indigo-600">
-                                        <a href="'faculty-of-information-science'"> ➢ Faculty of Information Science</a>
+                                        <a href="<?php echo $homeURL ?>faculty-of-information-science"> ➢ Faculty of Information Science</a>
                                     </li>
 
                                     <li class="hover:text-indigo-600">
-                                        <a href="'faculty-of-it-Supporting-and-maintenance'"> ➢ Faculty of IT Supporting and Maintenance</a>
+                                        <a href="<?php echo $homeURL ?>faculty-of-it-Supporting-and-maintenance"> ➢ Faculty of IT Supporting and Maintenance</a>
                                     </li>
 
                                     <li class="hover:text-indigo-600">
-                                        <a href="'myanmar'"> ➢ Myanmar</a>
+                                        <a href="<?php echo $homeURL ?>myanmar"> ➢ Myanmar</a>
                                     </li>
 
                                     <li class="hover:text-indigo-600">
-                                        <a href="'english'"> ➢ English</a>
+                                        <a href="<?php echo $homeURL ?>english"> ➢ English</a>
                                     </li>
 
                                     <li class="hover:text-indigo-600">
-                                        <a href="physics"> ➢ Physics</a>
+                                        <a href="<?php echo $homeURL ?>physics"> ➢ Physics</a>
                                     </li>
 
                                     <li class="hover:text-indigo-600">
-                                        <a href="'finance'">➢ Finance</a>
+                                        <a href="<?php echo $homeURL ?>finance">➢ Finance</a>
                                     </li>
 
                                     <li class="hover:text-indigo-600">
-                                        <a href="'student-affiair'">➢ Student affiair</a>
+                                        <a href="<?php echo $homeURL ?>student-affiair">➢ Student Affiair</a>
                                     </li>
                                 </ul>
                             </div>
