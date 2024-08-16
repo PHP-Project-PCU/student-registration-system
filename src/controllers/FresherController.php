@@ -2,10 +2,8 @@
 
 namespace controllers;
 
-use models\FresherModel;
-
 use core\db\MySQL;
-
+use models\FresherModel;
 use core\helpers\Constants;
 
 class FresherController
@@ -24,4 +22,14 @@ class FresherController
         }
     }
 
+    public function checkFresher($data)
+    {
+        $fresherModel = new FresherModel(new MYSQL());
+        if ($fresherModel) {
+            list($rollNum, $year) = $data;
+
+            return $fresherModel->checkFresher(Constants::$FRESHER_TBL, $rollNum, $year);
+        }
+        return false;
+    }
 }
