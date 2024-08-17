@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="light scroll-smooth">
+
 <?php
 require '../../vendor/autoload.php';
 include '../../autoload.php';
@@ -65,11 +66,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
 
     <!-- Message Section -->
     <?php if (!$validStudent && !empty($data) && !$isRegister): ?>
-        <p class="text-red-500 font-bold text-center pt-5">ဝင်ခွင့်စာရင်းတွင်မပါရှိပါ။</p>
+        <!-- <p class="text-red-500 font-bold text-center pt-5">ဝင်ခွင့်စာရင်းတွင်မပါရှိပါ။</p> -->
+        <script>
+            alertify.warning('ဝင်ခွင့်စာရင်းတွင်မပါရှိပါ။');
+        </script>
     <?php elseif ($isRegister): ?>
-        <p class="text-green-500 font-bold text-center pt-5">လျှောက်လွှာတင်ပြီးပါပြီ။</p>
+        <!-- <p class="text-green-500 font-bold text-center pt-5">လျှောက်လွှာတင်ပြီးပါပြီ။</p> -->
+        <script>
+            alertify.success('လျှောက်လွှာတင်ပြီးပါပြီ။');
+        </script>
     <?php elseif ($validStudent === true && !empty($data) && !$isRegister): ?>
-        <p class="text-green-500 font-bold text-center pt-5">ဝင်ခွင့်ရရှိ၍ လျှောက်လွှာတင်နိုင်ပါသည်။</p>
+        <!-- <p class="text-green-500 font-bold text-center pt-5">ဝင်ခွင့်ရရှိ၍ လျှောက်လွှာတင်နိုင်ပါသည်။</p> -->
+        <script>
+            alertify.success('ဝင်ခွင့်ရရှိ၍ လျှောက်လွှာတင်နိုင်ပါသည်။');
+        </script>
     <?php endif ?>
 
 
@@ -251,13 +261,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
                                     <div class="lg:col-span-4">
                                         <div class="text-start">
                                             <label for="matriculation_roll_num">ခုံအမှတ်</label>
-                                            <input name="matriculation_roll_num" id="matriculation_roll_num" type="text" disabled value="<?= $_POST['matriculation_roll_num'] ?>" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                            <input name="matriculation_roll_num" id="matriculation_roll_num" type="text" value="<?= $_POST['matriculation_roll_num'] ?>" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                         </div>
                                     </div>
                                     <div class="lg:col-span-4">
                                         <div class="text-start">
                                             <label for="matriculation_year">ခုနှစ်</label>
-                                            <input name="matriculation_year" id="matriculation_year" type="number" disabled value="<?= $_POST['passing_year'] ?>" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
+                                            <input name="matriculation_year" id="matriculation_year" type="number" value="<?= $_POST['passing_year'] ?>" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">
                                         </div>
                                     </div>
                                     <div class="lg:col-span-4">
@@ -611,12 +621,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
     <script src="./../utils/assets/js/plugins.init.js"></script>
     <script src="./../utils/assets/js/app.js"></script>
     <script src="./../utils/assets/js/preview2.js"></script>
+    <script src="./../utils/assets/js/alertify.js"></script>
+
 
     <!-- <script src="./../utils/assets/js/studentAnsweredExams.js"></script> -->
     <!-- <script src="./../utils/assets/js/test.js"></script> -->
 
 
     <script>
+        <?php if (!$validStudent && !empty($data) && !$isRegister): ?>
+            alertify.warning('ဝင်ခွင့်စာရင်းတွင်မပါရှိပါ။');
+        <?php elseif ($isRegister): ?>
+            alertify.success('လျှောက်လွှာတင်ပြီးပါပြီ။');
+        <?php elseif ($validStudent === true && !empty($data) && !$isRegister): ?>
+            alertify.success('ဝင်ခွင့်ရရှိ၍ လျှောက်လွှာတင်နိုင်ပါသည်။');
+        <?php endif ?>
+
         // Fetch NRC
         fetch('./../utils/assets/json/nrc.json')
             .then(response => response.json())
