@@ -440,8 +440,9 @@ function setupNrcDropdowns(nrcCodeSelectId, nrcNameSelectId, jsonData) {
 
         filteredNames.forEach(item => {
             let optionName = document.createElement('option');
-            optionName.value = item.name_mm;
-            optionName.textContent = item.name_mm;
+            let nrcName=item.name_mm.match(/\((.*?)\)/);
+            optionName.value = nrcName[1];
+            optionName.textContent = nrcName[1];
             nrcNameSelect.appendChild(optionName);
         });
     }

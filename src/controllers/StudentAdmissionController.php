@@ -5,6 +5,7 @@ namespace controllers;
 use models\StudentAdmissionModel;
 
 use core\db\MySQL;
+use core\helpers\Constants;
 
 class StudentAdmissionController
 {
@@ -18,31 +19,32 @@ class StudentAdmissionController
     {
         $studentAdmissionModel = new StudentAdmissionModel(new MySQL());
         if ($studentAdmissionModel) {
-            $studentAdmissionModel->setStudentAdmissions("student_admission_tbl", $this->data->getStudentAdmissionData());
+            return $studentAdmissionModel->setStudentAdmissions(Constants::$STUDENT_TBL, $this->data);
         }
+        return false;
     }
 
-    public function setStudentAdmissionRequireFiles()
-    {
-        $studentAdmissionModel = new StudentAdmissionModel(new MySQL());
-        if ($studentAdmissionModel) {
-            $studentAdmissionModel->setStudentAdmissions("student_admission_required_file_tbl", $this->data->getStudentAdmissionRequireFileData());
-        }
-    }
+    // public function setStudentAdmissionRequireFiles()
+    // {
+    //     $studentAdmissionModel = new StudentAdmissionModel(new MySQL());
+    //     if ($studentAdmissionModel) {
+    //         $studentAdmissionModel->setStudentAdmissions(Constants::$STUDENT_ADMISSION_REQUIRED_FILE_TBL, $this->data->getStudentAdmissionRequireFileData());
+    //     }
+    // }
 
-    public function setStudentParents()
-    {
-        $studentAdmissionModel = new StudentAdmissionModel(new MySQL());
-        if ($studentAdmissionModel) {
-            $studentAdmissionModel->setStudentAdmissions("student_parent_tbl", $this->data->getStudentParentsData());
-        }
-    }
+    // public function setStudentParents()
+    // {
+    //     $studentAdmissionModel = new StudentAdmissionModel(new MySQL());
+    //     if ($studentAdmissionModel) {
+    //         $studentAdmissionModel->setStudentAdmissions(Constants::$STUDENT_PARENT_TBL, $this->data->getStudentParentsData());
+    //     }
+    // }
 
-    public function setStudentGuardians()
-    {
-        $studentAdmissionModel = new StudentAdmissionModel(new MySQL());
-        if ($studentAdmissionModel) {
-            $studentAdmissionModel->setStudentAdmissions("guardian_tbl", $this->data->getStudentGuardians());
-        }
-    }
+    // public function setStudentGuardians()
+    // {
+    //     $studentAdmissionModel = new StudentAdmissionModel(new MySQL());
+    //     if ($studentAdmissionModel) {
+    //         $studentAdmissionModel->setStudentAdmissions(Constants::$GURDIAN_TBL, $this->data->getStudentGuardians());
+    //     }
+    // }
 }
