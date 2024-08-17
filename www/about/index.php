@@ -57,6 +57,7 @@ $heroImageFile = "../utils/assets/img/ucspyay/ucsp-front-build.jpg";
                     </div>
                 </div>
 
+                <!-- Vison & Mission -->
                 <div class="lg:col-span-8 md:col-span-7">
                     <div id="myTabContent" class="p-6 bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 rounded-md">
                         <div class="" id="vision" role="tabpanel" aria-labelledby="vision-tab">
@@ -95,6 +96,7 @@ $heroImageFile = "../utils/assets/img/ucspyay/ucsp-front-build.jpg";
                             </div>
                         </div>
 
+                        <!-- Department -->
                         <div class="hidden " id="department" role="tabpanel" aria-labelledby="department-tab">
                             <img src="assets/images/cowork/9.jpg" class="shadow rounded-md" alt="">
                             <div class="mt-6">
@@ -142,504 +144,461 @@ $heroImageFile = "../utils/assets/img/ucspyay/ucsp-front-build.jpg";
                                 </ul>
                             </div>
                         </div>
+
+                        <!-- Course -->
                         <div class="hidden " id="course" role="tabpanel" aria-labelledby="course-tab">
                             <img src="assets/images/cowork/9.jpg" class="shadow rounded-md" alt="">
                             <div class="mt-6">
-                                <!-- <h5 class="text-lg font-semibold mb-4">Courses</h5> -->
                                 <div class="grid grid-cols-1 mt-8">
                                     <ul class="md:w-fit w-full mx-auto flex-wrap justify-center text-center p-3 bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 rounded-md" id="myTab" data-tabs-toggle="#StarterContent" role="tablist">
                                         <li role="presentation" class="md:inline-block block md:w-fit w-full">
-                                            <button class="px-6 py-2 font-semibold rounded-md w-full hover:text-indigo-600 duration-500" id="tuesday-tab" data-tabs-target="#tuesday" type="button" role="tab" aria-controls="tuesday" aria-selected="true">Tuesday</button>
+                                            <button class="px-6 py-2 font-semibold rounded-md w-full hover:text-indigo-600 duration-500" id="first-tab" data-tabs-target="#first" type="button" role="tab" aria-controls="first" aria-selected="true">First Year</button>
                                         </li>
                                         <li role="presentation" class="md:inline-block block md:w-fit w-full">
-                                            <button class="px-6 py-2 font-semibold rounded-md w-full duration-500" id="wednesday-tab" data-tabs-target="#wednesday" type="button" role="tab" aria-controls="wednesday" aria-selected="false">Wednesday</button>
+                                            <button class="px-6 py-2 font-semibold rounded-md w-full duration-500" id="second-tab" data-tabs-target="#second" type="button" role="tab" aria-controls="second" aria-selected="false">Second Year</button>
                                         </li>
                                         <li role="presentation" class="md:inline-block block md:w-fit w-full">
-                                            <button class="px-6 py-2 font-semibold rounded-md w-full duration-500" id="thursday-tab" data-tabs-target="#thursday" type="button" role="tab" aria-controls="thursday" aria-selected="false">Thursday</button>
+                                            <button class="px-6 py-2 font-semibold rounded-md w-full duration-500" id="third-tab" data-tabs-target="#third" type="button" role="tab" aria-controls="third" aria-selected="false">Third Year</button>
                                         </li>
                                         <li role="presentation" class="md:inline-block block md:w-fit w-full">
-                                            <button class="px-6 py-2 font-semibold rounded-md w-full duration-500" id="friday-tab" data-tabs-target="#friday" type="button" role="tab" aria-controls="friday" aria-selected="false">Friday</button>
+                                            <button class="px-6 py-2 font-semibold rounded-md w-full duration-500" id="fourth-tab" data-tabs-target="#fourth" type="button" role="tab" aria-controls="fourth" aria-selected="false">Fourth Year</button>
                                         </li>
 
                                         <li role="presentation" class="md:inline-block block md:w-fit w-full">
-                                            <button class="px-6 py-2 font-semibold rounded-md w-full duration-500" id="monday-tab" data-tabs-target="#monday" type="button" role="tab" aria-controls="monday" aria-selected="false">Monday</button>
+                                            <button class="px-6 py-2 font-semibold rounded-md w-full duration-500" id="fifth-tab" data-tabs-target="#fifth" type="button" role="tab" aria-controls="fifth" aria-selected="false">Fifth Year</button>
                                         </li>
                                     </ul>
 
+                                    <!-- First Year -->
                                     <div id="StarterContent" class="mt-1">
-                                        <div class="" id="tuesday" role="tabpanel" aria-labelledby="tuesday-tab">
+                                        <div class="" id="first" role="tabpanel" aria-labelledby="first-tab">
                                             <div class="grid grid-cols-1">
-                                                <div class="relative overflow-x-auto block w-full bg-white dark:bg-slate-900">
-                                                    <table class="w-full text-start">
+                                                <br>
+                                                <table class="table-auto">
+                                                    <thead>
+                                                        <tr>
+                                                            <td></td>
+                                                            <td class="text-center font-weight-bold">B.C.Sc./ B.C.Tech.</td>
+                                                            <td class="text-center font-weight-bold">B.C.Sc./ B.C.Tech.</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center font-weight-bold">#</td>
+                                                            <td class="text-center font-weight-bold">First Semester</td>
+                                                            <td class="text-center font-weight-bold">Second Semester</td>
+                                                        </tr>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td>Myanmar</td>
+                                                            <td>Supporting Skil</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>2</td>
+                                                            <td>English</td>
+                                                            <td>Myanmar </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>3</td>
+                                                            <td>Physics</td>
+                                                            <td>English</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>4</td>
+                                                            <td>Calculus I</td>
+                                                            <td>Physics</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>5</td>
+                                                            <td>Principle of IT</td>
+                                                            <td>Discrete Mathematics</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>6</td>
+                                                            <td>Supporting Skill</td>
+                                                            <td>Object Oriented Programming</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <!-- Second Year -->
+                                        <div id="StarterContent" class="mt-1">
+                                            <div class="" id="second" role="tabpanel" aria-labelledby="second-tab">
+                                                <div class="grid grid-cols-1">
+                                                    <br>
+                                                    <table class="table-auto">
+                                                        <thead>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td class="text-center font-weight-bold">B.C.Sc.</td>
+                                                                <td class="text-center font-weight-bold">B.C.Tech.</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-center font-weight-bold">#</td>
+                                                                <td class="text-center font-weight-bold">First Semester</td>
+                                                                <td class="text-center font-weight-bold">Frist Semester</td>
+                                                            </tr>
+                                                        </thead>
                                                         <tbody>
                                                             <tr>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[200px] text-slate-400">09:00AM - 10:00AM</td>
-                                                                <td class="p-3 border-b border-gray-100 dark:border-gray-700 min-w-[540px] py-12 px-5">
-                                                                    <div class="flex items-center">
-                                                                        <img src="assets/images/event/eve-sch/1.jpg" class="rounded-full size-24 shadow-md dark:shadow-gray-700" alt="">
-
-                                                                        <div class="ms-4">
-                                                                            <a href="#" class="hover:text-indigo-600 text-lg font-semibold">Digital Conference Event Intro</a>
-                                                                            <p class="text-slate-400 mt-2">The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px] text-slate-400">
-                                                                    <span class="block">Speaker</span>
-                                                                    <span class="block text-black dark:text-white text-md mt-1">Raymond Turner</span>
-                                                                </td>
-                                                                <td class="text-end border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px]">
-                                                                    <a href="#" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-medium hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Buy Ticket <i class="uil uil-arrow-right"></i></a>
-                                                                </td>
+                                                                <td>1</td>
+                                                                <td>English</td>
+                                                                <td>English</td>
                                                             </tr>
-
                                                             <tr>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[200px] text-slate-400">10:30AM - 11:30AM</td>
-                                                                <td class="p-3 border-b border-gray-100 dark:border-gray-700 min-w-[540px] py-12 px-5">
-                                                                    <div class="flex items-center">
-                                                                        <img src="assets/images/event/eve-sch/2.jpg" class="rounded-full size-24 shadow-md dark:shadow-gray-700" alt="">
-
-                                                                        <div class="ms-4">
-                                                                            <a href="#" class="hover:text-indigo-600 text-lg font-semibold">Conference On User Interface</a>
-                                                                            <p class="text-slate-400 mt-2">The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px] text-slate-400">
-                                                                    <span class="block">Speaker</span>
-                                                                    <span class="block text-black dark:text-white text-md mt-1">Cindy Morrison</span>
-                                                                </td>
-                                                                <td class="text-end border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px]">
-                                                                    <a href="#" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-medium hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Buy Ticket <i class="uil uil-arrow-right"></i></a>
-                                                                </td>
+                                                                <td>2</td>
+                                                                <td>Calculus II</td>
+                                                                <td>Calculus II </td>
                                                             </tr>
-
                                                             <tr>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[200px] text-slate-400">12:00PM - 01:00PM</td>
-                                                                <td class="p-3 border-b border-gray-100 dark:border-gray-700 min-w-[540px] py-12 px-5">
-                                                                    <div class="flex items-center">
-                                                                        <img src="assets/images/event/eve-sch/3.jpg" class="rounded-full size-24 shadow-md dark:shadow-gray-700" alt="">
-
-                                                                        <div class="ms-4">
-                                                                            <a href="#" class="hover:text-indigo-600 text-lg font-semibold">Business World Event Intro</a>
-                                                                            <p class="text-slate-400 mt-2">The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px] text-slate-400">
-                                                                    <span class="block">Speaker</span>
-                                                                    <span class="block text-black dark:text-white text-md mt-1">Vincent Adams</span>
-                                                                </td>
-                                                                <td class="text-end border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px]">
-                                                                    <a href="#" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-medium hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Buy Ticket <i class="uil uil-arrow-right"></i></a>
-                                                                </td>
+                                                                <td>3</td>
+                                                                <td>Java Programming</td>
+                                                                <td>Java Programming</td>
                                                             </tr>
-
                                                             <tr>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[200px] text-slate-400">02:00PM - 03:00PM</td>
-                                                                <td class="p-3 border-b border-gray-100 dark:border-gray-700 min-w-[540px] py-12 px-5">
-                                                                    <div class="flex items-center">
-                                                                        <img src="assets/images/event/eve-sch/4.jpg" class="rounded-full size-24 shadow-md dark:shadow-gray-700" alt="">
-
-                                                                        <div class="ms-4">
-                                                                            <a href="#" class="hover:text-indigo-600 text-lg font-semibold">Business Conference for professional</a>
-                                                                            <p class="text-slate-400 mt-2">The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px] text-slate-400">
-                                                                    <span class="block">Speaker</span>
-                                                                    <span class="block text-black dark:text-white text-md mt-1">Ana Heweit</span>
-                                                                </td>
-                                                                <td class="text-end border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px]">
-                                                                    <a href="#" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-medium hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Buy Ticket <i class="uil uil-arrow-right"></i></a>
-                                                                </td>
+                                                                <td>4</td>
+                                                                <td>Digital Fundamental</td>
+                                                                <td>Digital Fundamental</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>5</td>
+                                                                <td>Database Management System</td>
+                                                                <td>Database Management System</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>6</td>
+                                                                <td>Web platform-based Development</td>
+                                                                <td></td>
+                                                            </tr>
+                                                        </tbody>
+                                                        <thead>
+                                                            <tr>
+                                                                <td class="text-center font-weight-bold">#</td>
+                                                                <td class="text-center font-weight-bold">Second Semester</td>
+                                                                <td class="text-center font-weight-bold">Second Semester</td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>1</td>
+                                                                <td>English</td>
+                                                                <td>English</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>2</td>
+                                                                <td>Data Structure and Algorithm</td>
+                                                                <td>Data Structure and Algorithm</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>3</td>
+                                                                <td>Linear Algebra</td>
+                                                                <td>Linear Algebra</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>4</td>
+                                                                <td>Software Engineering</td>
+                                                                <td>Software Engineering</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>5</td>
+                                                                <td>JAVASCRIPTS</td>
+                                                                <td> </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>6</td>
+                                                                <td>Supporting Skil (J2EE) </td>
+                                                                <td> </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="hidden" id="wednesday" role="tabpanel" aria-labelledby="wednesday-tab">
-                                            <div class="grid grid-cols-1">
-                                                <div class="relative overflow-x-auto block w-full bg-white dark:bg-slate-900">
-                                                    <table class="w-full text-start">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[200px] text-slate-400">09:00AM - 10:00AM</td>
-                                                                <td class="p-3 border-b border-gray-100 dark:border-gray-700 min-w-[540px] py-12 px-5">
-                                                                    <div class="flex items-center">
-                                                                        <img src="assets/images/event/eve-sch/5.jpg" class="rounded-full size-24 shadow-md dark:shadow-gray-700" alt="">
-
-                                                                        <div class="ms-4">
-                                                                            <a href="#" class="hover:text-indigo-600 text-lg font-semibold">Digital Conference Event Intro</a>
-                                                                            <p class="text-slate-400 mt-2">The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px] text-slate-400">
-                                                                    <span class="block">Speaker</span>
-                                                                    <span class="block text-black dark:text-white text-md mt-1">Raymond Turner</span>
-                                                                </td>
-                                                                <td class="text-end border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px]">
-                                                                    <a href="#" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-medium hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Buy Ticket <i class="uil uil-arrow-right"></i></a>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[200px] text-slate-400">10:30AM - 11:30AM</td>
-                                                                <td class="p-3 border-b border-gray-100 dark:border-gray-700 min-w-[540px] py-12 px-5">
-                                                                    <div class="flex items-center">
-                                                                        <img src="assets/images/event/eve-sch/6.jpg" class="rounded-full size-24 shadow-md dark:shadow-gray-700" alt="">
-
-                                                                        <div class="ms-4">
-                                                                            <a href="#" class="hover:text-indigo-600 text-lg font-semibold">Conference On User Interface</a>
-                                                                            <p class="text-slate-400 mt-2">The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px] text-slate-400">
-                                                                    <span class="block">Speaker</span>
-                                                                    <span class="block text-black dark:text-white text-md mt-1">Cindy Morrison</span>
-                                                                </td>
-                                                                <td class="text-end border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px]">
-                                                                    <a href="#" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-medium hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Buy Ticket <i class="uil uil-arrow-right"></i></a>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[200px] text-slate-400">12:00PM - 01:00PM</td>
-                                                                <td class="p-3 border-b border-gray-100 dark:border-gray-700 min-w-[540px] py-12 px-5">
-                                                                    <div class="flex items-center">
-                                                                        <img src="assets/images/event/eve-sch/7.jpg" class="rounded-full size-24 shadow-md dark:shadow-gray-700" alt="">
-
-                                                                        <div class="ms-4">
-                                                                            <a href="#" class="hover:text-indigo-600 text-lg font-semibold">Business World Event Intro</a>
-                                                                            <p class="text-slate-400 mt-2">The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px] text-slate-400">
-                                                                    <span class="block">Speaker</span>
-                                                                    <span class="block text-black dark:text-white text-md mt-1">Vincent Adams</span>
-                                                                </td>
-                                                                <td class="text-end border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px]">
-                                                                    <a href="#" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-medium hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Buy Ticket <i class="uil uil-arrow-right"></i></a>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[200px] text-slate-400">02:00PM - 03:00PM</td>
-                                                                <td class="p-3 border-b border-gray-100 dark:border-gray-700 min-w-[540px] py-12 px-5">
-                                                                    <div class="flex items-center">
-                                                                        <img src="assets/images/event/eve-sch/8.jpg" class="rounded-full size-24 shadow-md dark:shadow-gray-700" alt="">
-
-                                                                        <div class="ms-4">
-                                                                            <a href="#" class="hover:text-indigo-600 text-lg font-semibold">Business Conference for professional</a>
-                                                                            <p class="text-slate-400 mt-2">The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px] text-slate-400">
-                                                                    <span class="block">Speaker</span>
-                                                                    <span class="block text-black dark:text-white text-md mt-1">Ana Heweit</span>
-                                                                </td>
-                                                                <td class="text-end border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px]">
-                                                                    <a href="#" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-medium hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Buy Ticket <i class="uil uil-arrow-right"></i></a>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                            <!-- Third Year -->
+                                            <div id="StarterContent" class="mt-1">
+                                                <div class="" id="third" role="tabpanel" aria-labelledby="third-tab">
+                                                    <div class="grid grid-cols-1">
+                                                        <br>
+                                                        <table class="table-auto">
+                                                            <thead>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td class="text-center font-weight-bold">B.C.Sc./ B.C.Tech.</td>
+                                                                    <td class="text-center font-weight-bold">B.C.Sc./ B.C.Tech.</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-center font-weight-bold">#</td>
+                                                                    <td class="text-center font-weight-bold">First Semester</td>
+                                                                    <td class="text-center font-weight-bold">Frist Semester</td>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>1</td>
+                                                                    <td>English</td>
+                                                                    <td>English</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>2</td>
+                                                                    <td>Computer Organization</td>
+                                                                    <td>Computer Organization </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>3</td>
+                                                                    <td>Mathematics of Computing III</td>
+                                                                    <td>Mathematics of Computing III</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>4</td>
+                                                                    <td>Data and Computer Communications</td>
+                                                                    <td>Data and Computer Communications</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>5</td>
+                                                                    <td>Software Engineering</td>
+                                                                    <td>Electronics I</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>6</td>
+                                                                    <td>Computer Application Techniques III </td>
+                                                                    <td>Linear Control Systems</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>7</td>
+                                                                    <td>Advanced Programming Language</td>
+                                                                    <td>Engineering Circuits II</td>
+                                                                </tr>
+                                                            </tbody>
+                                                            <thead>
+                                                                <tr>
+                                                                    <td class="text-center font-weight-bold">#</td>
+                                                                    <td class="text-center font-weight-bold">Second Semester</td>
+                                                                    <td class="text-center font-weight-bold">Second Semester</td>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>1</td>
+                                                                    <td>English</td>
+                                                                    <td>English</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>2</td>
+                                                                    <td>Operating System</td>
+                                                                    <td>Operating System</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>3</td>
+                                                                    <td>Mathematics of Computing (III)</td>
+                                                                    <td>Mathematics of Computing (III)</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>4</td>
+                                                                    <td>Computer Networking </td>
+                                                                    <td>Computer Networking </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>5</td>
+                                                                    <td>Database Management System </td>
+                                                                    <td>Electronics</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>6</td>
+                                                                    <td>Computer Application Technique (III)</td>
+                                                                    <td>Computer Architecture </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>7</td>
+                                                                    <td>Ethics</td>
+                                                                    <td>Microprocessor Architecture and Interfacing </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
 
-                                        <div class="hidden" id="thursday" role="tabpanel" aria-labelledby="thursday-tab">
-                                            <div class="grid grid-cols-1">
-                                                <div class="relative overflow-x-auto block w-full bg-white dark:bg-slate-900">
-                                                    <table class="w-full text-start">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[200px] text-slate-400">09:00AM - 10:00AM</td>
-                                                                <td class="p-3 border-b border-gray-100 dark:border-gray-700 min-w-[540px] py-12 px-5">
-                                                                    <div class="flex items-center">
-                                                                        <img src="assets/images/event/eve-sch/9.jpg" class="rounded-full size-24 shadow-md dark:shadow-gray-700" alt="">
+                                                <!-- Fourth Year -->
+                                                <div id="StarterContent" class="mt-1">
+                                                    <div class="" id="fourth" role="tabpanel" aria-labelledby="fourth-tab">
+                                                        <div class="grid grid-cols-1">
+                                                            <br>
+                                                            <table class="table-auto">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td class="text-center font-weight-bold">B.C.Sc.</td>
+                                                                        <td class="text-center font-weight-bold">B.C.Tech.</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="text-center font-weight-bold">#</td>
+                                                                        <td class="text-center font-weight-bold">First Semester</td>
+                                                                        <td class="text-center font-weight-bold">Frist Semester</td>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>English</td>
+                                                                        <td>English</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>2</td>
+                                                                        <td>Operations Research </td>
+                                                                        <td>Computer Architecture II </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>3</td>
+                                                                        <td>Mathematics of Computing IV </td>
+                                                                        <td>Mathematics of Computing IV </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>4</td>
+                                                                        <td>Design and Analysis Algorithm </td>
+                                                                        <td>Introduction to Microcontroller</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>5</td>
+                                                                        <td>Database Management System </td>
+                                                                        <td>Control System II </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>6</td>
+                                                                        <td>Software Engineering </td>
+                                                                        <td>Computer Networking II</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>7</td>
+                                                                        <td>Artificial intelligence </td>
+                                                                        <td>Artificial intelligence </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <td class="text-center font-weight-bold">#</td>
+                                                                        <td class="text-center font-weight-bold">Second Semester</td>
+                                                                        <td class="text-center font-weight-bold">Second Semester</td>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>English</td>
+                                                                        <td>English</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>2</td>
+                                                                        <td>Digital Business and E-commerce Management </td>
+                                                                        <td>Database Management System </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>3</td>
+                                                                        <td>Mathematics of Computing IV </td>
+                                                                        <td>Mathematics of Computing IV </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>4</td>
+                                                                        <td>Operating System </td>
+                                                                        <td>Introduction to Embedded Systems </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>5</td>
+                                                                        <td>Management Information System + Information Security and IT Risk Management</td>
+                                                                        <td>Computer Architecture (II) </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>6</td>
+                                                                        <td>Unified Modelling Language</td>
+                                                                        <td>Cryptography</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>7</td>
+                                                                        <td>Computer Graphics</td>
+                                                                        <td>Computer Security </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
 
-                                                                        <div class="ms-4">
-                                                                            <a href="#" class="hover:text-indigo-600 text-lg font-semibold">Digital Conference Event Intro</a>
-                                                                            <p class="text-slate-400 mt-2">The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px] text-slate-400">
-                                                                    <span class="block">Speaker</span>
-                                                                    <span class="block text-black dark:text-white text-md mt-1">Raymond Turner</span>
-                                                                </td>
-                                                                <td class="text-end border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px]">
-                                                                    <a href="#" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-medium hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Buy Ticket <i class="uil uil-arrow-right"></i></a>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[200px] text-slate-400">10:30AM - 11:30AM</td>
-                                                                <td class="p-3 border-b border-gray-100 dark:border-gray-700 min-w-[540px] py-12 px-5">
-                                                                    <div class="flex items-center">
-                                                                        <img src="assets/images/event/eve-sch/10.jpg" class="rounded-full size-24 shadow-md dark:shadow-gray-700" alt="">
-
-                                                                        <div class="ms-4">
-                                                                            <a href="#" class="hover:text-indigo-600 text-lg font-semibold">Conference On User Interface</a>
-                                                                            <p class="text-slate-400 mt-2">The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px] text-slate-400">
-                                                                    <span class="block">Speaker</span>
-                                                                    <span class="block text-black dark:text-white text-md mt-1">Cindy Morrison</span>
-                                                                </td>
-                                                                <td class="text-end border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px]">
-                                                                    <a href="#" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-medium hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Buy Ticket <i class="uil uil-arrow-right"></i></a>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[200px] text-slate-400">12:00PM - 01:00PM</td>
-                                                                <td class="p-3 border-b border-gray-100 dark:border-gray-700 min-w-[540px] py-12 px-5">
-                                                                    <div class="flex items-center">
-                                                                        <img src="assets/images/event/eve-sch/11.jpg" class="rounded-full size-24 shadow-md dark:shadow-gray-700" alt="">
-
-                                                                        <div class="ms-4">
-                                                                            <a href="#" class="hover:text-indigo-600 text-lg font-semibold">Business World Event Intro</a>
-                                                                            <p class="text-slate-400 mt-2">The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px] text-slate-400">
-                                                                    <span class="block">Speaker</span>
-                                                                    <span class="block text-black dark:text-white text-md mt-1">Vincent Adams</span>
-                                                                </td>
-                                                                <td class="text-end border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px]">
-                                                                    <a href="#" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-medium hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Buy Ticket <i class="uil uil-arrow-right"></i></a>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[200px] text-slate-400">02:00PM - 03:00PM</td>
-                                                                <td class="p-3 border-b border-gray-100 dark:border-gray-700 min-w-[540px] py-12 px-5">
-                                                                    <div class="flex items-center">
-                                                                        <img src="assets/images/event/eve-sch/12.jpg" class="rounded-full size-24 shadow-md dark:shadow-gray-700" alt="">
-
-                                                                        <div class="ms-4">
-                                                                            <a href="#" class="hover:text-indigo-600 text-lg font-semibold">Business Conference for professional</a>
-                                                                            <p class="text-slate-400 mt-2">The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px] text-slate-400">
-                                                                    <span class="block">Speaker</span>
-                                                                    <span class="block text-black dark:text-white text-md mt-1">Ana Heweit</span>
-                                                                </td>
-                                                                <td class="text-end border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px]">
-                                                                    <a href="#" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-medium hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Buy Ticket <i class="uil uil-arrow-right"></i></a>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="hidden" id="friday" role="tabpanel" aria-labelledby="friday-tab">
-                                            <div class="grid grid-cols-1">
-                                                <div class="relative overflow-x-auto block w-full bg-white dark:bg-slate-900">
-                                                    <table class="w-full text-start">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[200px] text-slate-400">09:00AM - 10:00AM</td>
-                                                                <td class="p-3 border-b border-gray-100 dark:border-gray-700 min-w-[540px] py-12 px-5">
-                                                                    <div class="flex items-center">
-                                                                        <img src="assets/images/event/eve-sch/5.jpg" class="rounded-full size-24 shadow-md dark:shadow-gray-700" alt="">
-
-                                                                        <div class="ms-4">
-                                                                            <a href="#" class="hover:text-indigo-600 text-lg font-semibold">Digital Conference Event Intro</a>
-                                                                            <p class="text-slate-400 mt-2">The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px] text-slate-400">
-                                                                    <span class="block">Speaker</span>
-                                                                    <span class="block text-black dark:text-white text-md mt-1">Raymond Turner</span>
-                                                                </td>
-                                                                <td class="text-end border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px]">
-                                                                    <a href="#" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-medium hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Buy Ticket <i class="uil uil-arrow-right"></i></a>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[200px] text-slate-400">10:30AM - 11:30AM</td>
-                                                                <td class="p-3 border-b border-gray-100 dark:border-gray-700 min-w-[540px] py-12 px-5">
-                                                                    <div class="flex items-center">
-                                                                        <img src="assets/images/event/eve-sch/6.jpg" class="rounded-full size-24 shadow-md dark:shadow-gray-700" alt="">
-
-                                                                        <div class="ms-4">
-                                                                            <a href="#" class="hover:text-indigo-600 text-lg font-semibold">Conference On User Interface</a>
-                                                                            <p class="text-slate-400 mt-2">The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px] text-slate-400">
-                                                                    <span class="block">Speaker</span>
-                                                                    <span class="block text-black dark:text-white text-md mt-1">Cindy Morrison</span>
-                                                                </td>
-                                                                <td class="text-end border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px]">
-                                                                    <a href="#" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-medium hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Buy Ticket <i class="uil uil-arrow-right"></i></a>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[200px] text-slate-400">12:00PM - 01:00PM</td>
-                                                                <td class="p-3 border-b border-gray-100 dark:border-gray-700 min-w-[540px] py-12 px-5">
-                                                                    <div class="flex items-center">
-                                                                        <img src="assets/images/event/eve-sch/7.jpg" class="rounded-full size-24 shadow-md dark:shadow-gray-700" alt="">
-
-                                                                        <div class="ms-4">
-                                                                            <a href="#" class="hover:text-indigo-600 text-lg font-semibold">Business World Event Intro</a>
-                                                                            <p class="text-slate-400 mt-2">The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px] text-slate-400">
-                                                                    <span class="block">Speaker</span>
-                                                                    <span class="block text-black dark:text-white text-md mt-1">Vincent Adams</span>
-                                                                </td>
-                                                                <td class="text-end border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px]">
-                                                                    <a href="#" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-medium hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Buy Ticket <i class="uil uil-arrow-right"></i></a>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[200px] text-slate-400">02:00PM - 03:00PM</td>
-                                                                <td class="p-3 border-b border-gray-100 dark:border-gray-700 min-w-[540px] py-12 px-5">
-                                                                    <div class="flex items-center">
-                                                                        <img src="assets/images/event/eve-sch/8.jpg" class="rounded-full size-24 shadow-md dark:shadow-gray-700" alt="">
-
-                                                                        <div class="ms-4">
-                                                                            <a href="#" class="hover:text-indigo-600 text-lg font-semibold">Business Conference for professional</a>
-                                                                            <p class="text-slate-400 mt-2">The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px] text-slate-400">
-                                                                    <span class="block">Speaker</span>
-                                                                    <span class="block text-black dark:text-white text-md mt-1">Ana Heweit</span>
-                                                                </td>
-                                                                <td class="text-end border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px]">
-                                                                    <a href="#" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-medium hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Buy Ticket <i class="uil uil-arrow-right"></i></a>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="hidden" id="monday" role="tabpanel" aria-labelledby="monday-tab">
-                                            <div class="grid grid-cols-1">
-                                                <div class="relative overflow-x-auto block w-full bg-white dark:bg-slate-900">
-                                                    <table class="w-full text-start">
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[200px] text-slate-400">09:00AM - 10:00AM</td>
-                                                                <td class="p-3 border-b border-gray-100 dark:border-gray-700 min-w-[540px] py-12 px-5">
-                                                                    <div class="flex items-center">
-                                                                        <img src="assets/images/event/eve-sch/5.jpg" class="rounded-full size-24 shadow-md dark:shadow-gray-700" alt="">
-
-                                                                        <div class="ms-4">
-                                                                            <a href="#" class="hover:text-indigo-600 text-lg font-semibold">Digital Conference Event Intro</a>
-                                                                            <p class="text-slate-400 mt-2">The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px] text-slate-400">
-                                                                    <span class="block">Speaker</span>
-                                                                    <span class="block text-black dark:text-white text-md mt-1">Raymond Turner</span>
-                                                                </td>
-                                                                <td class="text-end border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px]">
-                                                                    <a href="#" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-medium hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Buy Ticket <i class="uil uil-arrow-right"></i></a>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[200px] text-slate-400">10:30AM - 11:30AM</td>
-                                                                <td class="p-3 border-b border-gray-100 dark:border-gray-700 min-w-[540px] py-12 px-5">
-                                                                    <div class="flex items-center">
-                                                                        <img src="assets/images/event/eve-sch/6.jpg" class="rounded-full size-24 shadow-md dark:shadow-gray-700" alt="">
-
-                                                                        <div class="ms-4">
-                                                                            <a href="#" class="hover:text-indigo-600 text-lg font-semibold">Conference On User Interface</a>
-                                                                            <p class="text-slate-400 mt-2">The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px] text-slate-400">
-                                                                    <span class="block">Speaker</span>
-                                                                    <span class="block text-black dark:text-white text-md mt-1">Cindy Morrison</span>
-                                                                </td>
-                                                                <td class="text-end border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px]">
-                                                                    <a href="#" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-medium hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Buy Ticket <i class="uil uil-arrow-right"></i></a>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[200px] text-slate-400">12:00PM - 01:00PM</td>
-                                                                <td class="p-3 border-b border-gray-100 dark:border-gray-700 min-w-[540px] py-12 px-5">
-                                                                    <div class="flex items-center">
-                                                                        <img src="assets/images/event/eve-sch/7.jpg" class="rounded-full size-24 shadow-md dark:shadow-gray-700" alt="">
-
-                                                                        <div class="ms-4">
-                                                                            <a href="#" class="hover:text-indigo-600 text-lg font-semibold">Business World Event Intro</a>
-                                                                            <p class="text-slate-400 mt-2">The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px] text-slate-400">
-                                                                    <span class="block">Speaker</span>
-                                                                    <span class="block text-black dark:text-white text-md mt-1">Vincent Adams</span>
-                                                                </td>
-                                                                <td class="text-end border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px]">
-                                                                    <a href="#" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-medium hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Buy Ticket <i class="uil uil-arrow-right"></i></a>
-                                                                </td>
-                                                            </tr>
-
-                                                            <tr>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[200px] text-slate-400">02:00PM - 03:00PM</td>
-                                                                <td class="p-3 border-b border-gray-100 dark:border-gray-700 min-w-[540px] py-12 px-5">
-                                                                    <div class="flex items-center">
-                                                                        <img src="assets/images/event/eve-sch/8.jpg" class="rounded-full size-24 shadow-md dark:shadow-gray-700" alt="">
-
-                                                                        <div class="ms-4">
-                                                                            <a href="#" class="hover:text-indigo-600 text-lg font-semibold">Business Conference for professional</a>
-                                                                            <p class="text-slate-400 mt-2">The most well-known dummy text is the 'Lorem Ipsum', which is said to have originated in the 16th century</p>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px] text-slate-400">
-                                                                    <span class="block">Speaker</span>
-                                                                    <span class="block text-black dark:text-white text-md mt-1">Ana Heweit</span>
-                                                                </td>
-                                                                <td class="text-end border-b border-gray-100 dark:border-gray-700 py-12 px-5 min-w-[180px]">
-                                                                    <a href="#" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-medium hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Buy Ticket <i class="uil uil-arrow-right"></i></a>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                    <!-- Fifth Year -->
+                                                    <div id="StarterContent" class="mt-1">
+                                                        <div class="" id="fifth" role="tabpanel" aria-labelledby="fifth-tab">
+                                                            <div class="grid grid-cols-1">
+                                                                <br>
+                                                                <table class="table-auto">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <td></td>
+                                                                            <td class="text-center font-weight-bold">B.C.Sc.</td>
+                                                                            <td class="text-center font-weight-bold">B.C.Tech.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td class="text-center font-weight-bold">#</td>
+                                                                            <td class="text-center font-weight-bold">First Semester</td>
+                                                                            <td class="text-center font-weight-bold">Frist Semester</td>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>1</td>
+                                                                            <td>English</td>
+                                                                            <td>English</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>2</td>
+                                                                            <td>Mathematics of Computing V </td>
+                                                                            <td>Mathematics of Computing V </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>3</td>
+                                                                            <td>Distributed Computing System + Advanced Networking </td>
+                                                                            <td>Distributed Computing System + Advanced Networking </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>4</td>
+                                                                            <td>Information Security and IT Risk Management </td>
+                                                                            <td>Fuzzy Logic Control System</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>5</td>
+                                                                            <td>Elective-Computing Applied Algorithms </td>
+                                                                            <td>Embedded System </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>6</td>
+                                                                            <td>Elective-Artificial Intelligence+Natural Language Processing </td>
+                                                                            <td>Image Processing and Computer Vision </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>7</td>
+                                                                            <td>Elective-Data Mining </td>
+                                                                            <td> </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>8</td>
+                                                                            <td>Elective-Enterprise Resource Planning </td>
+                                                                            <td> </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div><!--end grid-->
-                        </div><!--end container-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <
+                    </div><!--end grid-->
+            </div><!--end container-->
     </section><!--end section-->
     <!-- End -->
 
