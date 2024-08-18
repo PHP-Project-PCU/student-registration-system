@@ -65,7 +65,8 @@
             }
         },
         glossary:{
-            title:'AlertifyJS',
+            // title:'AlertifyJS',
+            title:'UCSPyay',
             ok: 'OK',
             cancel: 'Cancel',
             acccpt: 'Accept',
