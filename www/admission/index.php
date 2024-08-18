@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="light scroll-smooth">
+
 <?php
 require '../../vendor/autoload.php';
 include '../../autoload.php';
@@ -65,11 +66,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
 
     <!-- Message Section -->
     <?php if (!$validStudent && !empty($data) && !$isRegister): ?>
-        <p class="text-red-500 font-bold text-center pt-5">ဝင်ခွင့်စာရင်းတွင်မပါရှိပါ။</p>
+        <!-- <p class="text-red-500 font-bold text-center pt-5">ဝင်ခွင့်စာရင်းတွင်မပါရှိပါ။</p> -->
+        <script>
+            alertify.warning('ဝင်ခွင့်စာရင်းတွင်မပါရှိပါ။');
+        </script>
     <?php elseif ($isRegister): ?>
-        <p class="text-green-500 font-bold text-center pt-5">လျှောက်လွှာတင်ပြီးပါပြီ။</p>
+        <!-- <p class="text-green-500 font-bold text-center pt-5">လျှောက်လွှာတင်ပြီးပါပြီ။</p> -->
+        <script>
+            alertify.success('လျှောက်လွှာတင်ပြီးပါပြီ။');
+        </script>
     <?php elseif ($validStudent === true && !empty($data) && !$isRegister): ?>
-        <p class="text-green-500 font-bold text-center pt-5">ဝင်ခွင့်ရရှိ၍ လျှောက်လွှာတင်နိုင်ပါသည်။</p>
+        <!-- <p class="text-green-500 font-bold text-center pt-5">ဝင်ခွင့်ရရှိ၍ လျှောက်လွှာတင်နိုင်ပါသည်။</p> -->
+        <script>
+            alertify.success('ဝင်ခွင့်ရရှိ၍ လျှောက်လွှာတင်နိုင်ပါသည်။');
+        </script>
     <?php endif ?>
 
 
@@ -741,12 +751,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
     <script src="./../utils/assets/js/plugins.init.js"></script>
     <script src="./../utils/assets/js/app.js"></script>
     <script src="./../utils/assets/js/preview2.js"></script>
+    <script src="./../utils/assets/js/alertify.js"></script>
+
 
     <!-- <script src="./../utils/assets/js/studentAnsweredExams.js"></script> -->
     <!-- <script src="./../utils/assets/js/test.js"></script> -->
 
 
     <script>
+        <?php if (!$validStudent && !empty($data) && !$isRegister): ?>
+            alertify.warning('ဝင်ခွင့်စာရင်းတွင်မပါရှိပါ။');
+        <?php elseif ($isRegister): ?>
+            alertify.success('လျှောက်လွှာတင်ပြီးပါပြီ။');
+        <?php elseif ($validStudent === true && !empty($data) && !$isRegister): ?>
+            alertify.success('ဝင်ခွင့်ရရှိ၍ လျှောက်လွှာတင်နိုင်ပါသည်။');
+        <?php endif ?>
+
         // Fetch NRC
         fetch('./../utils/assets/json/nrc.json')
             .then(response => response.json())
