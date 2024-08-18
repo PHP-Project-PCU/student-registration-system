@@ -63,4 +63,55 @@ class FresherModel
             return $e->getMessage();
         }
     }
+
+    public function setIndividualFresher($table, $data)
+    {
+        try {
+            $columns = implode(", ", array_keys($data));
+            $placeholders = ":" . implode(", :", array_keys($data));
+
+            $statement = $this->db->prepare("
+        INSERT INTO $table ($columns) VALUES ($placeholders)
+        ");
+
+            $statement->execute($data);
+            return $this->db->lastInsertId();
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getFresherPaginationData($table, $page, $limit)
+    {
+        $offset = ($page - 1) * $limit;
+        try {
+            $statement = $this->db->prepare("
+            SELECT * FROM $table ORDER BY id LIMIT :limit OFFSET :offset
+        ");
+            // Bind the values as integers
+            $statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
+            $statement->bindValue(':offset', $offset, \PDO::PARAM_INT);
+
+            $statement->execute();
+
+            return $statement->fetchAll();  // Use fetchAll() if you expect multiple rows
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+
+    public function getTotalRows($table)
+    {
+        try {
+            $query = "SELECT COUNT(*) as total FROM $table";
+            $statement = $this->db->prepare($query);
+            $statement->execute();
+            $result = $statement->fetch();
+            return $result->total;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
 }
+
