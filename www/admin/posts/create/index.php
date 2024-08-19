@@ -20,29 +20,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['create_btn'])) {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Create Post</title>
-</head>
+<?php
+include("../../../utils/components/admin/admin.links.php");
+?>
 
 <body>
-    <h1>Create Post</h1>
-    <form action="" method="POST" enctype="multipart/form-data">
-        <label for="title">Title:</label>
-        <input type="text" name="title" required><br>
+    <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
 
-        <label for="description">Description:</label>
-        <textarea name="description" required></textarea><br>
+        <?php
+        include("../../../utils/components/admin/admin.sidebar.php");
+        ?>
 
-        <label for="images">Images:</label>
-        <input type="file" name="images[]" multiple required><br>
+        <div class=" flex flex-col flex-1 w-full">
+            <?php
+            include("../../../utils/components/admin/admin.navigation.php");
+            ?>
+            <div class="m-4">
+                <h1>Create Post</h1>
+                <form action="" method="POST" enctype="multipart/form-data">
+                    <label for="title">Title:</label>
+                    <input type="text" name="title" required><br>
 
-        <input type="submit" name="create_btn" value="Create Post">
-    </form>
+                    <label for="description">Description:</label>
+                    <textarea name="description" required></textarea><br>
+
+                    <label for="images">Images:</label>
+                    <input type="file" name="images[]" multiple required><br>
+
+                    <input type="submit" name="create_btn" value="Create Post">
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
