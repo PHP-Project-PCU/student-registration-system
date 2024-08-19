@@ -39,7 +39,7 @@ function fn() {
         }, 350);
     }
     // Menus
-    activateMenu();
+    // activateMenu();
 }
 
 // document.oncontextmenu=()=>{
@@ -75,7 +75,7 @@ function getClosest(elem, selector) {
             function (s) {
                 var matches = (this.document || this.ownerDocument).querySelectorAll(s),
                     i = matches.length;
-                while (--i >= 0 && matches.item(i) !== this) {}
+                while (--i >= 0 && matches.item(i) !== this) { }
                 return i > -1;
             };
     }
@@ -88,57 +88,56 @@ function getClosest(elem, selector) {
 
 };
 
-function activateMenu() {
-    var menuItems = document.getElementsByClassName("sub-menu-item");
-    if (menuItems) {
+// function activateMenu() {
+//     var menuItems = document.getElementsByClassName("sub-menu-item");
+//     if (menuItems) {
 
-        var matchingMenuItem = null;
-        for (var idx = 0; idx < menuItems.length; idx++) {
-            if (menuItems[idx].href === window.location.href) {
-                matchingMenuItem = menuItems[idx];
-            }
-        }
+//         var matchingMenuItem = null;
+//         for (var idx = 0; idx < menuItems.length; idx++) {
+//             if (menuItems[idx].href === window.location.href) {
+//                 matchingMenuItem = menuItems[idx];
+//             }
+//         }
+//         if (matchingMenuItem) {
+//             matchingMenuItem.classList.add('active');
 
-        if (matchingMenuItem) {
-            matchingMenuItem.classList.add('active');
-         
-         
-            var immediateParent = getClosest(matchingMenuItem, 'li');
-      
-            if (immediateParent) {
-                immediateParent.classList.add('active');
-            }
-            
-            var parent = getClosest(immediateParent, '.child-menu-item');
-            if(parent){
-                parent.classList.add('active');
-            }
 
-            var parent = getClosest(parent || immediateParent , '.parent-menu-item');
-        
-            if (parent) {
-                parent.classList.add('active');
+//             var immediateParent = getClosest(matchingMenuItem, 'li');
 
-                var parentMenuitem = parent.querySelector('.menu-item');
-                if (parentMenuitem) {
-                    parentMenuitem.classList.add('active');
-                }
+//             if (immediateParent) {
+//                 immediateParent.classList.add('active');
+//             }
 
-                var parentOfParent = getClosest(parent, '.parent-parent-menu-item');
-                if (parentOfParent) {
-                    parentOfParent.classList.add('active');
-                }
-            } else {
-                var parentOfParent = getClosest(matchingMenuItem, '.parent-parent-menu-item');
-                if (parentOfParent) {
-                    parentOfParent.classList.add('active');
-                }
-            }
-        }
-    }
-}
+//             var parent = getClosest(immediateParent, '.child-menu-item');
+//             if(parent){
+//                 parent.classList.add('active');
+//             }
+
+//             var parent = getClosest(parent || immediateParent , '.parent-menu-item');
+
+//             if (parent) {
+//                 parent.classList.add('active');
+
+//                 var parentMenuitem = parent.querySelector('.menu-item');
+//                 if (parentMenuitem) {
+//                     parentMenuitem.classList.add('active');
+//                 }
+
+//                 var parentOfParent = getClosest(parent, '.parent-parent-menu-item');
+//                 if (parentOfParent) {
+//                     parentOfParent.classList.add('active');
+//                 }
+//             } else {
+//                 var parentOfParent = getClosest(matchingMenuItem, '.parent-parent-menu-item');
+//                 if (parentOfParent) {
+//                     parentOfParent.classList.add('active');
+//                 }
+//             }
+//         }
+//     }
+// }
 /*********************/
-/*  Clickable manu   */
+/*  Clickable menu   */
 /*********************/
 if (document.getElementById("navigation")) {
     var elements = document.getElementById("navigation").getElementsByTagName("a");
@@ -170,7 +169,7 @@ if (document.getElementById("navigation")) {
 
 window.addEventListener('scroll', (ev) => {
     ev.preventDefault();
-    windowScroll();
+    // windowScroll();
 })
 /*********************/
 /*    Back To TOp    */
@@ -182,7 +181,7 @@ window.onscroll = function () {
 
 function scrollFunction() {
     var mybutton = document.getElementById("back-to-top");
-    if(mybutton!=null){
+    if (mybutton != null) {
         if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
             mybutton.classList.add("block");
             mybutton.classList.remove("hidden");
@@ -232,7 +231,7 @@ try {
 try {
     new WOW().init();
 } catch (error) {
-    
+
 }
 
 /*************************/
@@ -296,7 +295,7 @@ try {
         }, 200);
     }
 } catch (error) {
-    
+
 }
 
 
@@ -304,10 +303,10 @@ try {
 /* Dark & Light Mode */
 /*********************/
 try {
-    function changeTheme(e){
+    function changeTheme(e) {
         e.preventDefault()
         const htmlTag = document.getElementsByTagName("html")[0]
-        
+
         if (htmlTag.className.includes("dark")) {
             htmlTag.className = 'light'
         } else {
@@ -316,79 +315,105 @@ try {
     }
 
     const switcher = document.getElementById("theme-mode")
-    switcher?.addEventListener("click" ,changeTheme )
-    
+    switcher?.addEventListener("click", changeTheme)
+
     const chk = document.getElementById('chk');
 
-    chk.addEventListener('change',changeTheme);
+    chk.addEventListener('change', changeTheme);
 } catch (err) {
-    
+
 }
 
 
 /*********************/
 /* LTR & RTL Mode */
 /*********************/
-try{
-    const htmlTag = document.getElementsByTagName("html")[0]
-    function changeLayout(e){
-        e.preventDefault()
-        const switcherRtl = document.getElementById("switchRtl")
-        if(switcherRtl.innerText === "LTR"){
-            htmlTag.dir = "ltr"
-        }
-        else{
-            htmlTag.dir = "rtl"
-        }
-        
-    }
-    const switcherRtl = document.getElementById("switchRtl")
-    switcherRtl?.addEventListener("click" ,changeLayout )
-}
-catch(err){}
+// try{
+//     const htmlTag = document.getElementsByTagName("html")[0]
+//     function changeLayout(e){
+//         e.preventDefault()
+//         const switcherRtl = document.getElementById("switchRtl")
+//         if(switcherRtl.innerText === "LTR"){
+//             htmlTag.dir = "ltr"
+//         }
+//         else{
+//             htmlTag.dir = "rtl"
+//         }
 
-try{
-    function addNewRow(){
-         // Get the table by its ID
-    var table = document.getElementById("examTable");
+//     }
+//     const switcherRtl = document.getElementById("switchRtl")
+//     switcherRtl?.addEventListener("click" ,changeLayout )
+// }
+// catch(err){}
 
-    // Create a new row element
-    var newRow = table.insertRow();
 
-    // Create cells in the new row
-    var cell1 = newRow.insertCell(0);
-    var cell2 = newRow.insertCell(1);
-    var cell3 = newRow.insertCell(2);
-    var cell4 = newRow.insertCell(3);
-    var cell5 = newRow.insertCell(4);
+/*********************/
+/* ADD New Row in Exam Tbl */
+/*********************/
+// try{
+//     function addNewRow(){
+//          // Get the table by its ID
+//     var table = document.getElementById("examTable");
 
-    // Add content to the new cells
-    cell1.innerHTML = `
-        <select class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-            <option>ပထမနှစ်စာမေးပွဲ</option>
-            <option>ဒုတိယနှစ်စာမေးပွဲ</option>
-            <option>တတိယနှစ်စာမေးပွဲ</option>
-            <option>စတုတ္ထနှစ်စာမေးပွဲ</option>
-        </select>`;
-    cell2.innerHTML = `
-        <select class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-            <option>CST</option>
-            <option>CS</option>
-            <option>CT</option>
-        </select>`;
-    cell3.innerHTML = `
-        <input name="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">`;
-    cell4.innerHTML = `
-        <input name="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">`;
-    cell5.innerHTML = `
-        <select class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-            <option>အောင်</option>
-            <option>ရှုံး</option>
-        </select>`;
-}
-}catch(err){
+//     // Create a new row element
+//     var newRow = table.insertRow();
 
-}
+//     // Create cells in the new row
+//     var cell1 = newRow.insertCell(0);
+//     var cell2 = newRow.insertCell(1);
+//     var cell3 = newRow.insertCell(2);
+//     var cell4 = newRow.insertCell(3);
+//     var cell5 = newRow.insertCell(4);
+
+//     // Add content to the new cells
+//     cell1.innerHTML = `
+//         <select class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+//             <option>ပထမနှစ်စာမေးပွဲ</option>
+//             <option>ဒုတိယနှစ်စာမေးပွဲ</option>
+//             <option>တတိယနှစ်စာမေးပွဲ</option>
+//             <option>စတုတ္ထနှစ်စာမေးပွဲ</option>
+//         </select>`;
+//     cell2.innerHTML = `
+//         <select class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+//             <option>CST</option>
+//             <option>CS</option>
+//             <option>CT</option>
+//         </select>`;
+//     cell3.innerHTML = `
+//         <input name="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">`;
+//     cell4.innerHTML = `
+//         <input name="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">`;
+//     cell5.innerHTML = `
+//         <select class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+//             <option>အောင်</option>
+//             <option>ရှုံး</option>
+//         </select>`;
+// }
+// }catch(err){
+
+// }
+
+
+/*********************/
+/*       Years       */
+/*********************/
+
+// function setupYearsDropdowns(yearId, jsonData) {
+//     const yearIdSelect = document.getElementById(yearId);
+
+//     const years = [...new Set(jsonData.years.map(item => item.name))];
+//     const yearID = [...new Set(jsonData.years.map(item => item.id))];
+
+//     // console.log(yearID);
+
+//     years.forEach(code => {
+//         let optionCode = document.createElement('option');
+//         yearID.forEach
+//         optionCode.value = code;
+//         optionCode.textContent = code;
+//         yearIdSelect.appendChild(optionCode);
+//     });
+// }
 
 
 /*********************/
@@ -415,8 +440,9 @@ function setupNrcDropdowns(nrcCodeSelectId, nrcNameSelectId, jsonData) {
 
         filteredNames.forEach(item => {
             let optionName = document.createElement('option');
-            optionName.value = item.name_mm;
-            optionName.textContent = item.name_mm;
+            let nrcName=item.name_mm.match(/\((.*?)\)/);
+            optionName.value = nrcName[1];
+            optionName.textContent = nrcName[1];
             nrcNameSelect.appendChild(optionName);
         });
     }

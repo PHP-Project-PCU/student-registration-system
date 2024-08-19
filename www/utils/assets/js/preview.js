@@ -3,12 +3,12 @@ $(document).ready(function () {
         // Prevent the form from submitting
         event.preventDefault();
 
-        // Serialize the form data
-        // var formData = $("#myForm").serializeArray();
+        // Get all form elements
+        var allFields = $("#stdAdmissionForm").find("input, select, textarea");
 
         // Define the dimensions of the preview window
-        var width = 600;
-        var height = 400;
+        var width = 800; // Increased width for better image preview
+        var height = 800; // Increased height for better image preview
 
         // Calculate the position for centering the window
         var left = (screen.width / 2) - (width / 2);
@@ -20,21 +20,61 @@ $(document).ready(function () {
         // Construct the preview content
         var previewContent = "<html><head><title>Form Preview</title></head><body>";
         previewContent += "<h2>Form Preview</h2>";
-        previewContent += "<form>";
+        previewContent += "<form id='formPreview'>";
 
-        // $.each(formData, function(index, field) {
-        //     previewContent += "<div class='form-group'>";
-        //     previewContent += "<label for='" + field.name + "'>" + field.name.charAt(0).toUpperCase() + field.name.slice(1) + ":</label>";
-        //     previewContent += "<input type='text' class='form-control' id='" + field.name + "' name='" + field.name + "' value='" + field.value + "' readonly>";
-        //     previewContent += "</div>";
-        // });
+        // Array to store promises for image previews
+        var imagePromises = [];
 
-        previewContent += "<button type='button' onclick='window.close()'>Close</button>";
-        previewContent += "</form>";
-        previewContent += "</body></html>";
+        // Iterate over each form field to display its name and value
+        allFields.each(function () {
+            var fieldName = $(this).attr("name");
+            var fieldValue = $(this).val();
 
-        // Write the preview content to the new window
-        previewWindow.document.write(previewContent);
-        previewWindow.document.close();
+
+
+
+            if ($(this).is(':radio')) {
+                if ($(this).is(':checked')) {
+                    previewContent += `<p>${fieldName}: ${fieldValue}</p>`;
+                }
+            } else if ($(this).is(':file')) {
+                var files = $(this).prop('files');
+                if (files.length > 0) {
+                    previewContent += `<p>${fieldName}:</p>`;
+                    // Read and display each file
+                    $.each(files, function (index, file) {
+                        var reader = new FileReader();
+                        var imagePromise = new Promise((resolve) => {
+                            reader.onload = function (e) {
+                                previewContent += `<div>
+                                    <p>${file.name}</p>
+                                    <img src="${e.target.result}" style="max-width: 300px; max-height: 300px;"/>
+                                </div>`;
+                                resolve();
+                            };
+                            reader.readAsDataURL(file);
+                        });
+                        imagePromises.push(imagePromise);
+                    });
+                } else {
+                    previewContent += `<p>${fieldName}: No file selected</p>`;
+                }
+            } else {
+                previewContent += `<p>${fieldName}: ${fieldValue || "No value"}</p>`;
+            }
+        });
+
+        // Wait for all image promises to resolve before finalizing the preview content
+        Promise.all(imagePromises).then(() => {
+            previewContent += "<button type='button' onclick='window.close()'>Close</button>";
+            previewContent += "</form>";
+            previewContent += "</body></html>";
+
+            // Write the preview content to the new window
+            previewWindow.document.write(previewContent);
+            previewWindow.document.close();
+        });
     });
 });
+
+
