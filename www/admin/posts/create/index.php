@@ -6,7 +6,7 @@ use controllers\PostController;
 
 $result = false;
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['create_btn'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['post_btn'])) {
     $data = [
         'title' => $_POST['title'],
         'description' => $_POST['description']
@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['create_btn'])) {
         header("Location: ../");
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -38,18 +39,40 @@ include("../../../utils/components/admin/admin.links.php");
             include("../../../utils/components/admin/admin.navigation.php");
             ?>
             <div class="m-4">
-                <h1>Create Post</h1>
+                <button
+                    onclick="history.back()"
+                    class="px-4 py-2 my-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                    Back
+                </button>
+                <h3
+                    class="mb-4 text-2xl font-semibold text-gray-800 dark:text-gray-300">Create a new post</h3>
                 <form action="" method="POST" enctype="multipart/form-data">
-                    <label for="title">Title:</label>
-                    <input type="text" name="title" required><br>
+                    <label class="block text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">Title</span>
+                        <input name="title" required
+                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                            placeholder="Title" />
+                    </label>
 
-                    <label for="description">Description:</label>
-                    <textarea name="description" required></textarea><br>
+                    <label class="block mt-4 text-sm">
+                        <span class="text-gray-700 dark:text-gray-400">Description</span>
+                        <textarea
+                            name="description" required
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+                            rows="10"
+                            placeholder="Write content here."></textarea>
+                    </label>
 
-                    <label for="images">Images:</label>
-                    <input type="file" name="images[]" multiple required><br>
+                    <label class="block mt-4 text-sm" for="images">Images
+                        <input name="images[]" id="images" type="file" multiple class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
+                    </label>
 
-                    <input type="submit" name="create_btn" value="Create Post">
+                    <button
+                        name="post_btn"
+                        class="px-4 py-2 mt-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                        Post
+                    </button>
+
                 </form>
             </div>
         </div>

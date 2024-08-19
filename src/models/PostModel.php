@@ -79,7 +79,44 @@ class PostModel
         try {
             $sql = "SELECT p.id,p.title,p.description,p.created_at,pimg.image
                     FROM $postTbl p 
-                    LEFT JOIN $postImageTbl pimg ON p.id=pimg.post_id";
+                    LEFT JOIN $postImageTbl pimg ON p.id=pimg.post_id 
+                    ORDER BY p.created_at DESC
+                    ";
+            $statement = $this->db->query($sql);
+            $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            // Organize results
+            $posts = [];
+            foreach ($data as $row) {
+                $postId = $row['id'];
+                if (!isset($posts[$postId])) {
+                    $posts[$postId] = [
+                        'id' => $row['id'],
+                        'title' => $row['title'],
+                        'description' => $row['description'],
+                        'created_at' => $row['created_at'],
+                        'images' => []
+                    ];
+                }
+                if ($row['image']) {
+                    $posts[$postId]['images'][] = $row['image'];
+                }
+            }
+
+            return array_values($posts);
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+    public function getAllPostsByLimit($postTbl, $postImageTbl, $limit)
+    {
+        try {
+            $sql = "SELECT p.id,p.title,p.description,p.created_at,pimg.image
+                    FROM $postTbl p 
+                    LEFT JOIN $postImageTbl pimg ON p.id=pimg.post_id 
+                    ORDER BY p.created_at DESC
+                    LIMIT $limit
+                    ";
             $statement = $this->db->query($sql);
             $data = $statement->fetchAll(PDO::FETCH_ASSOC);
 
