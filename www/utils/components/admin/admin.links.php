@@ -15,4 +15,7 @@
     <script src="http://ucspyay.edu/utils/assets/js/charts-lines.js" defer></script>
     <script src="http://ucspyay.edu/utils/assets/js/tailwindcss.css"></script>
     <script src="http://ucsp.edu/utils/assets/js/charts-pie.js" defer></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
 </head>
