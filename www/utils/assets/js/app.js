@@ -469,7 +469,7 @@ function setupRegionTownshipSelect(regionSelectId, townshipSelectId, jsonData) {
     // Populate the region dropdown
     jsonData.data.forEach(region => {
         let optionRegion = document.createElement('option');
-        optionRegion.value = region.eng;
+        optionRegion.value = region.mm;
         optionRegion.textContent = region.mm;
         regionSelect.appendChild(optionRegion);
     });
@@ -480,13 +480,13 @@ function setupRegionTownshipSelect(regionSelectId, townshipSelectId, jsonData) {
         townshipSelect.innerHTML = '';
 
         // Find the selected region's districts and townships
-        const selectedRegionData = jsonData.data.find(region => region.eng === selectedRegion);
+        const selectedRegionData = jsonData.data.find(region => region.mm === selectedRegion);
 
         if (selectedRegionData) {
             selectedRegionData.districts.forEach(district => {
                 district.townships.forEach(township => {
                     let optionTownship = document.createElement('option');
-                    optionTownship.value = township.eng;
+                    optionTownship.value = township.mm;
                     optionTownship.textContent = township.mm;
                     townshipSelect.appendChild(optionTownship);
                 });
@@ -501,7 +501,7 @@ function setupRegionTownshipSelect(regionSelectId, townshipSelectId, jsonData) {
 
     // Initialize townships dropdown with the first region's townships
     if (jsonData.data.length > 0) {
-        regionSelect.value = jsonData.data[0].eng;
-        updateTownshipOptions(jsonData.data[0].eng);
+        regionSelect.value = jsonData.data[0].mm;
+        updateTownshipOptions(jsonData.data[0].mm);
     }
 }

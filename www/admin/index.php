@@ -1,5 +1,6 @@
 <?php
 include('../../autoload.php');
+
 use core\helpers\HTTP;
 
 session_start();

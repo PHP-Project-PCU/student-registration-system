@@ -47,7 +47,7 @@ include("../../utils/components/admin/admin.links.php");
                         class="m-4 text-2xl font-semibold text-gray-800 dark:text-gray-300">
                         Departments
                     </h4>
-                    <div class="w-1/2 px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                    <div class="md:w-1/2 px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
                         <form action="" method="POST">
                             <label class="block text-sm">
                                 <span class="text-gray-700 pt-4 font-semibold dark:text-gray-500">Name</span>

@@ -6,6 +6,7 @@ use core\db\MySQL;
 use core\helpers\Response;
 use DateTime;
 use PDOException;
+use PDO;
 
 class StudentAdmissionModel
 {
@@ -38,7 +39,7 @@ class StudentAdmissionModel
             )";
             $stmt_student = $this->db->prepare($sql_student);
 
-            $student_nrc = $data['student_nrc_code'] . $data['student_nrc_name'] . $data['student_nrc_type'] . $data['student_nrc_num'];
+            $student_nrc = $data['student_nrc_code'] . "/" . $data['student_nrc_name'] . $data['student_nrc_type'] . $data['student_nrc_num'];
 
             $stmt_student->execute([
                 ':year' => $data['year'],
@@ -90,8 +91,8 @@ class StudentAdmissionModel
                 :student_moth_address, :student_moth_job, :student_moth_phone_num
             )";
 
-            $student_fath_nrc = $data['student_fath_nrc_code'] . $data['student_fath_nrc_name'] . $data['student_fath_nrc_type'] . $data['student_fath_nrc_num'];
-            $student_moth_nrc = $data['student_moth_nrc_code'] . $data['student_moth_nrc_name'] . $data['student_moth_nrc_type'] . $data['student_moth_nrc_num'];
+            $student_fath_nrc = $data['student_fath_nrc_code'] . "/" . $data['student_fath_nrc_name'] . $data['student_fath_nrc_type'] . $data['student_fath_nrc_num'];
+            $student_moth_nrc = $data['student_moth_nrc_code'] . "/" . $data['student_moth_nrc_name'] . $data['student_moth_nrc_type'] . $data['student_moth_nrc_num'];
 
             $stmt_parent = $this->db->prepare($sql_parent);
             $stmt_parent->execute([
@@ -231,6 +232,102 @@ class StudentAdmissionModel
         } catch (PDOException $e) {
             $this->db->rollBack();
             echo "Failed to register student: " . $e->getMessage();
+            return $e->getMessage();
+        }
+    }
+    public function getAllFreshersByStatus($studentTbl, $status)
+    {
+        try {
+
+            $sql = "SELECT id,matriculation_reg_num,student_name_my,student_nrc
+            FROM $studentTbl WHERE year=1 AND status=:status 
+            ORDER BY matriculation_reg_num ASC";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                ":status" => $status
+            ]);
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return array_values($data);
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getStudentById($studentId)
+    {
+        try {
+            // Prepare SQL to get student details
+            $sql_student = "SELECT * FROM student_tbl WHERE id = :student_id";
+            $stmt_student = $this->db->prepare($sql_student);
+            $stmt_student->execute([':student_id' => $studentId]);
+            $student = $stmt_student->fetch(PDO::FETCH_ASSOC);
+
+            if (!$student) {
+                return null;  // No student found with the given ID
+            }
+
+            // Prepare SQL to get parent details
+            $sql_parent = "SELECT * FROM student_parent_tbl WHERE student_id = :student_id";
+            $stmt_parent = $this->db->prepare($sql_parent);
+            $stmt_parent->execute([':student_id' => $studentId]);
+            $parent = $stmt_parent->fetch(PDO::FETCH_ASSOC);
+
+            // Prepare SQL to get guardian details
+            $sql_guardian = "SELECT * FROM student_guardian_tbl WHERE student_id = :student_id";
+            $stmt_guardian = $this->db->prepare($sql_guardian);
+            $stmt_guardian->execute([':student_id' => $studentId]);
+            $guardian = $stmt_guardian->fetch(PDO::FETCH_ASSOC);
+
+            // Prepare SQL to get required files
+            $sql_files = "SELECT * FROM student_admission_required_file_tbl WHERE student_id = :student_id";
+            $stmt_files = $this->db->prepare($sql_files);
+            $stmt_files->execute([':student_id' => $studentId]);
+            $files = $stmt_files->fetch(PDO::FETCH_ASSOC);
+
+            // Combine all information into one array
+            $studentData = [
+                'student' => $student,
+                'parent' => $parent,
+                'guardian' => $guardian,
+                'files' => $files
+            ];
+
+            return $studentData;
+        } catch (PDOException $e) {
+            echo "Failed to retrieve student data: " . $e->getMessage();
+            return null;
+        }
+    }
+
+
+    public function approveFresher($studentTbl, $studentAuthTbl, $data)
+    {
+        try {
+            $this->db->beginTransaction();
+            $sql = "UPDATE $studentTbl SET status=:status, roll_num=:roll_num
+        WHERE id=:id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                ":status" => 1,
+                ":roll_num" => $data['roll_num'],
+                ":id" => $data['id'],
+            ]);
+            $sql = "INSERT INTO $studentAuthTbl(
+            student_id,edu_mail,password) 
+            VALUES(
+            :student_id,:edu_mail,:password
+            )";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                ":student_id" => $data['id'],
+                ":edu_mail" => $data['edu_mail'],
+                ":password" => $data['password'],
+            ]);
+
+            $this->db->commit();
+            return true;
+        } catch (PDOException $e) {
+            $this->db->rollBack();
             return $e->getMessage();
         }
     }

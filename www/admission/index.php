@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['checkBtn'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
     $data = $_POST;
     $studentAdmissionController = new StudentAdmissionController($data);
-    $isRegister = $studentAdmissionController->setStudentAdmissions();
+    $isRegister = $studentAdmissionController->setStudentAdmissions($data);
 } else {
     $isRegister = false;
 }
