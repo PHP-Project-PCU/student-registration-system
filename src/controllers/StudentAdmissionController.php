@@ -20,9 +20,9 @@ class StudentAdmissionController
     {
         return $this->studentAdmissionModel->setStudentAdmissions(Constants::$STUDENT_TBL, $data);
     }
-    public function getAllFreshersByStatus($status)
+    public function getAllFreshersByStatus($status, $year)
     {
-        return $this->studentAdmissionModel->getAllFreshersByStatus(Constants::$STUDENT_TBL, $status);
+        return $this->studentAdmissionModel->getAllFreshersByStatusAndYear(Constants::$STUDENT_TBL, $status, $year);
     }
     public function getStudentById($status)
     {

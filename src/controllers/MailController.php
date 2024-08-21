@@ -133,8 +133,8 @@ class MailController
       <div style='color:#000;'>
           <h2 style='color: #4CAF50;'>Congratulations!</h2>
           <p>
-              <strong>{$data['name']}</strong>၏ ကျောင်းလျှောက်လွှာအား ကွန်ပျူတာတက္ကသိုလ်(ပြည်) ၊ ကျောင်းသားရေးရာမှ လက်ခံရရှိ၍ အတည်ပြုပြီးဖြစ်ပါသည်။<br>
-              အောက်ဖော်ပြပါ <strong>Edu mail</strong> နှင့် <strong>Password</strong> အားအသုံးပြု၍ UCSPyay Students' Portal သို့ဝင်ရောက်အသုံးပြုနိုင်ပါသည်။
+              <strong>{$data['name']}</strong>၏ ကျောင်းဝင်ခ္ငင့်လျှောက်လွှာအား ကွန်ပျူတာတက္ကသိုလ်(ပြည်) ၊ ကျောင်းသားရေးရာမှ လက်ခံရရှိ၍ အတည်ပြုပြီးဖြစ်ပါသည်။<br>
+              အောက်ဖော်ပြပါ <strong>Edu mail</strong> နှင့် <strong>Password</strong> အားအသုံးပြု၍ UCSPyay Student Portal သို့ဝင်ရောက်အသုံးပြုနိုင်ပါသည်။
           </p>
           <ul style='list-style-type: none; padding: 0;'>
               <li style='margin-bottom: 10px;'>

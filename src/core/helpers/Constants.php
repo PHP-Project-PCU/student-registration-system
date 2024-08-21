@@ -16,4 +16,5 @@ class Constants
     static $POST_TBL = "post_tbl";
     static $POST_IMAGES_TBL = "post_images_tbl";
     static $DEPT_TBL = "dept_tbl";
+    static $ACADEMIC_YEAR_TBL = "academic_year_tbl";
 }

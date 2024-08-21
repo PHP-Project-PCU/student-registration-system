@@ -235,16 +235,17 @@ class StudentAdmissionModel
             return $e->getMessage();
         }
     }
-    public function getAllFreshersByStatus($studentTbl, $status)
+    public function getAllFreshersByStatusAndYear($studentTbl, $status, $year)
     {
         try {
 
             $sql = "SELECT id,matriculation_reg_num,student_name_my,student_nrc
-            FROM $studentTbl WHERE year=1 AND status=:status 
+            FROM $studentTbl WHERE year=1 AND status=:status and YEAR(created_at) =:year
             ORDER BY matriculation_reg_num ASC";
             $stmt = $this->db->prepare($sql);
             $stmt->execute([
-                ":status" => $status
+                ":status" => $status,
+                ":year" => $year,
             ]);
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return array_values($data);

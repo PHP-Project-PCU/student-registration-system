@@ -9,7 +9,7 @@ use controllers\MailController;
 
 
 $id = $_GET['id'];
-
+$imageBasePath = "http://ucspyay.edu/utils/uploads/admission/$id/";
 $studentAdmissionController = new StudentAdmissionController();
 
 $studentData = $studentAdmissionController->getStudentById($id);
@@ -30,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("location:index.php");
     }
 }
-
 
 function formatDate($date)
 {
@@ -57,6 +56,54 @@ include("../../../utils/components/admin/admin.links.php");
     td {
         padding: 10px 5px;
     }
+
+    .tbl,
+    .tbl td {
+        border: none;
+    }
+
+    /* Lightbox styles */
+    /* Lightbox styles */
+    .lightbox {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.8);
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .lightbox-content {
+        margin: auto;
+        display: block;
+        max-width: 90%;
+        max-height: 90%;
+        width: auto;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .close {
+        position: absolute;
+        top: 20px;
+        right: 35px;
+        color: #fff;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #bbb;
+    }
 </style>
 
 
@@ -71,21 +118,61 @@ include("../../../utils/components/admin/admin.links.php");
             ?>
 
             <div class="p-4">
-                <div class="flex justify-between pb-4">
+                <div class="flex justify-start pb-4">
+                    <button
+                        onclick="history.back()"
+                        class="px-4 py-2 my-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                        &larr;
+                    </button>
                     <h4
                         class="m-4 text-2xl font-semibold text-gray-800 dark:text-gray-300">
-                        <?= htmlspecialchars($studentData['student']['student_name_my']); ?>၏ ဝင်ခွင့်လျှောက်လွှာ
+                        <?= htmlspecialchars($studentData['student']['student_name_my']); ?>၏ ပညာသင်ခွင့်လျှောက်လွှာ
                     </h4>
 
 
                 </div>
-                <!-- New Table -->
+
+                <!-- Start First Table -->
+                <section class="w-full my-6" id="first-tbl">
+                    <div class="grid grid-cols-1 lg:grid-cols-2">
+                        <div class="text-center mx-auto">
+                            <img src="<?= $imageBasePath . htmlspecialchars($studentData['files']['passport_photo']); ?>" class="w-36 my-6" alt="Profile" onclick="openLightbox(this);">
+                        </div>
+                        <div class=" w-full">
+                            <table class="w-full table-fixed">
+                                <tr>
+                                    <td class="text-start">သင်တန်းနှစ်</td>
+                                    <td class="text-indigo-600"><?php if (($studentData['student']['year']) == 1) echo "ပထမနှစ်"; ?></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-start">အထူးပြုဘာသာ</td>
+                                    <td class="text-indigo-600"><?= htmlspecialchars($studentData['student']['major']); ?></td>
+                                </tr>
+                                <!-- <tr>
+                                    <td class="text-start">ခုံအမှတ်</td>
+                                    <td class="text-indigo-600"><?= htmlspecialchars($studentData['student']['roll_num']); ?></td>
+                                </tr> -->
+                                <tr>
+                                    <td class="text-start">တက္ကသိုလ်မှတ်ပုံတင်အမှတ်</td>
+                                    <td class="text-indigo-600"><?= htmlspecialchars($studentData['student']['matriculation_reg_num']); ?></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-start">တက္ကသိုလ်ဝင်ရောက်သည့်ခုနှစ်</td>
+                                    <td class="text-indigo-600"><?= htmlspecialchars($studentData['student']['started_year']); ?></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                </section> <!-- End First Table -->
+
+                <!-- Second Table -->
                 <div class=" w-full overflow-hidden rounded-lg shadow-xs">
                     <div class="w-full ">
                         <table class="w-full ">
                             <thead class="bg-gray-50 border-b-2 ">
                                 <tr>
-                                    <th colspan="2" class=" p-3 tracking-wide text-start">၁။ ပညာသင်ခွင့်တောင်းခံသူ</th>
+                                    <th colspan="2" class=" p-3 tracking-wide text-start">ပညာသင်ခွင့်တောင်းခံသူ</th>
                                     <th class=" p-3 tracking-wide text-left">ကျောင်းသား/သူ</th>
                                     <th class=" p-3 tracking-wide text-left">အဘ</th>
                                     <th class=" p-3 tracking-wide text-left">အမိ</th>
@@ -174,7 +261,7 @@ include("../../../utils/components/admin/admin.links.php");
                                         <p>
                                             အမြဲတမ်းနေထိုင်သည့်လိပ်စာ(အပြည့်အစုံ)
                                         </p>
-                                        <p class="text-indigo-600">
+                                        <p class="text-indigo-600 py-2">
                                             <?= htmlspecialchars($studentData['student']['student_current_address']); ?>
                                         </p>
                                     </td>
@@ -182,7 +269,7 @@ include("../../../utils/components/admin/admin.links.php");
                                         <p>
                                             အမိအုပ်ထိန်းသူ၏အလုပ်အကိုင်၊လိပ်စာအပြည့်အစုံ
                                         </p>
-                                        <p class="text-indigo-600">
+                                        <p class="text-indigo-600 py-2">
                                             <?= htmlspecialchars($studentData['parent']['student_moth_job']); ?> ၊
                                             <?= htmlspecialchars($studentData['parent']['student_moth_address']); ?>
                                         </p>
@@ -190,7 +277,7 @@ include("../../../utils/components/admin/admin.links.php");
                                 </tr>
 
                                 <tr>
-                                    <td colspan="2" rowspan="5" class="text-start">၃။ ကျောင်းနေရန်အထောက်အပံ့ပြုမည့်ပုဂ္ဂိုလ်</td>
+                                    <td colspan="2" rowspan="5" class="text-start">ကျောင်းနေရန်အထောက်အပံ့ပြုမည့်ပုဂ္ဂိုလ်</td>
                                     <td colspan="1" class="text-start">(က) အမည်</td>
                                     <td colspan="2" class="text-start text-indigo-600"><?= htmlspecialchars($studentData['guardian']['guardian_name']); ?></td>
 
@@ -216,18 +303,164 @@ include("../../../utils/components/admin/admin.links.php");
 
                                 </tr>
                                 <tr>
-                                    <td colspan="3" class="text-start">၄။ ပညာသင်ထောက်ပံ့ကြေးပေးရန်မေတ္တာရပ်ခံခြင်းပြု/မပြု</td>
+                                    <td colspan="3" class="text-start">ပညာသင်ထောက်ပံ့ကြေးပေးရန်မေတ္တာရပ်ခံခြင်းပြု/မပြု</td>
                                     <td colspan="2" class="text-start text-indigo-600"><?= htmlspecialchars($studentData['student']['scholarship']) == 0 ? "မပြု" : "ပြု"; ?></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-
+                </div>
+                <!-- Files Section -->
+                <div class=" w-full px-4 py-3 my-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                    <h3 class="font-semibold text-xl">ကျောင်းသားမှတ်ပုံတင်</h3>
+                    <table class="tbl">
+                        <tr>
+                            <td>
+                                <div class="text-center mx-auto">
+                                    <img src="<?= $imageBasePath . htmlspecialchars($studentData['files']['student_nrc_photo_front']); ?>" class=" my-6" alt="" onclick="openLightbox(this);">
+                                </div>
+                            </td>
+                            <td>
+                                <div class=" text-center mx-auto">
+                                    <img src="<?= $imageBasePath . htmlspecialchars($studentData['files']['student_nrc_photo_back']); ?>" class=" my-6" alt="" onclick="openLightbox(this);">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class=" w-full px-4 py-3 my-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                    <h3 class="font-semibold text-xl">အဘမှတ်ပုံတင်</h3>
+                    <table class="tbl">
+                        <tr>
+                            <td>
+                                <div class="text-center mx-auto">
+                                    <img src="<?= $imageBasePath . htmlspecialchars($studentData['files']['fath_nrc_photo_front']); ?>" class=" my-6" alt="" onclick="openLightbox(this);">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="text-center mx-auto">
+                                    <img src="<?= $imageBasePath . htmlspecialchars($studentData['files']['fath_nrc_photo_back']); ?>" class=" my-6" alt="" onclick="openLightbox(this);">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class=" w-full px-4 py-3 my-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                    <h3 class="font-semibold text-xl">အမိမှတ်ပုံတင်</h3>
+                    <table class="tbl">
+                        <tr>
+                            <td>
+                                <div class="text-center mx-auto">
+                                    <img src="<?= $imageBasePath . htmlspecialchars($studentData['files']['moth_nrc_photo_front']); ?>" class=" my-6" alt="" onclick="openLightbox(this);">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="text-center mx-auto">
+                                    <img src="<?= $imageBasePath . htmlspecialchars($studentData['files']['moth_nrc_photo_back']); ?>" class=" my-6" alt="" onclick="openLightbox(this);">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
 
+                <div class=" w-full px-4 py-3 my-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                    <h3 class="font-semibold text-xl">၁၀ တန်းအောင်လက်မှတ်</h3>
+                    <table class="tbl">
+                        <tr>
+                            <td>
+                                <div class="text-center mx-auto">
+                                    <img src="<?= $imageBasePath . htmlspecialchars($studentData['files']['matriculation_certificate']); ?>" class=" my-6" alt="" onclick="openLightbox(this);">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class=" w-full px-4 py-3 my-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                    <h3 class="font-semibold text-xl">၁၀ တန်းအမှတ်စာရင်း</h3>
+                    <table class="tbl">
+                        <tr>
+                            <td>
+                                <div class="text-center mx-auto">
+                                    <img src="<?= $imageBasePath . htmlspecialchars($studentData['files']['matriculation_mark_photo']); ?>" class=" my-6" alt="" onclick="openLightbox(this);">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class=" w-full px-4 py-3 my-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                    <h3 class="font-semibold text-xl">အိမ်ထောင်စုစာရင်း</h3>
+                    <table class="tbl">
+                        <tr>
+                            <td>
+                                <div class="text-center mx-auto">
+                                    <img src="<?= $imageBasePath . htmlspecialchars($studentData['files']['house_registration_photo_front']); ?>" class=" my-6" alt="" onclick="openLightbox(this);">
+                                </div>
+                            </td>
+                            <td>
+                                <div class="text-center mx-auto">
+                                    <img src="<?= $imageBasePath . htmlspecialchars($studentData['files']['house_registration_photo_back']); ?>" class=" my-6" alt="" onclick="openLightbox(this);">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class=" w-full px-4 py-3 my-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                    <h3 class="font-semibold text-xl">ကိုဗစ်ကာကွယ်ဆေးထိုးပြီးကြောင်းထောက်ခံချက်</h3>
+                    <table class="tbl">
+                        <tr>
+                            <td>
+                                <div class="text-center mx-auto">
+                                    <img src="<?= $imageBasePath . htmlspecialchars($studentData['files']['covid_photo']); ?>" class=" my-6" alt="" onclick="openLightbox(this);">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class=" w-full px-4 py-3 my-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                    <h3 class="font-semibold text-xl">ရပ်ကွက်ထောက်ခံစာ</h3>
+                    <table class="tbl">
+                        <tr>
+                            <td>
+                                <div class="text-center mx-auto">
+                                    <img src="<?= $imageBasePath . htmlspecialchars($studentData['files']['quarter_approved_letter']); ?>" class=" my-6" alt="" onclick="openLightbox(this);">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class=" w-full px-4 py-3 my-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                    <h3 class="font-semibold text-xl">ရဲစခန်းထောက်ခံစာ</h3>
+                    <table class="tbl">
+                        <tr>
+                            <td>
+                                <div class="text-center mx-auto">
+                                    <img src="<?= $imageBasePath . htmlspecialchars($studentData['files']['police_approved_letter']); ?>" class=" my-6" alt="" onclick="openLightbox(this);">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class=" w-full px-4 py-3 my-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                    <h3 class="font-semibold text-xl">ငွေသွင်းပြီးကြောင်း Screenshot</h3>
+                    <table class="tbl">
+                        <tr>
+                            <td>
+                                <div class="text-center mx-auto">
+                                    <img src="<?= $imageBasePath . htmlspecialchars($studentData['files']['payment_screenshot']); ?>" class=" my-6" alt="" onclick="openLightbox(this);">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+
+
+                <!-- Admin Approve Section -->
                 <div class="md:w-1/2 px-4 py-3 my-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
                     <form action="" method="POST">
-                        <label class="block text-sm">
+                        <h3 class="font-semibold text-xl" class="font-semibold text-xl">Student Portal အားဝင်ရောက်အသုံးပြုနိုင်ရန်</h3>
+                        <label class="block text-sm pt-4">
                             <span class="text-gray-700 pt-4 font-semibold dark:text-gray-500">Roll No:</span>
                             <input
                                 class="mt-4 mb-2 block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
@@ -257,8 +490,27 @@ include("../../../utils/components/admin/admin.links.php");
                 </div>
             </div>
 
+            <!-- Light Box -->
+            <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+                <span class="close">&times;</span>
+                <img class="lightbox-content" id="lightbox-img">
+            </div>
+
 
 </body>
+<script>
+    function openLightbox(element) {
+        var lightbox = document.getElementById('lightbox');
+        var lightboxImg = document.getElementById('lightbox-img');
+        lightboxImg.src = element.src;
+        lightbox.style.display = 'flex';
+    }
+
+    function closeLightbox() {
+        var lightbox = document.getElementById('lightbox');
+        lightbox.style.display = 'none';
+    }
+</script>
 
 
 </html>
