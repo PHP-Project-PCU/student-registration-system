@@ -32,21 +32,20 @@ function formatDate($date)
 <?php include("../../utils/components/admin/admin.links.php"); ?>
 
 <body>
-    <div class="flex h-screen bg-gray-50 dark:bg-gray-900">
+    <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
         <!-- Sidebar -->
-        <div class="w-64 bg-white dark:bg-gray-800 z-10 hidden md:block">
-            <?php include("../../utils/components/admin/admin.sidebar.php"); ?>
-        </div>
-
-        <!-- Main Content Area -->
-        <div class="flex-1 flex flex-col">
+        <?php
+        include("../../utils/components/admin/admin.sidebar.php");
+        ?>
+        <!-- Main content -->
+        <div class=" flex flex-col flex-1 md:ml-64">
             <!-- Navbar -->
-            <div class="sticky top-0 w-full z-10 bg-white dark:bg-gray-800">
-                <?php include("../../utils/components/admin/admin.navigation.php"); ?>
-            </div>
+            <?php
+            include("../../utils/components/admin/admin.navigation.php");
+            ?>
+            <!-- Scrollable content section -->
+            <div class="overflow-y-auto md:pt-16 px-4 pb-4 h-full">
 
-            <!-- Posts Section -->
-            <div class="flex-1 overflow-y-auto pt-4 px-4 pb-4 md:pl-8">
                 <div class="m-4">
                     <button
                         onclick="window.location.href='create'"

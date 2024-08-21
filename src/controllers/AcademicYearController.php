@@ -14,21 +14,21 @@ class AcademicYearController
         $this->academicYearModel = new AcademicYearModel(new MySQL());
     }
 
-    // public function createDept($data)
-    // {
-    //     return $this->academicYearModel->createDept(Constants::$DEPT_TBL, $data);
-    // }
+    public function createAcademicYear($data)
+    {
+        return $this->academicYearModel->createAcademicYear(Constants::$ACADEMIC_YEAR_TBL, $data);
+    }
     public function index()
     {
         $academicYear = $this->academicYearModel->getAllAcademicYear(Constants::$ACADEMIC_YEAR_TBL);
         return $academicYear;
     }
-    // public function updateDept($id, $data)
-    // {
-    //     $this->academicYearModel->updateDept(Constants::$DEPT_TBL, $id, $data);
-    // }
-    // public function deleteDept($id)
-    // {
-    //     $this->academicYearModel->deleteDept(Constants::$DEPT_TBL, $id);
-    // }
+    public function updateAcademicYear($id, $data)
+    {
+        $this->academicYearModel->updateAcademicYear(Constants::$ACADEMIC_YEAR_TBL, $id, $data);
+    }
+    public function deleteAcademicYear($id)
+    {
+        $this->academicYearModel->deleteAcademicYear(Constants::$ACADEMIC_YEAR_TBL, $id);
+    }
 }

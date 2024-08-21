@@ -58,13 +58,13 @@ $date = formatDate($post['created_at']);
             </div>
 
             <!-- Content -->
-            <div class="flex-1 overflow-y-auto pt-16 px-4 pb-4">
+            <div class="flex-1 overflow-y-auto md:pt-16 px-4 pb-4">
                 <div class="p-4">
                     <div class="flex justify-between mb-4">
                         <button
                             onclick="history.back()"
                             class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                            Back
+                            &larr;
                         </button>
                         <div class="flex gap-2">
                             <a href="create/">
@@ -96,7 +96,7 @@ $date = formatDate($post['created_at']);
                         <div class="mt-4">
                             <?php foreach ($post['images'] as $key => $image): ?>
                                 <?php if ($key != 0): ?>
-                                    <img src="<?= getRelativePath($image) ?>" alt="" class="inline-block w-48  rounded-md mr-2 mb-2">
+                                    <img src="<?= getRelativePath($image) ?>" alt="" class="cursor-pointer inline-block w-48  rounded-md mr-2 mb-2" onclick="openLightbox(this);">
                                 <?php endif ?>
                             <?php endforeach ?>
                         </div>
@@ -104,6 +104,12 @@ $date = formatDate($post['created_at']);
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Light Box -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
     </div>
 </body>
 
