@@ -16,7 +16,7 @@ class PostController
 
     public function createPost($data, $images)
     {
-        $uploadDir = 'C:\xampp\htdocs\student-registration-system\www\admin\posts\uploads/';
+        $uploadDir = 'C:\xampp\htdocs\student-registration-system\www\utils\uploads\admin-posts/';
         $imagePaths = [];
         foreach ($images['tmp_name'] as $key => $tmpName) {
             $image = basename($images['name'][$key]);
@@ -36,13 +36,18 @@ class PostController
         $posts = $this->postModel->getAllPosts(Constants::$POST_TBL, Constants::$POST_IMAGES_TBL);
         return $posts;
     }
+    public function getPostsByLimit($limit)
+    {
+        $posts = $this->postModel->getAllPostsByLimit(Constants::$POST_TBL, Constants::$POST_IMAGES_TBL, $limit);
+        return $posts;
+    }
     public function getPostById($id)
     {
         return  $this->postModel->getPostById(Constants::$POST_TBL, Constants::$POST_IMAGES_TBL, $id);
     }
     public function updatePost($id, $data, $images)
     {
-        $uploadDir = 'C:\xampp\htdocs\student-registration-system\www\admin\posts\uploads/';
+        $uploadDir = 'C:\xampp\htdocs\student-registration-system\www\utils\uploads\admin-posts/';
         $imagePaths = [];
         foreach ($images['tmp_name'] as $key => $tmpName) {
             $image = basename($images['name'][$key]);

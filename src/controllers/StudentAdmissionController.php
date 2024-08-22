@@ -6,45 +6,30 @@ use models\StudentAdmissionModel;
 
 use core\db\MySQL;
 use core\helpers\Constants;
+use StudentDataModel;
 
 class StudentAdmissionController
 {
-    private $data;
-    public function __construct($data)
+    private $studentAdmissionModel;
+    public function __construct()
     {
-        $this->data = $data;
+        $this->studentAdmissionModel = new StudentAdmissionModel(new MySQL());
     }
 
-    public function setStudentAdmissions()
+    public function setStudentAdmissions($data)
     {
-        $studentAdmissionModel = new StudentAdmissionModel(new MySQL());
-        if ($studentAdmissionModel) {
-            return $studentAdmissionModel->setStudentAdmissions(Constants::$STUDENT_TBL, $this->data);
-        }
-        return false;
+        return $this->studentAdmissionModel->setStudentAdmissions(Constants::$STUDENT_TBL, $data);
     }
-
-    // public function setStudentAdmissionRequireFiles()
-    // {
-    //     $studentAdmissionModel = new StudentAdmissionModel(new MySQL());
-    //     if ($studentAdmissionModel) {
-    //         $studentAdmissionModel->setStudentAdmissions(Constants::$STUDENT_ADMISSION_REQUIRED_FILE_TBL, $this->data->getStudentAdmissionRequireFileData());
-    //     }
-    // }
-
-    // public function setStudentParents()
-    // {
-    //     $studentAdmissionModel = new StudentAdmissionModel(new MySQL());
-    //     if ($studentAdmissionModel) {
-    //         $studentAdmissionModel->setStudentAdmissions(Constants::$STUDENT_PARENT_TBL, $this->data->getStudentParentsData());
-    //     }
-    // }
-
-    // public function setStudentGuardians()
-    // {
-    //     $studentAdmissionModel = new StudentAdmissionModel(new MySQL());
-    //     if ($studentAdmissionModel) {
-    //         $studentAdmissionModel->setStudentAdmissions(Constants::$GURDIAN_TBL, $this->data->getStudentGuardians());
-    //     }
-    // }
+    public function getAllFreshersByStatus($status, $year)
+    {
+        return $this->studentAdmissionModel->getAllFreshersByStatusAndYear(Constants::$STUDENT_TBL, $status, $year);
+    }
+    public function getStudentById($status)
+    {
+        return $this->studentAdmissionModel->getStudentById($status);
+    }
+    public function approveFresher($data)
+    {
+        return $this->studentAdmissionModel->approveFresher(Constants::$STUDENT_TBL, Constants::$STUDENT_AUTH_TBL, $data);
+    }
 }

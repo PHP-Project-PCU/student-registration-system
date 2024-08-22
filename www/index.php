@@ -7,6 +7,35 @@ include("./utils/components/navigation.php");
 $heroVideoFilePath = "utils/assets/img/ucspyay/cu-short.mp4";
 $youtubeCoverImgPath = "utils/assets/img/ucspyay/uc-build-1.jpg";
 $ucspLogoImgPath = "utils/assets/img/ucspyay/ucsp-logo-light.jpg";
+
+
+
+require '../vendor/autoload.php';
+include '../autoload.php';
+
+use controllers\PostController;
+
+$postController = new PostController();
+$posts = $postController->getPostsByLimit(5);
+
+function getRelativePath($imgPath)
+{
+    $baseUrl = "http://ucspyay.edu/";
+    $imgPath = str_replace('\\', '/', $imgPath);
+    $startPos = strpos($imgPath, 'utils/');
+    if ($startPos === false) {
+        return 'Path segment not found';
+    }
+    $relativePath = substr($imgPath, $startPos);
+    return $baseUrl . $relativePath;
+};
+
+function formatDate($date)
+{
+    return date("M d, Y", strtotime($date));
+}
+
+?>
 ?>
 
 <body class="font-nunito text-base text-black dark:text-white dark:bg-slate-900 scroll-smooth">
@@ -155,54 +184,32 @@ $ucspLogoImgPath = "utils/assets/img/ucspyay/ucsp-logo-light.jpg";
         <!--end grid-->
 
         <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 mt-8 gap-[30px]">
-            <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden wow animate__animated animate__fadeInUp"
-                data-wow-delay=".7s">
-                <img src="<?= $ucspLogoImgPath ?>" alt="">
-                <div class="content p-6">
-                    <a href="blog-detail.html"
-                        class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">Smartest
-                        Applications for Business</a>
-                    <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and benefit
-                    </p>
-                    <div class="mt-4">
-                        <a href="blog-detail.html"
-                            class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-normal hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Read
-                            More <i class="uil uil-arrow-right"></i></a>
+            <?php foreach ($posts as $post) {
+                $coverImg = getRelativePath($post['images'][0]);
+            ?>
+                <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden wow animate__animated animate__fadeInUp"
+                    data-wow-delay=".7s">
+                    <img src="<?= $coverImg ?>" alt="" class="w-full h-48 object-cover">
+                    <div class="content p-6">
+                        <a href="posts.php?id=<?= $post['id'] ?>"
+                            class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">
+                            <?= htmlspecialchars(strlen($post['title']) > 100 ? substr($post['title'], 0, 100) . '...' : $post['title']) ?>
+                        </a>
+                        <p class="text-slate-400 mt-3">
+                            <?= htmlspecialchars(strlen($post['description']) > 100 ? substr($post['description'], 0, 100) . '...' : $post['description']) ?>
+                        </p>
+                        <p class="text-gray-400 my-2 text-sm"><?= formatDate($post['created_at']) ?></p>
+
+
+                        <div class="mt-4">
+                            <a href="posts.php?id=<?= $post['id'] ?>"
+                                class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-normal hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Read
+                                More <i class="uil uil-arrow-right"></i></a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden wow animate__animated animate__fadeInUp"
-                data-wow-delay=".7s">
-                <img src="<?= $ucspLogoImgPath ?>" alt="">
-                <div class="content p-6">
-                    <a href="blog-detail.html"
-                        class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">Smartest
-                        Applications for Business</a>
-                    <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and benefit
-                    </p>
-                    <div class="mt-4">
-                        <a href="blog-detail.html"
-                            class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-normal hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Read
-                            More <i class="uil uil-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden wow animate__animated animate__fadeInUp"
-                data-wow-delay=".7s">
-                <img src="<?= $ucspLogoImgPath ?>" alt="">
-                <div class="content p-6">
-                    <a href="blog-detail.html"
-                        class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">Smartest
-                        Applications for Business</a>
-                    <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and benefit
-                    </p>
-                    <div class="mt-4">
-                        <a href="blog-detail.html"
-                            class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-normal hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Read
-                            More <i class="uil uil-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
+
+            <?php } ?>
         </div>
         <!--end grid-->
     </div>

@@ -1,3 +1,4 @@
 /vendor/
-/www/admin/posts/uploads/
+/www/utils/uploads/admin-posts/
+/www/utils/uploads/admission/
 

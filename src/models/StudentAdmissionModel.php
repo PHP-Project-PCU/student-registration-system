@@ -6,6 +6,7 @@ use core\db\MySQL;
 use core\helpers\Response;
 use DateTime;
 use PDOException;
+use PDO;
 
 class StudentAdmissionModel
 {
@@ -38,31 +39,31 @@ class StudentAdmissionModel
             )";
             $stmt_student = $this->db->prepare($sql_student);
 
-            $student_nrc = $_POST['student_nrc_code'] . $_POST['student_nrc_name'] . $_POST['student_nrc_type'] . $_POST['student_nrc_num'];
+            $student_nrc = $data['student_nrc_code'] . "/" . $data['student_nrc_name'] . $data['student_nrc_type'] . $data['student_nrc_num'];
 
             $stmt_student->execute([
-                ':year' => $_POST['year'],
-                ':major' => $_POST['major'],
-                ':student_name_my' => $_POST['student_name_my'],
-                ':student_name_en' => $_POST['student_name_en'],
-                ':student_ethnicity' => $_POST['student_ethnicity'],
-                ':student_religion' => $_POST['student_religion'],
-                ':student_birth_place' => $_POST['student_birth_place'],
-                ':student_nationality' => $_POST['student_nationality'],
-                ':student_dob' => $_POST['student_dob'],
-                ':student_email' => $_POST['student_email'],
-                ':student_phone_num' => $_POST['student_phone_num'],
-                ':roll_num' => $_POST['roll_num'] ?? "",
-                ':matriculation_reg_num' => $_POST['matriculation_reg_num'],
-                ':started_year' => $_POST['started_year'],
-                ':matriculation_roll_num' => $_POST['matriculation_roll_num'],
-                ':matriculation_year' => $_POST['matriculation_year'],
-                ':matriculation_exam_center' => $_POST['matriculation_exam_center'],
+                ':year' => $data['year'],
+                ':major' => $data['major'],
+                ':student_name_my' => $data['student_name_my'],
+                ':student_name_en' => $data['student_name_en'],
+                ':student_ethnicity' => $data['student_ethnicity'],
+                ':student_religion' => $data['student_religion'],
+                ':student_birth_place' => $data['student_birth_place'],
+                ':student_nationality' => $data['student_nationality'],
+                ':student_dob' => $data['student_dob'],
+                ':student_email' => $data['student_email'],
+                ':student_phone_num' => $data['student_phone_num'],
+                ':roll_num' => $data['roll_num'] ?? "",
+                ':matriculation_reg_num' => $data['matriculation_reg_num'],
+                ':started_year' => $data['started_year'],
+                ':matriculation_roll_num' => $data['matriculation_roll_num'],
+                ':matriculation_year' => $data['matriculation_year'],
+                ':matriculation_exam_center' => $data['matriculation_exam_center'],
                 ':student_nrc' => $student_nrc ?? "",
-                ':student_region' => $_POST['student_region'],
-                ':student_township' => $_POST['student_township'],
-                ':student_current_address' => $_POST['student_current_address'],
-                ':scholarship' => $_POST['scholarship'],
+                ':student_region' => $data['student_region'],
+                ':student_township' => $data['student_township'],
+                ':student_current_address' => $data['student_current_address'],
+                ':scholarship' => $data['scholarship'],
                 ':status' => 0,
             ]);
 
@@ -90,36 +91,36 @@ class StudentAdmissionModel
                 :student_moth_address, :student_moth_job, :student_moth_phone_num
             )";
 
-            $student_fath_nrc = $_POST['student_fath_nrc_code'] . $_POST['student_fath_nrc_name'] . $_POST['student_fath_nrc_type'] . $_POST['student_fath_nrc_num'];
-            $student_moth_nrc = $_POST['student_moth_nrc_code'] . $_POST['student_moth_nrc_name'] . $_POST['student_moth_nrc_type'] . $_POST['student_moth_nrc_num'];
+            $student_fath_nrc = $data['student_fath_nrc_code'] . "/" . $data['student_fath_nrc_name'] . $data['student_fath_nrc_type'] . $data['student_fath_nrc_num'];
+            $student_moth_nrc = $data['student_moth_nrc_code'] . "/" . $data['student_moth_nrc_name'] . $data['student_moth_nrc_type'] . $data['student_moth_nrc_num'];
 
             $stmt_parent = $this->db->prepare($sql_parent);
             $stmt_parent->execute([
                 ':student_id' => $student_id,
-                ':student_fath_name_my' => $_POST['student_fath_name_my'],
-                ':student_fath_name_en' => $_POST['student_fath_name_en'],
-                ':student_fath_ethnicity' => $_POST['student_fath_ethnicity'],
-                ':student_fath_religion' => $_POST['student_fath_religion'],
-                ':student_fath_birth_place' => $_POST['student_fath_birth_place'],
-                ':student_fath_nationality' => $_POST['student_fath_nationality'],
+                ':student_fath_name_my' => $data['student_fath_name_my'],
+                ':student_fath_name_en' => $data['student_fath_name_en'],
+                ':student_fath_ethnicity' => $data['student_fath_ethnicity'],
+                ':student_fath_religion' => $data['student_fath_religion'],
+                ':student_fath_birth_place' => $data['student_fath_birth_place'],
+                ':student_fath_nationality' => $data['student_fath_nationality'],
                 ':student_fath_nrc' => $student_fath_nrc,
-                ':student_fath_region' => $_POST['student_fath_region'],
-                ':student_fath_township' => $_POST['student_fath_township'],
-                ':student_fath_address' => $_POST['student_fath_address'],
-                ':student_fath_job' => $_POST['student_fath_job'],
-                ':student_fath_phone_num' => $_POST['student_fath_phone_num'],
-                ':student_moth_name_my' => $_POST['student_moth_name_my'],
-                ':student_moth_name_en' => $_POST['student_moth_name_en'],
-                ':student_moth_ethnicity' => $_POST['student_moth_ethnicity'],
-                ':student_moth_religion' => $_POST['student_moth_religion'],
-                ':student_moth_birth_place' => $_POST['student_moth_birth_place'],
-                ':student_moth_nationality' => $_POST['student_moth_nationality'],
+                ':student_fath_region' => $data['student_fath_region'],
+                ':student_fath_township' => $data['student_fath_township'],
+                ':student_fath_address' => $data['student_fath_address'],
+                ':student_fath_job' => $data['student_fath_job'],
+                ':student_fath_phone_num' => $data['student_fath_phone_num'],
+                ':student_moth_name_my' => $data['student_moth_name_my'],
+                ':student_moth_name_en' => $data['student_moth_name_en'],
+                ':student_moth_ethnicity' => $data['student_moth_ethnicity'],
+                ':student_moth_religion' => $data['student_moth_religion'],
+                ':student_moth_birth_place' => $data['student_moth_birth_place'],
+                ':student_moth_nationality' => $data['student_moth_nationality'],
                 ':student_moth_nrc' => $student_moth_nrc,
-                ':student_moth_region' => $_POST['student_moth_region'],
-                ':student_moth_township' => $_POST['student_moth_township'],
-                ':student_moth_address' => $_POST['student_moth_address'],
-                ':student_moth_job' => $_POST['student_moth_job'],
-                ':student_moth_phone_num' => $_POST['student_moth_phone_num']
+                ':student_moth_region' => $data['student_moth_region'],
+                ':student_moth_township' => $data['student_moth_township'],
+                ':student_moth_address' => $data['student_moth_address'],
+                ':student_moth_job' => $data['student_moth_job'],
+                ':student_moth_phone_num' => $data['student_moth_phone_num']
             ]);
 
             $sql_guardian = "INSERT INTO student_guardian_tbl (
@@ -140,15 +141,15 @@ class StudentAdmissionModel
             $stmt_guardian = $this->db->prepare($sql_guardian);
             $stmt_guardian->execute([
                 ':student_id' => $student_id,
-                ':guardian_name' => $_POST['guardian_name'],
-                ':guardian_relation' => $_POST['guardian_relation'],
-                ':guardian_job' => $_POST['guardian_job'],
-                ':guardian_address' => $_POST['guardian_address'],
-                ':guardian_phone_num' => $_POST['guardian_phone_num'],
+                ':guardian_name' => $data['guardian_name'],
+                ':guardian_relation' => $data['guardian_relation'],
+                ':guardian_job' => $data['guardian_job'],
+                ':guardian_address' => $data['guardian_address'],
+                ':guardian_phone_num' => $data['guardian_phone_num'],
             ]);
 
             // Create a directory for the student if it doesn't exist
-            $uploadDir = '../uploads/' . $student_id . '/';
+            $uploadDir = 'C:\xampp\htdocs\student-registration-system\www\utils\uploads\admission/' . $student_id . '/';
             if (!file_exists($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
             }
@@ -231,6 +232,103 @@ class StudentAdmissionModel
         } catch (PDOException $e) {
             $this->db->rollBack();
             echo "Failed to register student: " . $e->getMessage();
+            return $e->getMessage();
+        }
+    }
+    public function getAllFreshersByStatusAndYear($studentTbl, $status, $year)
+    {
+        try {
+
+            $sql = "SELECT id,matriculation_reg_num,student_name_my,student_nrc
+            FROM $studentTbl WHERE year=1 AND status=:status and YEAR(created_at) =:year
+            ORDER BY matriculation_reg_num ASC";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                ":status" => $status,
+                ":year" => $year,
+            ]);
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return array_values($data);
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getStudentById($studentId)
+    {
+        try {
+            // Prepare SQL to get student details
+            $sql_student = "SELECT * FROM student_tbl WHERE id = :student_id";
+            $stmt_student = $this->db->prepare($sql_student);
+            $stmt_student->execute([':student_id' => $studentId]);
+            $student = $stmt_student->fetch(PDO::FETCH_ASSOC);
+
+            if (!$student) {
+                return null;  // No student found with the given ID
+            }
+
+            // Prepare SQL to get parent details
+            $sql_parent = "SELECT * FROM student_parent_tbl WHERE student_id = :student_id";
+            $stmt_parent = $this->db->prepare($sql_parent);
+            $stmt_parent->execute([':student_id' => $studentId]);
+            $parent = $stmt_parent->fetch(PDO::FETCH_ASSOC);
+
+            // Prepare SQL to get guardian details
+            $sql_guardian = "SELECT * FROM student_guardian_tbl WHERE student_id = :student_id";
+            $stmt_guardian = $this->db->prepare($sql_guardian);
+            $stmt_guardian->execute([':student_id' => $studentId]);
+            $guardian = $stmt_guardian->fetch(PDO::FETCH_ASSOC);
+
+            // Prepare SQL to get required files
+            $sql_files = "SELECT * FROM student_admission_required_file_tbl WHERE student_id = :student_id";
+            $stmt_files = $this->db->prepare($sql_files);
+            $stmt_files->execute([':student_id' => $studentId]);
+            $files = $stmt_files->fetch(PDO::FETCH_ASSOC);
+
+            // Combine all information into one array
+            $studentData = [
+                'student' => $student,
+                'parent' => $parent,
+                'guardian' => $guardian,
+                'files' => $files
+            ];
+
+            return $studentData;
+        } catch (PDOException $e) {
+            echo "Failed to retrieve student data: " . $e->getMessage();
+            return null;
+        }
+    }
+
+
+    public function approveFresher($studentTbl, $studentAuthTbl, $data)
+    {
+        try {
+            $this->db->beginTransaction();
+            $sql = "UPDATE $studentTbl SET status=:status, roll_num=:roll_num
+        WHERE id=:id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                ":status" => 1,
+                ":roll_num" => $data['roll_num'],
+                ":id" => $data['id'],
+            ]);
+            $sql = "INSERT INTO $studentAuthTbl(
+            student_id,edu_mail,password) 
+            VALUES(
+            :student_id,:edu_mail,:password
+            )";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                ":student_id" => $data['id'],
+                ":edu_mail" => $data['edu_mail'],
+                ":password" => $data['password'],
+            ]);
+
+            $this->db->commit();
+            return true;
+        } catch (PDOException $e) {
+            $this->db->rollBack();
             return $e->getMessage();
         }
     }

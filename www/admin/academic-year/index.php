@@ -4,22 +4,26 @@
 require '../../../vendor/autoload.php';
 include '../../../autoload.php';
 
-use controllers\DeptController;
+use controllers\AcademicYearController;
 
-$deptController = new DeptController();
-$departments = $deptController->index();
+$academicYearController = new AcademicYearController();
+$academicYears = $academicYearController->index();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $deptName = $_POST['dept_name'];
+    $year = $_POST['academic_year'];
+    $id = isset($_POST['id']) ? $_POST['id'] : null;
 
-    if (isset($_POST['dept_id'])) {
-        // Update 
-        $deptController->updateDept($_POST['dept_id'], $deptName);
+    if ($id) {
+        // Update
+        $academicYearController->updateAcademicYear($id, $year);
+        echo "updated";
     } else {
-        // Create 
-        $deptController->createDept($deptName);
+        // Create
+        $academicYearController->createAcademicYear($year);
+        echo "created";
     }
     header('Location: index.php');
+    exit;
 }
 
 ?>
@@ -51,18 +55,19 @@ include("../../utils/components/admin/admin.links.php");
                     <div>
                         <h4
                             class="m-4 text-2xl font-semibold text-gray-800 dark:text-gray-300">
-                            Departments
+                            Academic Year (ပညာသင်နှစ်)
                         </h4>
                         <div class="md:w-1/2 px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
                             <form action="" method="POST">
                                 <label class="block text-sm">
-                                    <span class="text-gray-700 pt-4 font-semibold dark:text-gray-500">Name</span>
+                                    <span class="text-gray-700 pt-4 font-semibold dark:text-gray-500">Academic Year</span>
                                     <input
                                         class="mt-4 mb-2 block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                        name="dept_name" placeholder="Faculty of Computer Science" required />
+                                        name="academic_year" placeholder="2024 - 2025" required />
                                 </label>
                                 <div class="flex justify-end">
                                     <button
+                                        name="create"
                                         class="px-4 py-2 my-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                         Create
                                     </button>
@@ -78,7 +83,7 @@ include("../../utils/components/admin/admin.links.php");
                                     <tr
                                         class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                                         <th class="px-4 py-3">No</th>
-                                        <th class="px-4 py-3">Name</th>
+                                        <th class="px-4 py-3">Academic Year</th>
                                         <th class="px-4 py-3">Action</th>
                                     </tr>
                                 </thead>
@@ -86,7 +91,7 @@ include("../../utils/components/admin/admin.links.php");
                                     class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                                     <?php
                                     $count = 1;
-                                    foreach ($departments as $department) {
+                                    foreach ($academicYears as $acYear) {
 
                                     ?>
                                         <tr class="text-gray-700 dark:text-gray-400">
@@ -94,14 +99,14 @@ include("../../utils/components/admin/admin.links.php");
                                                 <?= $count ?>
                                             </td>
                                             <td class="px-4 py-3 text-sm">
-                                                <?= $department['dept_name'] ?>
+                                                <?= $acYear['academic_year'] ?>
                                             </td>
                                             <td>
                                                 <div class="flex items-center space-x-4 text-sm">
 
                                                     <button
                                                         @click="openModal"
-                                                        onclick="openEditModal('<?= $department['dept_id'] ?>', '<?= $department['dept_name'] ?>' )"
+                                                        onclick="openEditModal('<?= $acYear['id'] ?>', '<?= $acYear['academic_year'] ?>' )"
                                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                         aria-label="Edit">
                                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
@@ -113,7 +118,7 @@ include("../../utils/components/admin/admin.links.php");
                                                     </button>
 
                                                     <button
-                                                        onclick="window.location.href='delete.php?id=<?= $department['dept_id'] ?>'"
+                                                        onclick="window.location.href='delete.php?id=<?= $acYear['id'] ?>'"
                                                         class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                         aria-label="Delete">
                                                         <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
@@ -184,16 +189,16 @@ include("../../utils/components/admin/admin.links.php");
                         <!-- Modal title -->
                         <p
                             class="mb-6 text-lg font-semibold text-gray-700 dark:text-gray-300">
-                            Update Department
+                            Update Academic Year
                         </p>
                         <!-- Modal description -->
                         <form action="" method="POST">
-                            <input type="hidden" name="dept_id" id="editDeptId">
+                            <input type="hidden" name="id" id="editAcademicYearId">
                             <label class="block text-sm">
-                                <span class="text-gray-800 font-semibold dark:text-gray-500">Name</span>
+                                <span class="text-gray-800 font-semibold dark:text-gray-500">Academic Year</span>
                                 <input
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    name="dept_name" id="editDeptName" placeholder="Faculty of Computer Science" required />
+                                    name="academic_year" id="editAcademicYear" placeholder="2024 - 2025" required />
                             </label>
                     </div>
                     <footer
@@ -215,11 +220,9 @@ include("../../utils/components/admin/admin.links.php");
             <!-- End of modal backdrop -->
 </body>
 <script>
-    function openEditModal(deptId, deptName) {
-        document.getElementById('editDeptId').value = deptId;
-        document.getElementById('editDeptName').value = deptName;
-        console.log(deptName);
-
+    function openEditModal(id, academicYear) {
+        document.getElementById('editAcademicYearId').value = id;
+        document.getElementById('editAcademicYear').value = academicYear;
     }
 </script>
 
