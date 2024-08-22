@@ -63,6 +63,7 @@ class DeptModel
             $sql = "DELETE FROM $table WHERE dept_id=:id";
             $statement = $this->db->prepare($sql);
             $statement->execute([":id" => $id]);
+            return true;
         } catch (PDOException $e) {
             return $e->getMessage();
         }
