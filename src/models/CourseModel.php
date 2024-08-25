@@ -56,6 +56,20 @@ class CourseModel
             return $e->getMessage();
         }
     }
+    public function getAllCoursesBySemester($table, $semesterId)
+    {
+        try {
+            $sql = "SELECT * FROM $table where semester_id=:semester_id";
+            $statement = $this->db->prepare($sql);
+            $statement->execute([
+                ":semester_id" => $semesterId
+            ]);
+            $data = $statement->fetchAll((PDO::FETCH_ASSOC));
+            return $data;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
     public function updateCourse($table, $id, $data)
     {
         try {

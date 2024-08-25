@@ -18,5 +18,9 @@ class Constants
     static $DEPT_TBL = "dept_tbl";
     static $COURSE_TBL = "course_tbl";
     static $SEMESTER_TBL = "semester_tbl";
+    static $MAJOR_TBL = "major_tbl";
+    static $SECTION_TBL = "section_tbl";
     static $ACADEMIC_YEAR_TBL = "academic_year_tbl";
+    static $TIMETABLE_TBL = "timetable_tbl";
+    static $TEACHER_TBL = "teacher_tbl";
 }

@@ -23,6 +23,11 @@ class CourseController
         $courses = $this->courseModel->getAllCourses(Constants::$COURSE_TBL);
         return $courses;
     }
+    public function getAllCoursesBySemester($semesterId)
+    {
+        $courses = $this->courseModel->getAllCoursesBySemester(Constants::$COURSE_TBL, $semesterId);
+        return $courses;
+    }
     public function updateCourse($id, $data)
     {
         $this->courseModel->updateCourse(Constants::$COURSE_TBL, $id, $data);
