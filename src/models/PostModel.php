@@ -216,6 +216,7 @@ class PostModel
             ";
             $statement = $this->db->prepare($sql);
             $statement->execute([':id' => $id]);
+            return true;
         } catch (PDOException $e) {
             return $e->getMessage();
         }

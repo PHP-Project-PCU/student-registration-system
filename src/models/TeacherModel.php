@@ -6,7 +6,7 @@ use core\db\MySQL;
 use PDOException;
 use PDO;
 
-class DeptModel
+class TeacherModel
 {
     private $db = null;
 
@@ -18,21 +18,24 @@ class DeptModel
         }
     }
 
-    public function createDept($table, $data)
+    public function enrollNewTeacher($table, $data)
     {
         try {
-            $sql = "INSERT INTO $table (dept_name) 
-                    VALUES (:dept_name)";
+            $sql = "INSERT INTO $table (teacher_name,dept_id,edu_mail,password) 
+                    VALUES (:teacher_name,:dept_id,:edu_mail,:password)";
             $statement = $this->db->prepare($sql);
             $result = $statement->execute([
-                ':dept_name' => $data,
+                ":teacher_name" =>  $data['teacher_name'],
+                ":dept_id" =>  $data['dept_id'],
+                ":edu_mail" =>  $data['edu_mail'],
+                ":password" =>  $data['password'],
             ]);
             return true;
         } catch (PDOException $e) {
             return $e->getMessage();
         }
     }
-    public function getAllDepts($table)
+    public function getAllTeachers($table)
     {
         try {
             $sql = "SELECT * FROM $table";
@@ -44,23 +47,33 @@ class DeptModel
             return $e->getMessage();
         }
     }
-    public function updateDept($table, $id, $data)
+    public function updateTeacher($table, $id, $data)
     {
         try {
-            $sql = " UPDATE $table SET dept_name=:dept_name WHERE dept_id=:id";
+            $sql = "UPDATE $table SET 
+                    teacher_name=:teacher_name,
+                    dept_id=:dept_id,
+                    edu_mail=:edu_mail,
+                    password=:password
+                    WHERE id = :id";
             $statement = $this->db->prepare($sql);
-            $statement->execute([
-                ":id" => $id,
-                ":dept_name" => $data
+            $result = $statement->execute([
+                ":teacher_name" =>  $data['teacher_name'],
+                ":dept_id" =>  $data['dept_id'],
+                ":edu_mail" =>  $data['edu_mail'],
+                ":password" =>  $data['password'],
+                ":id" => $id
             ]);
+            var_dump($result);
         } catch (PDOException $e) {
             return $e->getMessage();
         }
     }
-    public function deleteDept($table, $id)
+
+    public function deleteTeacher($table, $id)
     {
         try {
-            $sql = "DELETE FROM $table WHERE dept_id=:id";
+            $sql = "DELETE FROM $table WHERE id=:id";
             $statement = $this->db->prepare($sql);
             $statement->execute([":id" => $id]);
             return true;
