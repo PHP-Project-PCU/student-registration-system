@@ -16,7 +16,7 @@ class PostController
 
     public function createPost($data, $images)
     {
-        $uploadDir = 'C:\xampp\htdocs\student-registration-system\www\utils\uploads\admin-posts/';
+        $uploadDir = 'C:\xampp\htdocs\student-registration-system\www\utils\uploads\images/';
         $imagePaths = [];
         foreach ($images['tmp_name'] as $key => $tmpName) {
             $image = basename($images['name'][$key]);
@@ -43,11 +43,11 @@ class PostController
     }
     public function getPostById($id)
     {
-        return  $this->postModel->getPostById(Constants::$POST_TBL, Constants::$POST_IMAGES_TBL, $id);
+        return $this->postModel->getPostById(Constants::$POST_TBL, Constants::$POST_IMAGES_TBL, $id);
     }
     public function updatePost($id, $data, $images)
     {
-        $uploadDir = 'C:\xampp\htdocs\student-registration-system\www\utils\uploads\admin-posts/';
+        $uploadDir = 'C:\xampp\htdocs\student-registration-system\www\utils\uploads\images/';
         $imagePaths = [];
         foreach ($images['tmp_name'] as $key => $tmpName) {
             $image = basename($images['name'][$key]);

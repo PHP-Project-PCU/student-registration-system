@@ -22,7 +22,6 @@ function getYear($year)
     $part = explode('-', $year);
     return $part[0];
 }
-
 $studentAdmissionController = new StudentAdmissionController();
 $freshers = $studentAdmissionController->getAllFreshersByStatus($status, $selectedYear);
 
@@ -52,27 +51,30 @@ include("../../../utils/components/admin/admin.links.php");
 
                 <div class="p-4">
                     <div class="flex justify-between items-start mb-4">
-                        <button
-                            onclick="window.location.href='../'"
+                        <button onclick="window.location.href='../'"
                             class="px-4 py-2 my-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                             &larr;
                         </button>
-                        <h4
-                            class="m-4 text-2xl font-semibold text-gray-800 dark:text-gray-300">
+                        <h4 class="m-4 text-2xl font-semibold text-gray-800 dark:text-gray-300">
                             ပထမနှစ်ဝင်ခွင့်လျှောက်ထားသူများ
                         </h4>
                         <form action="" method="POST">
-                            <select id="status" name="status"
-                                onchange="this.form.submit()"
+                            <select id="status" name="status" onchange="this.form.submit()"
                                 class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                                <option value="0" <?php if ($status == 0) echo 'selected'; ?>>အတည်မပြုရသေးသောလျှောက်လွှာများ</option>
-                                <option value="1" <?php if ($status == 1) echo 'selected'; ?>>အတည်ပြုပြီးသောလျှောက်လွှာများ</option>
+                                <option value="0" <?php if ($status == 0)
+                                    echo 'selected'; ?>>
+                                    အတည်မပြုရသေးသောလျှောက်လွှာများ</option>
+                                <option value="1" <?php if ($status == 1)
+                                    echo 'selected'; ?>>
+                                    အတည်ပြုပြီးသောလျှောက်လွှာများ</option>
                             </select>
-                            <select id="selected_year" name="selected_year"
-                                onchange="this.form.submit()"
+                            <select id="selected_year" name="selected_year" onchange="this.form.submit()"
                                 class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                 <?php foreach ($academicYears as $year): ?>
-                                    <option value="<?= $year["academic_year"] ?>" <?php if ($selectedYear == getYear($year['academic_year'])) echo 'selected' ?>><?= $year['academic_year'] . " (ပညာသင်နှစ်)" ?></option>
+                                    <option value="<?= $year["academic_year"] ?>" <?php if ($selectedYear == getYear($year['academic_year']))
+                                          echo 'selected' ?>>
+                                        <?= $year['academic_year'] . " (ပညာသင်နှစ်)" ?>
+                                    </option>
                                 <?php endforeach ?>
 
                             </select>
@@ -85,8 +87,7 @@ include("../../../utils/components/admin/admin.links.php");
                         <div class="w-full ">
                             <table class="table-fixed w-full whitespace-no-wrap">
                                 <thead>
-                                    <tr
-                                        class="text-xs font-semibold tracking-wide text-left  uppercase border-b ">
+                                    <tr class="text-xs font-semibold tracking-wide text-left  uppercase border-b ">
                                         <th class="px-4 py-3">စဉ်</th>
                                         <th class="px-4 py-3">ဝင်ခွင့်အမှတ်စဉ်</th>
                                         <th class="px-4 py-3">အမည်</th>
@@ -95,14 +96,13 @@ include("../../../utils/components/admin/admin.links.php");
 
                                     </tr>
                                 </thead>
-                                <tbody
-                                    class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                                <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                                     <?php
                                     $count = 1;
                                     foreach ($freshers as $fresher) {
                                         $id = $fresher['id'];
 
-                                    ?>
+                                        ?>
                                         <tr class="text-gray-700 dark:text-gray-400">
                                             <td class="px-4 py-3">
                                                 <?= $count ?>
@@ -118,13 +118,15 @@ include("../../../utils/components/admin/admin.links.php");
                                             </td>
                                             <td class="px-4 py-3 text-sm">
                                                 <?php if ($status == 1): ?>
-                                                    <a href="view.php?id=<?= $fresher['id'] ?>" class="text-indigo-700 hover:text-indigo-400">အသေးစိတ်ကြည့်ရှုရန်</a>
+                                                    <a href="view.php?id=<?= $fresher['id'] ?>"
+                                                        class="text-indigo-700 hover:text-indigo-400">အသေးစိတ်ကြည့်ရှုရန်</a>
                                                 <?php else: ?>
-                                                    <a href="update.php?id=<?= $fresher['id'] ?>" class="text-indigo-700 hover:text-indigo-400">စစ်ဆေးကြည့်ရှုရန်</a>
+                                                    <a href="update.php?id=<?= $fresher['id'] ?>"
+                                                        class="text-indigo-700 hover:text-indigo-400">စစ်ဆေးကြည့်ရှုရန်</a>
                                                 <?php endif ?>
                                             </td>
                                         </tr>
-                                    <?php $count++;
+                                        <?php $count++;
                                     } ?>
                                 </tbody>
                             </table>
