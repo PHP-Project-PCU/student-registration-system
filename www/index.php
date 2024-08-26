@@ -7,6 +7,35 @@ include("./utils/components/navigation.php");
 $heroVideoFilePath = "utils/assets/img/ucspyay/cu-short.mp4";
 $youtubeCoverImgPath = "utils/assets/img/ucspyay/uc-build-1.jpg";
 $ucspLogoImgPath = "utils/assets/img/ucspyay/ucsp-logo-light.jpg";
+
+
+
+require '../vendor/autoload.php';
+include '../autoload.php';
+
+use controllers\PostController;
+
+$postController = new PostController();
+$posts = $postController->getPostsByLimit(5);
+
+function getRelativePath($imgPath)
+{
+    $baseUrl = "http://ucspyay.edu/";
+    $imgPath = str_replace('\\', '/', $imgPath);
+    $startPos = strpos($imgPath, 'utils/');
+    if ($startPos === false) {
+        return 'Path segment not found';
+    }
+    $relativePath = substr($imgPath, $startPos);
+    return $baseUrl . $relativePath;
+};
+
+function formatDate($date)
+{
+    return date("M d, Y", strtotime($date));
+}
+
+?>
 ?>
 
 <body class="font-nunito text-base text-black dark:text-white dark:bg-slate-900 scroll-smooth">
@@ -22,12 +51,14 @@ $ucspLogoImgPath = "utils/assets/img/ucspyay/ucsp-logo-light.jpg";
         <div class="container relative z-2">
             <div class="grid grid-cols-1 md:mt-44 mt-32 text-center py-4">
                 <div class="wow">
-                    <h4 class="text-white font-bold lg:leading-normal leading-normal text-4xl lg:text-5xl mb-5 animate__animated animate__flipInX">
+                    <h4
+                        class="text-white font-bold lg:leading-normal leading-normal text-4xl lg:text-5xl mb-5 animate__animated animate__flipInX">
                         University of Computer Studies, Pyay</h4>
                     <p class="text-white text-lg max-w-xl mx-auto animate__animated animate__jello">
                         ကွန်ပျူတာတက္ကသိုလ်(ပြည်)</p>
                     <div class="mt-6">
-                        <a href="/admission/" class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md animate__animated animate__flipInX">Student
+                        <a href="/admission/"
+                            class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md animate__animated animate__flipInX">Student
                             Admission</a>
                     </div>
                 </div>
@@ -73,7 +104,8 @@ $ucspLogoImgPath = "utils/assets/img/ucspyay/ucsp-logo-light.jpg";
 
     <div class="container relative md:mt-24 mt-16">
         <div class="grid grid-cols-1 pb-8 text-center">
-            <h3 class="mb-4 md:text-3xl md:leading-normal text-2xl leading-normal font-semibold">Welcome to our university</h3>
+            <h3 class="mb-4 md:text-3xl md:leading-normal text-2xl leading-normal font-semibold">Welcome to our
+                university</h3>
             <p class="text-slate-400 max-w-xl mx-auto">Our university is</p>
             <p class="text-slate-400 max-w-xl mx-auto">To give the students a higher standard education. Give better
                 education service,</p>
@@ -92,7 +124,8 @@ $ucspLogoImgPath = "utils/assets/img/ucspyay/ucsp-logo-light.jpg";
                         <div class="relative">
                             <img src="<?= $youtubeCoverImgPath ?>" alt="School Image" class="rounded-md z-10">
                             <div class="absolute bottom-2/4 translate-y-2/4 start-0 end-0 text-center">
-                                <a href="#!" data-type="youtube" data-id="hZ0oCAOi5hw" class="lightbox size-20 rounded-full shadow-lg dark:shadow-gray-800 inline-flex items-center justify-center bg-white dark:bg-slate-900 text-indigo-600 dark:text-white">
+                                <a href="#!" data-type="youtube" data-id="hZ0oCAOi5hw"
+                                    class="lightbox size-20 rounded-full shadow-lg dark:shadow-gray-800 inline-flex items-center justify-center bg-white dark:bg-slate-900 text-indigo-600 dark:text-white">
                                     <i class="mdi mdi-play inline-flex items-center justify-center text-2xl"></i>
                                 </a>
                             </div>
@@ -105,7 +138,8 @@ $ucspLogoImgPath = "utils/assets/img/ucspyay/ucsp-logo-light.jpg";
                                     <div class="mt-8">
                                         <div class="section-title text-md-start">
                                             <h6 class="text-white/50 text-lg font-semibold">UCSPyay</h6>
-                                            <h3 class="md:text-3xl text-2xl md:leading-normal leading-normal font-semibold text-white mt-2">
+                                            <h3
+                                                class="md:text-3xl text-2xl md:leading-normal leading-normal font-semibold text-white mt-2">
                                                 “ပညာ၀ေဆာ၊ သီရိခေတ္တရာ” </h3>
                                         </div>
                                     </div>
@@ -115,7 +149,8 @@ $ucspLogoImgPath = "utils/assets/img/ucspyay/ucsp-logo-light.jpg";
                                                 Studies (Pyay) is government funded university located in Pyay, Bago
                                                 Region with an emphasis is on computer engineering at the undergraduate
                                                 and graduate levels. Founded in 2004…</span>
-                                            <a href="#" class="text-white">Read More <i class="uil uil-angle-right-b align-middle"></i></a>
+                                            <a href="#" class="text-white">Read More <i
+                                                    class="uil uil-angle-right-b align-middle"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -134,7 +169,8 @@ $ucspLogoImgPath = "utils/assets/img/ucspyay/ucsp-logo-light.jpg";
 
     <!-- News Session Start -->
     <div class="container relative md:mt-24 mt-16">
-        <div class="grid md:grid-cols-12 grid-cols-1 items-center wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
+        <div class="grid md:grid-cols-12 grid-cols-1 items-center wow animate__animated animate__fadeInUp"
+            data-wow-delay=".1s">
             <div class="md:col-span-6">
                 <h6 class="text-indigo-600 text-sm font-bold uppercase mb-2">Blogs</h6>
                 <h3 class="mb-4 md:text-3xl md:leading-normal text-2xl leading-normal font-semibold">Reads Our Latest
@@ -148,36 +184,32 @@ $ucspLogoImgPath = "utils/assets/img/ucspyay/ucsp-logo-light.jpg";
         <!--end grid-->
 
         <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 mt-8 gap-[30px]">
-            <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden wow animate__animated animate__fadeInUp" data-wow-delay=".7s">
-                <img src="<?= $ucspLogoImgPath ?>" alt="">
-                <div class="content p-6">
-                    <a href="blog-detail.html" class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">Smartest Applications for Business</a>
-                    <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and benefit </p>
-                    <div class="mt-4">
-                        <a href="blog-detail.html" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-normal hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Read More <i class="uil uil-arrow-right"></i></a>
+            <?php foreach ($posts as $post) {
+                $coverImg = getRelativePath($post['images'][0]);
+            ?>
+                <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden wow animate__animated animate__fadeInUp"
+                    data-wow-delay=".7s">
+                    <img src="<?= $coverImg ?>" alt="" class="w-full h-48 object-cover">
+                    <div class="content p-6">
+                        <a href="posts.php?id=<?= $post['id'] ?>"
+                            class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">
+                            <?= htmlspecialchars(strlen($post['title']) > 100 ? substr($post['title'], 0, 100) . '...' : $post['title']) ?>
+                        </a>
+                        <p class="text-slate-400 mt-3">
+                            <?= htmlspecialchars(strlen($post['description']) > 100 ? substr($post['description'], 0, 100) . '...' : $post['description']) ?>
+                        </p>
+                        <p class="text-gray-400 my-2 text-sm"><?= formatDate($post['created_at']) ?></p>
+
+
+                        <div class="mt-4">
+                            <a href="posts.php?id=<?= $post['id'] ?>"
+                                class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-normal hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Read
+                                More <i class="uil uil-arrow-right"></i></a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden wow animate__animated animate__fadeInUp" data-wow-delay=".7s">
-                <img src="<?= $ucspLogoImgPath ?>" alt="">
-                <div class="content p-6">
-                    <a href="blog-detail.html" class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">Smartest Applications for Business</a>
-                    <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and benefit </p>
-                    <div class="mt-4">
-                        <a href="blog-detail.html" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-normal hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Read More <i class="uil uil-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden wow animate__animated animate__fadeInUp" data-wow-delay=".7s">
-                <img src="<?= $ucspLogoImgPath ?>" alt="">
-                <div class="content p-6">
-                    <a href="blog-detail.html" class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">Smartest Applications for Business</a>
-                    <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and benefit </p>
-                    <div class="mt-4">
-                        <a href="blog-detail.html" class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-normal hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Read More <i class="uil uil-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
+
+            <?php } ?>
         </div>
         <!--end grid-->
     </div>
@@ -190,11 +222,14 @@ $ucspLogoImgPath = "utils/assets/img/ucspyay/ucsp-logo-light.jpg";
     ?>
 
     <!-- Start Cookie Popup -->
-    <div class="cookie-popup fixed max-w-lg bottom-3 end-3 start-3 sm:start-0 mx-auto bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 rounded-md py-5 px-6 z-50">
+    <div
+        class="cookie-popup fixed max-w-lg bottom-3 end-3 start-3 sm:start-0 mx-auto bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 rounded-md py-5 px-6 z-50">
         <p class="text-slate-400">This website uses cookies to provide you with a great user experience. By using it,
-            you accept our <a href="https://shreethemes.in/" target="_blank" class="text-emerald-600 dark:text-emerald-500 font-semibold">use of cookies</a></p>
+            you accept our <a href="https://shreethemes.in/" target="_blank"
+                class="text-emerald-600 dark:text-emerald-500 font-semibold">use of cookies</a></p>
         <div class="cookie-popup-actions text-end">
-            <button class="absolute border-none bg-none p-0 cursor-pointer font-semibold top-2 end-2"><i class="uil uil-times text-dark dark:text-slate-200 text-2xl"></i></button>
+            <button class="absolute border-none bg-none p-0 cursor-pointer font-semibold top-2 end-2"><i
+                    class="uil uil-times text-dark dark:text-slate-200 text-2xl"></i></button>
         </div>
     </div>
 

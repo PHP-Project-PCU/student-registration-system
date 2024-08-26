@@ -75,7 +75,7 @@ function getClosest(elem, selector) {
             function (s) {
                 var matches = (this.document || this.ownerDocument).querySelectorAll(s),
                     i = matches.length;
-                while (--i >= 0 && matches.item(i) !== this) {}
+                while (--i >= 0 && matches.item(i) !== this) { }
                 return i > -1;
             };
     }
@@ -98,24 +98,23 @@ function getClosest(elem, selector) {
 //                 matchingMenuItem = menuItems[idx];
 //             }
 //         }
-
 //         if (matchingMenuItem) {
 //             matchingMenuItem.classList.add('active');
-         
-         
+
+
 //             var immediateParent = getClosest(matchingMenuItem, 'li');
-      
+
 //             if (immediateParent) {
 //                 immediateParent.classList.add('active');
 //             }
-            
+
 //             var parent = getClosest(immediateParent, '.child-menu-item');
 //             if(parent){
 //                 parent.classList.add('active');
 //             }
 
 //             var parent = getClosest(parent || immediateParent , '.parent-menu-item');
-        
+
 //             if (parent) {
 //                 parent.classList.add('active');
 
@@ -182,7 +181,7 @@ window.onscroll = function () {
 
 function scrollFunction() {
     var mybutton = document.getElementById("back-to-top");
-    if(mybutton!=null){
+    if (mybutton != null) {
         if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
             mybutton.classList.add("block");
             mybutton.classList.remove("hidden");
@@ -232,7 +231,7 @@ try {
 try {
     new WOW().init();
 } catch (error) {
-    
+
 }
 
 /*************************/
@@ -296,7 +295,7 @@ try {
         }, 200);
     }
 } catch (error) {
-    
+
 }
 
 
@@ -304,10 +303,10 @@ try {
 /* Dark & Light Mode */
 /*********************/
 try {
-    function changeTheme(e){
+    function changeTheme(e) {
         e.preventDefault()
         const htmlTag = document.getElementsByTagName("html")[0]
-        
+
         if (htmlTag.className.includes("dark")) {
             htmlTag.className = 'light'
         } else {
@@ -316,79 +315,105 @@ try {
     }
 
     const switcher = document.getElementById("theme-mode")
-    switcher?.addEventListener("click" ,changeTheme )
-    
+    switcher?.addEventListener("click", changeTheme)
+
     const chk = document.getElementById('chk');
 
-    chk.addEventListener('change',changeTheme);
+    chk.addEventListener('change', changeTheme);
 } catch (err) {
-    
+
 }
 
 
 /*********************/
 /* LTR & RTL Mode */
 /*********************/
-try{
-    const htmlTag = document.getElementsByTagName("html")[0]
-    function changeLayout(e){
-        e.preventDefault()
-        const switcherRtl = document.getElementById("switchRtl")
-        if(switcherRtl.innerText === "LTR"){
-            htmlTag.dir = "ltr"
-        }
-        else{
-            htmlTag.dir = "rtl"
-        }
-        
-    }
-    const switcherRtl = document.getElementById("switchRtl")
-    switcherRtl?.addEventListener("click" ,changeLayout )
-}
-catch(err){}
+// try{
+//     const htmlTag = document.getElementsByTagName("html")[0]
+//     function changeLayout(e){
+//         e.preventDefault()
+//         const switcherRtl = document.getElementById("switchRtl")
+//         if(switcherRtl.innerText === "LTR"){
+//             htmlTag.dir = "ltr"
+//         }
+//         else{
+//             htmlTag.dir = "rtl"
+//         }
 
-try{
-    function addNewRow(){
-         // Get the table by its ID
-    var table = document.getElementById("examTable");
+//     }
+//     const switcherRtl = document.getElementById("switchRtl")
+//     switcherRtl?.addEventListener("click" ,changeLayout )
+// }
+// catch(err){}
 
-    // Create a new row element
-    var newRow = table.insertRow();
 
-    // Create cells in the new row
-    var cell1 = newRow.insertCell(0);
-    var cell2 = newRow.insertCell(1);
-    var cell3 = newRow.insertCell(2);
-    var cell4 = newRow.insertCell(3);
-    var cell5 = newRow.insertCell(4);
+/*********************/
+/* ADD New Row in Exam Tbl */
+/*********************/
+// try{
+//     function addNewRow(){
+//          // Get the table by its ID
+//     var table = document.getElementById("examTable");
 
-    // Add content to the new cells
-    cell1.innerHTML = `
-        <select class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-            <option>ပထမနှစ်စာမေးပွဲ</option>
-            <option>ဒုတိယနှစ်စာမေးပွဲ</option>
-            <option>တတိယနှစ်စာမေးပွဲ</option>
-            <option>စတုတ္ထနှစ်စာမေးပွဲ</option>
-        </select>`;
-    cell2.innerHTML = `
-        <select class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-            <option>CST</option>
-            <option>CS</option>
-            <option>CT</option>
-        </select>`;
-    cell3.innerHTML = `
-        <input name="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">`;
-    cell4.innerHTML = `
-        <input name="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">`;
-    cell5.innerHTML = `
-        <select class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-            <option>အောင်</option>
-            <option>ရှုံး</option>
-        </select>`;
-}
-}catch(err){
+//     // Create a new row element
+//     var newRow = table.insertRow();
 
-}
+//     // Create cells in the new row
+//     var cell1 = newRow.insertCell(0);
+//     var cell2 = newRow.insertCell(1);
+//     var cell3 = newRow.insertCell(2);
+//     var cell4 = newRow.insertCell(3);
+//     var cell5 = newRow.insertCell(4);
+
+//     // Add content to the new cells
+//     cell1.innerHTML = `
+//         <select class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+//             <option>ပထမနှစ်စာမေးပွဲ</option>
+//             <option>ဒုတိယနှစ်စာမေးပွဲ</option>
+//             <option>တတိယနှစ်စာမေးပွဲ</option>
+//             <option>စတုတ္ထနှစ်စာမေးပွဲ</option>
+//         </select>`;
+//     cell2.innerHTML = `
+//         <select class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+//             <option>CST</option>
+//             <option>CS</option>
+//             <option>CT</option>
+//         </select>`;
+//     cell3.innerHTML = `
+//         <input name="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">`;
+//     cell4.innerHTML = `
+//         <input name="text" class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0" placeholder="">`;
+//     cell5.innerHTML = `
+//         <select class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+//             <option>အောင်</option>
+//             <option>ရှုံး</option>
+//         </select>`;
+// }
+// }catch(err){
+
+// }
+
+
+/*********************/
+/*       Years       */
+/*********************/
+
+// function setupYearsDropdowns(yearId, jsonData) {
+//     const yearIdSelect = document.getElementById(yearId);
+
+//     const years = [...new Set(jsonData.years.map(item => item.name))];
+//     const yearID = [...new Set(jsonData.years.map(item => item.id))];
+
+//     // console.log(yearID);
+
+//     years.forEach(code => {
+//         let optionCode = document.createElement('option');
+//         yearID.forEach
+//         optionCode.value = code;
+//         optionCode.textContent = code;
+//         yearIdSelect.appendChild(optionCode);
+//     });
+// }
 
 
 /*********************/
@@ -415,8 +440,9 @@ function setupNrcDropdowns(nrcCodeSelectId, nrcNameSelectId, jsonData) {
 
         filteredNames.forEach(item => {
             let optionName = document.createElement('option');
-            optionName.value = item.name_mm;
-            optionName.textContent = item.name_mm;
+            let nrcName=item.name_mm.match(/\((.*?)\)/);
+            optionName.value = nrcName[1];
+            optionName.textContent = nrcName[1];
             nrcNameSelect.appendChild(optionName);
         });
     }
@@ -443,7 +469,7 @@ function setupRegionTownshipSelect(regionSelectId, townshipSelectId, jsonData) {
     // Populate the region dropdown
     jsonData.data.forEach(region => {
         let optionRegion = document.createElement('option');
-        optionRegion.value = region.eng;
+        optionRegion.value = region.mm;
         optionRegion.textContent = region.mm;
         regionSelect.appendChild(optionRegion);
     });
@@ -454,13 +480,13 @@ function setupRegionTownshipSelect(regionSelectId, townshipSelectId, jsonData) {
         townshipSelect.innerHTML = '';
 
         // Find the selected region's districts and townships
-        const selectedRegionData = jsonData.data.find(region => region.eng === selectedRegion);
+        const selectedRegionData = jsonData.data.find(region => region.mm === selectedRegion);
 
         if (selectedRegionData) {
             selectedRegionData.districts.forEach(district => {
                 district.townships.forEach(township => {
                     let optionTownship = document.createElement('option');
-                    optionTownship.value = township.eng;
+                    optionTownship.value = township.mm;
                     optionTownship.textContent = township.mm;
                     townshipSelect.appendChild(optionTownship);
                 });
@@ -475,7 +501,7 @@ function setupRegionTownshipSelect(regionSelectId, townshipSelectId, jsonData) {
 
     // Initialize townships dropdown with the first region's townships
     if (jsonData.data.length > 0) {
-        regionSelect.value = jsonData.data[0].eng;
-        updateTownshipOptions(jsonData.data[0].eng);
+        regionSelect.value = jsonData.data[0].mm;
+        updateTownshipOptions(jsonData.data[0].mm);
     }
 }

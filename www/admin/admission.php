@@ -1,5 +1,6 @@
 <?php
-include ('../../autoload.php');
+include('../../autoload.php');
+
 use core\helpers\HTTP;
 
 session_start();
@@ -13,15 +14,15 @@ if (!isset($_SESSION['admin'])) {
 <!DOCTYPE html>
 
 
-<?php include('head.php')?>
+<?php include('head.php') ?>
 
 <body>
   <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
     <!-- Desktop sidebar -->
-    <?php 
+    <?php
     include('sidebar.php');
     ?>
-    
+
     <div class="flex flex-col flex-1 w-full">
       <?php
       include('header.php');
@@ -32,7 +33,7 @@ if (!isset($_SESSION['admin'])) {
             Admission
           </h2>
           <!-- CTA -->
-         
+
           <!-- Cards -->
           <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-2">
             <!-- Card -->
@@ -49,30 +50,36 @@ if (!isset($_SESSION['admin'])) {
                   ပထမနှစ်
                 </p>
                 <div class="flex items-center justify-between">
-                    <div class="flex items-center flex-col">
-                    <div><p>40</p></div>
-                        <div>
-                        <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
-                            လျှောက်လွှာအရေအတွက်
-                        </p>
-                        </div>
+                  <div class="flex items-center flex-col">
+                    <div>
+                      <p>40</p>
                     </div>
-                    <div class="flex items-center flex-col">
-                    <div><p>30</p></div>
-                        <div>
-                        <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
-                            စစ်ဆေးပြီး
-                        </p>
-                        </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                        လျှောက်လွှာအရေအတွက်
+                      </p>
                     </div>
-                    <div class="flex items-center flex-col">
-                    <div><p>10</p></div>
-                        <div>
-                        <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
-                            ပြင်ဆင်ရန်
-                        </p>
-                        </div>
+                  </div>
+                  <div class="flex items-center flex-col">
+                    <div>
+                      <p>30</p>
                     </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                        စစ်ဆေးပြီး
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex items-center flex-col">
+                    <div>
+                      <p>10</p>
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                        ပြင်ဆင်ရန်
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -90,30 +97,36 @@ if (!isset($_SESSION['admin'])) {
                   ဒုတိယနှစ်
                 </p>
                 <div class="flex items-center justify-between">
-                    <div class="flex items-center flex-col">
-                    <div><p>40</p></div>
-                        <div>
-                        <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
-                            လျှောက်လွှာအရေအတွက်
-                        </p>
-                        </div>
+                  <div class="flex items-center flex-col">
+                    <div>
+                      <p>40</p>
                     </div>
-                    <div class="flex items-center flex-col">
-                    <div><p>30</p></div>
-                        <div>
-                        <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
-                            စစ်ဆေးပြီး
-                        </p>
-                        </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                        လျှောက်လွှာအရေအတွက်
+                      </p>
                     </div>
-                    <div class="flex items-center flex-col">
-                    <div><p>10</p></div>
-                        <div>
-                        <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
-                            ပြင်ဆင်ရန်
-                        </p>
-                        </div>
+                  </div>
+                  <div class="flex items-center flex-col">
+                    <div>
+                      <p>30</p>
                     </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                        စစ်ဆေးပြီး
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex items-center flex-col">
+                    <div>
+                      <p>10</p>
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                        ပြင်ဆင်ရန်
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -131,30 +144,36 @@ if (!isset($_SESSION['admin'])) {
                   တတိယနှစ်
                 </p>
                 <div class="flex items-center justify-between">
-                    <div class="flex items-center flex-col">
-                    <div><p>40</p></div>
-                        <div>
-                        <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
-                            လျှောက်လွှာအရေအတွက်
-                        </p>
-                        </div>
+                  <div class="flex items-center flex-col">
+                    <div>
+                      <p>40</p>
                     </div>
-                    <div class="flex items-center flex-col">
-                    <div><p>30</p></div>
-                        <div>
-                        <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
-                            စစ်ဆေးပြီး
-                        </p>
-                        </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                        လျှောက်လွှာအရေအတွက်
+                      </p>
                     </div>
-                    <div class="flex items-center flex-col">
-                    <div><p>10</p></div>
-                        <div>
-                        <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
-                            ပြင်ဆင်ရန်
-                        </p>
-                        </div>
+                  </div>
+                  <div class="flex items-center flex-col">
+                    <div>
+                      <p>30</p>
                     </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                        စစ်ဆေးပြီး
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex items-center flex-col">
+                    <div>
+                      <p>10</p>
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                        ပြင်ဆင်ရန်
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -172,30 +191,36 @@ if (!isset($_SESSION['admin'])) {
                   စတုတ္ထနှစ်
                 </p>
                 <div class="flex items-center justify-between">
-                    <div class="flex items-center flex-col">
-                    <div><p>40</p></div>
-                        <div>
-                        <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
-                            လျှောက်လွှာအရေအတွက်
-                        </p>
-                        </div>
+                  <div class="flex items-center flex-col">
+                    <div>
+                      <p>40</p>
                     </div>
-                    <div class="flex items-center flex-col">
-                    <div><p>30</p></div>
-                        <div>
-                        <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
-                            စစ်ဆေးပြီး
-                        </p>
-                        </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                        လျှောက်လွှာအရေအတွက်
+                      </p>
                     </div>
-                    <div class="flex items-center flex-col">
-                    <div><p>10</p></div>
-                        <div>
-                        <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
-                            ပြင်ဆင်ရန်
-                        </p>
-                        </div>
+                  </div>
+                  <div class="flex items-center flex-col">
+                    <div>
+                      <p>30</p>
                     </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                        စစ်ဆေးပြီး
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex items-center flex-col">
+                    <div>
+                      <p>10</p>
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                        ပြင်ဆင်ရန်
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -212,41 +237,47 @@ if (!isset($_SESSION['admin'])) {
                   ပဉ္စမနှစ်
                 </p>
                 <div class="flex items-center justify-between">
-                    <div class="flex items-center flex-col">
-                    <div><p>40</p></div>
-                        <div>
-                        <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
-                            လျှောက်လွှာအရေအတွက်
-                        </p>
-                        </div>
+                  <div class="flex items-center flex-col">
+                    <div>
+                      <p>40</p>
                     </div>
-                    <div class="flex items-center flex-col">
-                    <div><p>30</p></div>
-                        <div>
-                        <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
-                            စစ်ဆေးပြီး
-                        </p>
-                        </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                        လျှောက်လွှာအရေအတွက်
+                      </p>
                     </div>
-                    <div class="flex items-center flex-col">
-                    <div><p>10</p></div>
-                        <div>
-                        <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
-                            ပြင်ဆင်ရန်
-                        </p>
-                        </div>
+                  </div>
+                  <div class="flex items-center flex-col">
+                    <div>
+                      <p>30</p>
                     </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                        စစ်ဆေးပြီး
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex items-center flex-col">
+                    <div>
+                      <p>10</p>
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                        ပြင်ဆင်ရန်
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- New Table -->
-          
+
 
           <!-- Charts -->
-          
-         
+
+
         </div>
       </main>
     </div>
@@ -258,12 +289,11 @@ if (!isset($_SESSION['admin'])) {
 
 
 <script>
-console.log("hello")
-const pieConfig = {
-  type: 'doughnut',
-  data: {
-    datasets: [
-      {
+  console.log("hello")
+  const pieConfig = {
+    type: 'doughnut',
+    data: {
+      datasets: [{
         data: [58, 33, 33],
         /**
          * These colors come from Tailwind CSS palette
@@ -271,25 +301,23 @@ const pieConfig = {
          */
         backgroundColor: ['#0694a2', '#1c64f2', '#7e3af2'],
         label: 'Dataset 1',
-      },
-    ],
-    labels: ['Shoes', 'Shirts', 'Bags'],
-  },
-  options: {
-    responsive: true,
-    cutoutPercentage: 80,
-    /**
-     * Default legends are ugly and impossible to style.
-     * See examples in charts.html to add your own legends
-     *  */
-    legend: {
-      display: false,
+      }, ],
+      labels: ['Shoes', 'Shirts', 'Bags'],
     },
-  },
-}
+    options: {
+      responsive: true,
+      cutoutPercentage: 80,
+      /**
+       * Default legends are ugly and impossible to style.
+       * See examples in charts.html to add your own legends
+       *  */
+      legend: {
+        display: false,
+      },
+    },
+  }
 
-// change this to the id of your chart element in HMTL
-const pieCtx = document.getElementById('pie')
-const pie = new Chart(pieCtx, pieConfig)
-
+  // change this to the id of your chart element in HMTL
+  const pieCtx = document.getElementById('pie')
+  const pie = new Chart(pieCtx, pieConfig)
 </script>
