@@ -12,11 +12,6 @@ use controllers\MajorController;
 use controllers\CourseController;
 use controllers\TimetableController;
 use controllers\TeacherController;
-use models\TimeTableModel;
-
-// $currentSemesterId = 1;
-// $currentMajorId = 1;
-// $currentSectionId = 1;
 
 $academicYearController = new AcademicYearController();
 $academicYears = $academicYearController->index();
@@ -30,28 +25,20 @@ $timetableController = new TimetableController();
 
 $majorController = new MajorController();
 $majors = $majorController->index();
-$currentMajorId = $_POST['major_id'] ?? '';
+$currentMajorId = $_POST['major_id'] ?? 1;
 
 $sectionController = new SectionController();
 $sections = $sectionController->index();
-$currentSectionId = $_POST['section_id'] ?? '';
+$currentSectionId = $_POST['section_id'] ?? 1;
 
 $courseController = new CourseController();
 
 $semesterController = new SemesterController();
 $semesters = $semesterController->index();
-$currentSemesterId = $_POST['semester_id'] ?? '';
+$currentSemesterId = $_POST['semester_id'] ?? 1;
 
 // getting Courses by Semester
 $courses = $courseController->getAllCoursesBySemester($currentSemesterId);
-
-
-// function getYear($year)
-// {
-//     $part = explode('-', $year);
-//     return $part[0];
-// }
-
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $currentSemesterId = $_POST['semester_id'];
@@ -673,11 +660,9 @@ include("../../utils/components/admin/admin.links.php");
                         document.getElementById('delete_btn').classList.add('hidden');
                         document.getElementById('update_btn').classList.add('hidden');
 
-
                     }
 
                     function openEditModal(id, day, courseId, teacherId, timeSlot, startTime, endTime, startDate, endDate) {
-                        // console.log(id, courseId, teacherId, timeSlot, startTime, endTime, startDate, endDate);
                         document.getElementById('id').value = id;
                         document.getElementById('day').value = day;
                         var courseSelect = document.getElementById('course_id');
@@ -705,15 +690,10 @@ include("../../utils/components/admin/admin.links.php");
                         let formattedEndDate = endDate.split(' ')[0];
                         document.getElementById('start_date').value = formattedStartDate;
                         document.getElementById('end_date').value = formattedEndDate;
-
-
                         document.getElementById('save_btn').classList.add('hidden');
                         document.getElementById('delete_btn').classList.remove('hidden');
                         document.getElementById('update_btn').classList.remove('hidden');
                         document.getElementById('delete_btn').setAttribute('href', 'delete.php?id=' + id);
-
-
-                        console.log(startDate, endDate);
                     }
                 </script>
 </body>
