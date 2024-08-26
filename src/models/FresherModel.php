@@ -20,6 +20,7 @@ class FresherModel
 
     public function setFreshers($table, $datas)
     {
+
         try {
             foreach ($datas as $data) {
                 $columns = implode(", ", array_keys($data));
@@ -34,7 +35,7 @@ class FresherModel
                     $statement->bindValue(":$key", $value);
                 }
 
-                // Execute the prepared statement
+                // // Execute the prepared statement
                 $statement->execute();
             }
 
@@ -81,19 +82,29 @@ class FresherModel
         }
     }
 
-    public function getFresherPaginationData($table, $page, $limit)
+    public function getFresherPaginationData($table, $page, $limit, $passingYear = null)
     {
         $offset = ($page - 1) * $limit;
+
         try {
-            $statement = $this->db->prepare("
-            SELECT * FROM $table ORDER BY id LIMIT :limit OFFSET :offset
-        ");
-            // Bind the values as integers
-            $statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
-            $statement->bindValue(':offset', $offset, \PDO::PARAM_INT);
+            if ($passingYear) {
+                $statement = $this->db->prepare("
+                    SELECT * FROM $table WHERE passing_year = :passingYear ORDER BY id LIMIT :limit OFFSET :offset 
+                ");
+                // Bind the values as integers
+                $statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
+                $statement->bindValue(':offset', $offset, \PDO::PARAM_INT);
+                $statement->bindValue(':passingYear', $passingYear, \PDO::PARAM_STR);
+            } else {
+                $statement = $this->db->prepare("
+                SELECT * FROM $table ORDER BY id LIMIT :limit OFFSET :offset 
+                ");
+                // Bind the values as integers
+                $statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
+                $statement->bindValue(':offset', $offset, \PDO::PARAM_INT);
+            }
 
             $statement->execute();
-
             return $statement->fetchAll();  // Use fetchAll() if you expect multiple rows
         } catch (PDOException $e) {
             return $e->getMessage();
@@ -101,17 +112,78 @@ class FresherModel
     }
 
 
-    public function getTotalRows($table)
+    public function getTotalRows($table, $passingYear = null)
     {
         try {
-            $query = "SELECT COUNT(*) as total FROM $table";
-            $statement = $this->db->prepare($query);
+            if ($passingYear) {
+                $query = "SELECT COUNT(*) as total FROM $table WHERE passing_year = :passingYear";
+                $statement = $this->db->prepare($query);
+                $statement->bindParam(':passingYear', $passingYear);
+            } else {
+                $query = "SELECT COUNT(*) as total FROM $table";
+                $statement = $this->db->prepare($query);
+            }
             $statement->execute();
             $result = $statement->fetch();
+
             return $result->total;
         } catch (PDOException $e) {
             return $e->getMessage();
         }
     }
-}
 
+    public function updateFresher($table, $updateData)
+    {
+        try {
+            $query = "UPDATE $table SET student_name = :student_name , matriculation_roll_num = :matriculation_roll_num,nrc_num = :nrc_num,matriculation_mark = :matriculation_mark,passing_year=:passing_year WHERE id=:id";
+            $statement = $this->db->prepare($query);
+            $statement->execute([
+                ":id" => $updateData['id'],
+                ":student_name" => $updateData['student_name'],
+                ":matriculation_roll_num" => $updateData['matriculation_roll_num'],
+                ":nrc_num" => $updateData['nrc_num'],
+                ":matriculation_mark" => $updateData['matriculation_mark'],
+                ":passing_year" => $updateData['passing_year']
+            ]);
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function updateFresherDeleteStatus($table, $deleteStatusData)
+    {
+        try {
+            $query = "UPDATE $table SET delete_status = :delete_status WHERE id = :id";
+            $statement = $this->db->prepare($query);
+            $statement->execute([
+                ":id" => $deleteStatusData['id'],
+                ":delete_status" => $deleteStatusData['delete_status']
+            ]);
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function truncateFresherData($table)
+    {
+        try {
+            $query = "TRUNCATE TABLE $table";
+            $statement = $this->db->prepare($query);
+            $statement->execute();
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getFresherPassingYear($table)
+    {
+        try {
+            $query = "SELECT DISTINCT passing_year FROM $table";
+            $statement = $this->db->prepare($query);
+            $statement->execute();
+            return $statement->fetchAll();
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+}
