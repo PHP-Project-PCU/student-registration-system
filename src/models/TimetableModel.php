@@ -78,6 +78,25 @@ class TimeTableModel
             return $e->getMessage();
         }
     }
+    public function getTimetableByTeacher($table, $day, $teacherId)
+    {
+        try {
+            $sql = "SELECT * FROM $table
+            WHERE day=:day
+            AND (teacher_id=:teacher_id OR (teacher_id IS NULL AND course_id IS NULL))
+            ORDER BY start_time";
+
+            $statement = $this->db->prepare($sql);
+            $statement->execute([
+                ":day" => $day,
+                ":teacher_id" => $teacherId,
+            ]);
+            $data = $statement->fetchAll((PDO::FETCH_ASSOC));
+            return $data;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
 
     public function updateTimetable($table, $id, $data)
     {

@@ -28,6 +28,11 @@ class TimetableController
         $timetables = $this->timetableModel->getTimetableByDSSM(Constants::$TIMETABLE_TBL, $day, $sectionId, $semesterId, $majorId);
         return $timetables;
     }
+    public function getTimetableByTeacher($day, $teacherId)
+    {
+        $timetables = $this->timetableModel->getTimetableByTeacher(Constants::$TIMETABLE_TBL, $day, $teacherId);
+        return $timetables;
+    }
     public function updateTimetable($id, $data)
     {
         $this->timetableModel->updateTimetable(Constants::$TIMETABLE_TBL, $id, $data);

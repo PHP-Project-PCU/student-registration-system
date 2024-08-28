@@ -35,7 +35,7 @@ class DeptModel
     public function getAllDepts($table)
     {
         try {
-            $sql = "SELECT * FROM $table";
+            $sql = "SELECT * FROM $table ORDER BY dept_name ASC";
             $statement = $this->db->prepare($sql);
             $statement->execute();
             $data = $statement->fetchAll((PDO::FETCH_ASSOC));

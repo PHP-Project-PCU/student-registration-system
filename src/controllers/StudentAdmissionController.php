@@ -6,7 +6,6 @@ use models\StudentAdmissionModel;
 
 use core\db\MySQL;
 use core\helpers\Constants;
-use StudentDataModel;
 
 class StudentAdmissionController
 {
@@ -19,6 +18,12 @@ class StudentAdmissionController
     public function setStudentAdmissions($data)
     {
         return $this->studentAdmissionModel->setStudentAdmissions(Constants::$STUDENT_TBL, $data);
+    }
+
+    // for credit transfer students status=2
+    public function setStudentAdmissionsByStatus($data)
+    {
+        return $this->studentAdmissionModel->setStudentAdmissionsByStatus(Constants::$STUDENT_TBL, $data);
     }
     public function getAllFreshersByStatus($status, $year)
     {
