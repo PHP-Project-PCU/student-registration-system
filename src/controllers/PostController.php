@@ -16,7 +16,7 @@ class PostController
 
     public function createPost($data, $images)
     {
-        $uploadDir = 'C:\xampp\htdocs\student-registration-system\www\utils\uploads\images/';
+        $uploadDir = 'C:\xampp\htdocs\student-registration-system\www\utils\uploads\admin-posts/';
         $imagePaths = [];
         foreach ($images['tmp_name'] as $key => $tmpName) {
             $image = basename($images['name'][$key]);

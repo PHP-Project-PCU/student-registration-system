@@ -2,37 +2,30 @@
 <html lang="en" class="light scroll-smooth">
 
 <?php
-require '../../vendor/autoload.php';
-include '../../autoload.php';
-include("./../utils/components/links.php");
-include("./../utils/components/navigation.php");
+require '../../../vendor/autoload.php';
+include '../../../autoload.php';
+include("../../utils/components/links.php");
+include("../../utils/components/navigation.php");
 
-use controllers\FresherController;
 use controllers\StudentAdmissionController;
+use controllers\AcademicYearController;
+
+$academicYearController = new AcademicYearController();
+$academicYears = $academicYearController->index();
+$academicYear = $academicYears[0]['academic_year'];
 
 
-$academicYear = "၂၀၂၄ - ၂၀၂၅";
-$heroImageFile = "../utils/assets/img/ucspyay/ucsp-front-build.jpg";
+$heroImageFile = "../../utils/assets/img/ucspyay/ucsp-front-build.jpg";
 $guideVideoUrl = "";
 
 $data = [];
 
-$validStudent = false;
-$isRegister = false;
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['checkBtn'])) {
-    if (isset($_POST['matriculation_roll_num'], $_POST['passing_year'])) {
-        $data = [$_POST['matriculation_roll_num'], $_POST['passing_year']];
-        $fresherController = new FresherController($data);
-        $validStudent = $fresherController->checkFresher($data);
-        // $_POST = [];
-    }
-}
+$isRegister = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
     $data = $_POST;
     $studentAdmissionController = new StudentAdmissionController($data);
-    $isRegister = $studentAdmissionController->setStudentAdmissions($data);
+    $isRegister = $studentAdmissionController->setStudentAdmissionsByStatus($data);
 } else {
     $isRegister = false;
 }
@@ -54,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
                     ( <?= $academicYear; ?> ) ပညာသင်နှစ်
                 </h3>
                 <h3 class="mb-4 md:text-4xl text-3xl md:leading-normal leading-normal font-bold text-white">
-                    "ပထမနှစ်ကျောင်းသား/ကျောင်းသူများပညာသင်ခွင့်လျှောက်လွှာ "
+                    "ကျောင်းပြောင်းကျောင်းသား/ကျောင်းသူများပညာသင်ခွင့်လျှောက်လွှာ"
                 </h3>
             </div>
             <!--end grid-->
@@ -64,71 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
     <!--end section-->
     <!-- End Hero -->
 
-    <!-- Message Section -->
-    <?php if (!$validStudent && !empty($data) && !$isRegister): ?>
-    <!-- <p class="text-red-500 font-bold text-center pt-5">ဝင်ခွင့်စာရင်းတွင်မပါရှိပါ။</p> -->
-    <script>
-    alertify.warning('ဝင်ခွင့်စာရင်းတွင်မပါရှိပါ။');
-    </script>
-    <?php elseif ($isRegister): ?>
-    <!-- <p class="text-green-500 font-bold text-center pt-5">လျှောက်လွှာတင်ပြီးပါပြီ။</p> -->
-    <script>
-    alertify.success('လျှောက်လွှာတင်ပြီးပါပြီ။');
-    </script>
-    <?php elseif ($validStudent === true && !empty($data) && !$isRegister): ?>
-    <!-- <p class="text-green-500 font-bold text-center pt-5">ဝင်ခွင့်ရရှိ၍ လျှောက်လွှာတင်နိုင်ပါသည်။</p> -->
-    <script>
-    alertify.success('ဝင်ခွင့်ရရှိ၍ လျှောက်လွှာတင်နိုင်ပါသည်။');
-    </script>
-    <?php endif ?>
 
-
-
-    <?php if (!$validStudent): ?>
-    <!-- Check Section-->
-    <section class="relative md:py-24 py-16">
-        <div class="container relative">
-            <div class="grid lg:grid-cols-12 grid-cols-1" id="reserve-form">
-                <div class="lg:col-start-2 lg:col-span-10">
-                    <div class="rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
-                        <form action="" method="POST">
-                            <div class="grid lg:grid-cols-12 gap-6 pt-4">
-                                <div class="lg:col-span-6">
-                                    <div class="text-start">
-                                        <label
-                                            for="matriculation_roll_num">တက္ကသိုလ်ဝင်တန်းအောင်မြင်သည့်ခုံအမှတ်</label>
-                                        <input name="matriculation_roll_num" id="matriculation_roll_num" type="text"
-                                            class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
-                                            placeholder="ပအမ-xx" value="" required>
-                                    </div>
-                                </div>
-                                <div class="lg:col-span-6">
-                                    <div class="text-start">
-                                        <label for="passing_year">တက္ကသိုလ်ဝင်တန်းအောင်မြင်သည့်ခုနှစ်</label>
-                                        <input name="passing_year" id="passing_year" type="number"
-                                            class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
-                                            placeholder="" min="2015" value="" required>
-                                    </div>
-                                </div>
-
-                                <div class="lg:col-span-12">
-                                    <button type="submit" id="checkBtn" name="checkBtn"
-                                        class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mt-4">Check</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <?php endif ?>
-
-
-
-
-    <?php if ($validStudent && !$isRegister): ?>
-    <!-- Fresher Admission Form Section-->
+    <!-- Credit Transfer Admission Form Section-->
     <section class="relative md:py-24 py-16">
         <div class="container relative">
             <div class="grid lg:grid-cols-12 grid-cols-1" id="reserve-form">
@@ -144,6 +74,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
                                     <select id="year" name="year"
                                         class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                         <option value="1">ပထမနှစ်</option>
+                                        <option value="2">ဒုတိယနှစ်</option>
+                                        <option value="3">တတိယနှစ်</option>
+                                        <option value="4">စတုတ္ထနှစ်</option>
+                                        <option value="5">ပဥ္စမနှစ်</option>
                                     </select>
                                 </div>
                                 <div class="lg:col-span-6">
@@ -151,6 +85,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
                                     <select id="major" name="major"
                                         class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                         <option value="CST">CST</option>
+                                        <option value="CS">CS</option>
+                                        <option value="CT">CT</option>
                                     </select>
                                 </div>
                                 <div class="lg:col-span-6">
@@ -296,7 +232,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
                                     <div class="text-start">
                                         <label for="matriculation_roll_num">ခုံအမှတ်</label>
                                         <input name="matriculation_roll_num" id="matriculation_roll_num" type="text"
-                                            value="<?= $_POST['matriculation_roll_num'] ?>" class=" form-input mt-3 w-full py-2 px-3 h-10 bg-transparent
+                                            value="" class=" form-input mt-3 w-full py-2 px-3 h-10 bg-transparent
                                             dark:bg-slate-900 dark:text-slate-200 rounded outline-none border
                                             border-gray-200 focus:border-indigo-600 dark:border-gray-800
                                             dark:focus:border-indigo-600 focus:ring-0" placeholder="">
@@ -306,7 +242,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
                                     <div class="text-start">
                                         <label for="matriculation_year">ခုနှစ်</label>
                                         <input name="matriculation_year" id="matriculation_year" type="number"
-                                            value="<?= $_POST['passing_year'] ?>" class=" form-input mt-3 w-full py-2 px-3 h-10 bg-transparent
+                                            value="" class=" form-input mt-3 w-full py-2 px-3 h-10 bg-transparent
                                             dark:bg-slate-900 dark:text-slate-200 rounded outline-none border
                                             border-gray-200 focus:border-indigo-600 dark:border-gray-800
                                             dark:focus:border-indigo-600 focus:ring-0" placeholder="">
@@ -686,12 +622,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
                                 <div class="bg-indigo-300 p-5 rounded-md lg:col-span-12 ">
                                     <label for="subject" class="font-semibold">ကျောင်းလခပေးသွင်းခြင်း</label>
                                 </div>
-                                <div class="lg:col-span-6">
-                                    <label for="payment_screenshot">ငွေသွင်းပြီးကြောင်း Screenshot</label>
-                                    <input name="payment_screenshot"
-                                        class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer"
-                                        id="" type="file">
-                                </div>
+
                                 <div class="lg:col-span-12">
                                     <div id="accordion-collapse" data-accordion="collapse"
                                         class="grid md:grid-cols-2 grid-cols-1 mt-8 md:gap-[30px]">
@@ -703,7 +634,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
                                                         class="flex justify-between items-center p-5 w-full font-medium text-start"
                                                         data-accordion-target="#accordion-collapse-body-1"
                                                         aria-expanded="false" aria-controls="accordion-collapse-body-1">
-                                                        <span>ငွေပေးချေရန် QR</span>
+                                                        <span>ပေးသွင်းရန်</span>
                                                         <svg data-accordion-icon class="size-4 rotate-0 shrink-0"
                                                             fill="currentColor" viewBox="0 0 20 20"
                                                             xmlns="http://www.w3.org/2000/svg">
@@ -716,14 +647,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
                                                 <div id="accordion-collapse-body-1" class="hidden"
                                                     aria-labelledby="accordion-collapse-heading-1">
                                                     <div class="p-5">
-                                                        <img src="../utils/assets/img/ucspyay/qrcode.jpg" alt="QR Code">
+                                                        <ul>
+                                                            <li>ကျောင်းလခ(၁၀လစာ) - ၂၅၀၀၀ ကျပ်</li>
+                                                            <li>က-ပ-မ ကြေး - ၁၀၀၀ ကျပ်</li>
+                                                            <li>ဓါတ်ခွဲခန်းကြေး - ၅၀၀ ကျပ်</li>
+                                                            <li>စာမေးပွဲကြေး - ၁၀၀၀ ကျပ်</li>
+                                                            <li>အထွေထွေ - ၃၀၀ ကျပ်</li>
+                                                            <span class=" border  border-black-900"></span>
+                                                            <li class="pt-2"><b>စုစုပေါင်း - ၂၇၈၀၀ ကျပ်</b></li>
+                                                        </ul>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="lg:col-span-12">
+                                    <div id="accordion-collapse" data-accordion="collapse"
+                                        class="grid md:grid-cols-2 grid-cols-1 mt-8 md:gap-[30px]">
+                                        <div>
+                                            <div
+                                                class="relative shadow dark:shadow-gray-800 rounded-md overflow-hidden">
+                                                <h2 class="text-base font-semibold" id="accordion-collapse-heading-1">
+                                                    <button type="button"
+                                                        class="flex justify-between items-center p-5 w-full font-medium text-start"
+                                                        data-accordion-target="#accordion-collapse-body-2"
+                                                        aria-expanded="false" aria-controls="accordion-collapse-body-1">
+                                                        <span>ငွေပေးချေရန် QR</span>
+                                                        <svg data-accordion-icon class="size-4 rotate-0 shrink-0"
+                                                            fill="currentColor" viewBox="0 0 20 20"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path fill-rule="evenodd"
+                                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                                clip-rule="evenodd"></path>
+                                                        </svg>
+                                                    </button>
+                                                </h2>
+                                                <div id="accordion-collapse-body-2" class="hidden"
+                                                    aria-labelledby="accordion-collapse-heading-1">
+                                                    <div class="p-5">
+                                                        <img src="../../utils/assets/img/ucspyay/qrcode.jpg" alt="QR Code">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="lg:col-span-12">
+                                    <label for="payment_screenshot">ငွေသွင်းပြီးကြောင်း Screenshot</label>
+                                    <input name="payment_screenshot"
+                                        class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer"
+                                        id="" type="file">
+                                </div>
+                                <div class="lg:col-span-4">
+
                                     <button type="submit" id="registerBtn" name="registerBtn"
-                                        class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mt-4">Register</button>
+                                        class="py-2  px-5 w-full inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mt-4">Register</button>
                                 </div>
                         </form>
                         <!--end form-->
@@ -740,19 +720,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
     </section>
     <!--end section-->
     <!-- End Section-->
-    <?php endif ?>
 
 
 
-    <?php include("./../utils/components/footer.php") ?>
+    <?php include("../../utils/components/footer.php") ?>
 
     <!-- JAVASCRIPTS -->
-    <script src="./../utils/assets/js/tailwindcss.js"></script>
-    <script src="./../utils/assets/libs/feather-icons/feather.min.js"></script>
-    <script src="./../utils/assets/libs/jquery/jquery.min.js"></script>
-    <script src="./../utils/assets/js/plugins.init.js"></script>
-    <script src="./../utils/assets/js/app.js"></script>
-    <script src="./../utils/assets/js/alertify.js"></script>
+    <script src="../../utils/assets/js/tailwindcss.js"></script>
+    <script src="../../utils/assets/libs/feather-icons/feather.min.js"></script>
+    <script src="../../utils/assets/libs/jquery/jquery.min.js"></script>
+    <script src="../../utils/assets/js/plugins.init.js"></script>
+    <script src="../../utils/assets/js/app.js"></script>
+    <script src="../../utils/assets/js/alertify.js"></script>
 
 
     <!-- <script src="./../utils/assets/js/studentAnsweredExams.js"></script> -->
@@ -760,34 +739,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
 
 
     <script>
-    <?php if (!$validStudent && !empty($data) && !$isRegister): ?>
-    alertify.warning('ဝင်ခွင့်စာရင်းတွင်မပါရှိပါ။');
-    <?php elseif ($isRegister): ?>
-    alertify.success('လျှောက်လွှာတင်ပြီးပါပြီ။');
-    <?php elseif ($validStudent === true && !empty($data) && !$isRegister): ?>
-    alertify.success('ဝင်ခွင့်ရရှိ၍ လျှောက်လွှာတင်နိုင်ပါသည်။');
-    <?php endif ?>
-
-    // Fetch NRC
-    fetch('./../utils/assets/json/nrc.json')
-        .then(response => response.json())
-        .then(data => {
-            setupNrcDropdowns('student_nrc_code', 'student_nrc_name', data);
-            setupNrcDropdowns('student_fath_nrc_code', 'student_fath_nrc_name', data);
-            setupNrcDropdowns('student_moth_nrc_code', 'student_moth_nrc_name', data);
-        })
-        .catch(error => console.error('Error fetching the JSON data:', error));
+        <?php if ($isRegister != null && !$isRegister): ?>
+            alertify.warning('လျှောက်လွှာတင်ခြင်းမအောင်မြင်ပါ။');
+        <?php elseif ($isRegister): ?>
+            alertify.success('လျှောက်လွှာတင်ပြီးပါပြီ။');
+        <?php endif ?>
+        // Fetch NRC
+        fetch('../../utils/assets/json/nrc.json')
+            .then(response => response.json())
+            .then(data => {
+                setupNrcDropdowns('student_nrc_code', 'student_nrc_name', data);
+                setupNrcDropdowns('student_fath_nrc_code', 'student_fath_nrc_name', data);
+                setupNrcDropdowns('student_moth_nrc_code', 'student_moth_nrc_name', data);
+            })
+            .catch(error => console.error('Error fetching the JSON data:', error));
 
 
-    // Fetch states
-    fetch('./../utils/assets/json/states.json')
-        .then(response => response.json())
-        .then(data => {
-            setupRegionTownshipSelect('student_region', 'student_township', data);
-            setupRegionTownshipSelect('student_fath_region', 'student_fath_township', data);
-            setupRegionTownshipSelect('student_moth_region', 'student_moth_township', data);
-        })
-        .catch(error => console.error('Error fetching the JSON data:', error));
+        // Fetch states
+        fetch('../../utils/assets/json/states.json')
+            .then(response => response.json())
+            .then(data => {
+                setupRegionTownshipSelect('student_region', 'student_township', data);
+                setupRegionTownshipSelect('student_fath_region', 'student_fath_township', data);
+                setupRegionTownshipSelect('student_moth_region', 'student_moth_township', data);
+            })
+            .catch(error => console.error('Error fetching the JSON data:', error));
     </script>
     <!-- JAVASCRIPTS -->
 </body>
