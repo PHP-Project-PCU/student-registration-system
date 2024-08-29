@@ -38,5 +38,7 @@ if ($currentPath === '/www' || $currentPath === '/') {
     <link href="<?php echo $relativePath; ?>utils/assets/libs/%40mdi/font/css/materialdesignicons.min.css"
         rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="<?php echo $relativePath; ?>utils/assets/css/tailwind.min.css">
+    <link rel="stylesheet" href="<?php echo $relativePath; ?>utils/assets/css/alertify.css">
+
 
 </head>

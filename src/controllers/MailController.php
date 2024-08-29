@@ -41,7 +41,7 @@ class MailController
       $this->email = $email;
    }
 
-   function sendMail()
+   function sendMail($data)
    {
       // Creating a new PHPMailer object.
       $mail = new PHPMailer(true);
@@ -124,12 +124,46 @@ class MailController
          Assigning the incoming subject to the 
          $mail->subject property. 	
        */
-      $mail->Subject = "Student Confirmation";
+      $mail->Subject = "UCSPyay Student Admission Confirmation";
 
       /*
          Assigning the incoming message to the $mail->body property.
        */
-      $mail->Body = "<button><a href='admin.ucsp.edu'>Go to dashboard</a></button>";
+      $mail->Body = "
+      <div style='color:#000;'>
+          <h2 style='color: #4CAF50;'>Congratulations!</h2>
+          <p>
+              <strong>{$data['name']}</strong>၏ ကျောင်းဝင်ခ္ငင့်လျှောက်လွှာအား ကွန်ပျူတာတက္ကသိုလ်(ပြည်) ၊ ကျောင်းသားရေးရာမှ လက်ခံရရှိ၍ အတည်ပြုပြီးဖြစ်ပါသည်။<br>
+              အောက်ဖော်ပြပါ <strong>Edu mail</strong> နှင့် <strong>Password</strong> အားအသုံးပြု၍ UCSPyay Student Portal သို့ဝင်ရောက်အသုံးပြုနိုင်ပါသည်။
+          </p>
+          <ul style='list-style-type: none; padding: 0;'>
+              <li style='margin-bottom: 10px;'>
+                  <strong>Edu mail:</strong> <span style='background-color: #f1f1f1; padding: 5px 10px; border-radius: 4px;'>{$data['edu_mail']}</span>
+              </li>
+              <li>
+                  <strong>Password:</strong> <span style='background-color: #f1f1f1; padding: 5px 10px; border-radius: 4px;'>{$data['password']}</span>
+              </li>
+          </ul>
+          <div style='margin-top: 20px;'>
+              <a href='http://student.ucspyay.edu' 
+                 style='display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: #fff; text-decoration: none; border-radius: 4px;'>
+                 Login Here
+              </a>
+          </div>
+           <p>
+            ပထမဆုံးအကြိမ် Login ဝင်ရောက်ပြီး Password အသစ်အား ပြောင်းလဲအသုံးပြုရန်အကြံပြုအပ်ပါသည်။
+        </p>
+        <p>
+            မေးခွန်းများ ရှိပါက သို့မဟုတ် အကူအညီလိုအပ်ပါက admin@ucspyay.edu.mm သို့မဟုတ် 053-28639 သို့ဆက်သွယ်နိုင်ပါသည်။
+        </p>
+        <p>
+            Best regards,<br>
+            Admin Team,<br>
+            Student Affairs,<br>
+            University of Computer Studies, Pyay<br>
+            http://ucspyay.edu
+        </p>
+      </div>";
 
       /*
          When we set $mail->AltBody, we are providing 

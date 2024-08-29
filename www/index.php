@@ -7,6 +7,35 @@ include("./utils/components/navigation.php");
 $heroVideoFilePath = "utils/assets/img/ucspyay/cu-short.mp4";
 $youtubeCoverImgPath = "utils/assets/img/ucspyay/uc-build-1.jpg";
 $ucspLogoImgPath = "utils/assets/img/ucspyay/ucsp-logo-light.jpg";
+
+
+
+require '../vendor/autoload.php';
+include '../autoload.php';
+
+use controllers\PostController;
+
+$postController = new PostController();
+$posts = $postController->getPostsByLimit(5);
+
+function getRelativePath($imgPath)
+{
+    $baseUrl = "http://ucspyay.edu/";
+    $imgPath = str_replace('\\', '/', $imgPath);
+    $startPos = strpos($imgPath, 'utils/');
+    if ($startPos === false) {
+        return 'Path segment not found';
+    }
+    $relativePath = substr($imgPath, $startPos);
+    return $baseUrl . $relativePath;
+};
+
+function formatDate($date)
+{
+    return date("M d, Y", strtotime($date));
+}
+
+?>
 ?>
 
 <body class="font-nunito text-base text-black dark:text-white dark:bg-slate-900 scroll-smooth">
@@ -28,9 +57,9 @@ $ucspLogoImgPath = "utils/assets/img/ucspyay/ucsp-logo-light.jpg";
                     <p class="text-white text-lg max-w-xl mx-auto animate__animated animate__jello">
                         ကွန်ပျူတာတက္ကသိုလ်(ပြည်)</p>
                     <div class="mt-6">
-                        <a href="/admission/"
+                        <a href="/admissions/freshers"
                             class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md animate__animated animate__flipInX">Student
-                            Admission</a>
+                            Admissions</a>
                     </div>
                 </div>
             </div>
@@ -45,24 +74,24 @@ $ucspLogoImgPath = "utils/assets/img/ucspyay/ucsp-logo-light.jpg";
     <section class="py-6">
         <div class="container relative">
             <div class="grid md:grid-cols-4 grid-cols-2 justify-center gap-[30px]">
-                <div class="mx-auto text-center py-4 wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
+                <div class="mx-auto text-center py-4">
                     <p></p>
-                    <p class="text-6xl sm:text-4xl font-bold text-indigo-600 counter-value" data-target="2007">2000</p>
+                    <p class="text-6xl sm:text-4xl font-bold text-indigo-600 counter-value" data-target="2007" data-start="2000">2000</p>
                     <p class="font-bold">Established</p>
                 </div>
-                <div class="mx-auto text-center py-4 wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
+                <div class="mx-auto text-center py-4">
                     <p></p>
-                    <p class="text-6xl font-bold text-indigo-600 counter-value" data-target="17">0</p>
+                    <p class="text-6xl font-bold text-indigo-600 counter-value" data-target="17" data-start="0">0</p>
                     <p class="font-bold">Years</p>
                 </div>
-                <div class="mx-auto text-center py-4 wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
+                <div class="mx-auto text-center py-4">
                     <p></p>
-                    <p class="text-6xl font-bold text-indigo-600 counter-value" data-target="50">1</p>
+                    <p class="text-6xl font-bold text-indigo-600 counter-value" data-target="50" data-start="1">1</p>
                     <p class="font-bold">Lecturers</p>
                 </div>
-                <div class="mx-auto text-center py-4 wow animate__animated animate__fadeInUp" data-wow-delay=".1s">
+                <div class="mx-auto text-center py-4">
                     <p></p>
-                    <p class="text-6xl font-bold text-indigo-600 counter-value" data-target="1376">1000</p>
+                    <p class="text-6xl font-bold text-indigo-600 counter-value" data-target="1376" data-start="1300">1300</p>
                     <p class="font-bold">Graduates</p>
                 </div>
             </div>
@@ -95,7 +124,7 @@ $ucspLogoImgPath = "utils/assets/img/ucspyay/ucsp-logo-light.jpg";
                         <div class="relative">
                             <img src="<?= $youtubeCoverImgPath ?>" alt="School Image" class="rounded-md z-10">
                             <div class="absolute bottom-2/4 translate-y-2/4 start-0 end-0 text-center">
-                                <a href="#!" data-type="youtube" data-id="hZ0oCAOi5hw"
+                                <a href="#!" data-type="youtube" data-id="NbjtynGOIGM"
                                     class="lightbox size-20 rounded-full shadow-lg dark:shadow-gray-800 inline-flex items-center justify-center bg-white dark:bg-slate-900 text-indigo-600 dark:text-white">
                                     <i class="mdi mdi-play inline-flex items-center justify-center text-2xl"></i>
                                 </a>
@@ -120,7 +149,7 @@ $ucspLogoImgPath = "utils/assets/img/ucspyay/ucsp-logo-light.jpg";
                                                 Studies (Pyay) is government funded university located in Pyay, Bago
                                                 Region with an emphasis is on computer engineering at the undergraduate
                                                 and graduate levels. Founded in 2004…</span>
-                                            <a href="#" class="text-white">Read More <i
+                                            <a href="about" class="text-white">Read More <i
                                                     class="uil uil-angle-right-b align-middle"></i></a>
                                         </div>
                                     </div>
@@ -155,54 +184,35 @@ $ucspLogoImgPath = "utils/assets/img/ucspyay/ucsp-logo-light.jpg";
         <!--end grid-->
 
         <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 mt-8 gap-[30px]">
-            <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden wow animate__animated animate__fadeInUp"
-                data-wow-delay=".7s">
-                <img src="<?= $ucspLogoImgPath ?>" alt="">
-                <div class="content p-6">
-                    <a href="blog-detail.html"
-                        class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">Smartest
-                        Applications for Business</a>
-                    <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and benefit
-                    </p>
-                    <div class="mt-4">
-                        <a href="blog-detail.html"
-                            class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-normal hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Read
-                            More <i class="uil uil-arrow-right"></i></a>
+            <?php foreach ($posts as $post) {
+                $coverImg = getRelativePath($post['images'][0]);
+            ?>
+                <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden wow animate__animated animate__fadeInUp"
+                    data-wow-delay=".7s">
+                    <div class="w-full h-48 overflow-hidden">
+                        <img src="<?= $coverImg ?>" alt="" class="w-full h-full object-cover">
+                    </div>
+
+                    <div class="content p-6">
+                        <a href="posts.php?id=<?= $post['id'] ?>"
+                            class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">
+                            <?= htmlspecialchars(strlen($post['title']) > 100 ? substr($post['title'], 0, 100) . '...' : $post['title']) ?>
+                        </a>
+                        <p class="text-slate-400 mt-3">
+                            <?= htmlspecialchars(strlen($post['description']) > 100 ? substr($post['description'], 0, 100) . '...' : $post['description']) ?>
+                        </p>
+                        <p class="text-gray-400 my-2 text-sm"><?= formatDate($post['created_at']) ?></p>
+
+
+                        <div class="mt-4">
+                            <a href="posts.php?id=<?= $post['id'] ?>"
+                                class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-normal hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Read
+                                More <i class="uil uil-arrow-right"></i></a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden wow animate__animated animate__fadeInUp"
-                data-wow-delay=".7s">
-                <img src="<?= $ucspLogoImgPath ?>" alt="">
-                <div class="content p-6">
-                    <a href="blog-detail.html"
-                        class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">Smartest
-                        Applications for Business</a>
-                    <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and benefit
-                    </p>
-                    <div class="mt-4">
-                        <a href="blog-detail.html"
-                            class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-normal hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Read
-                            More <i class="uil uil-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="blog relative rounded-md shadow dark:shadow-gray-800 overflow-hidden wow animate__animated animate__fadeInUp"
-                data-wow-delay=".7s">
-                <img src="<?= $ucspLogoImgPath ?>" alt="">
-                <div class="content p-6">
-                    <a href="blog-detail.html"
-                        class="title h5 text-lg font-medium hover:text-indigo-600 duration-500 ease-in-out">Smartest
-                        Applications for Business</a>
-                    <p class="text-slate-400 mt-3">The phrasal sequence of the is now so that many campaign and benefit
-                    </p>
-                    <div class="mt-4">
-                        <a href="blog-detail.html"
-                            class="relative inline-block tracking-wide align-middle text-base text-center border-none after:content-[''] after:absolute after:h-px after:w-0 hover:after:w-full after:end-0 hover:after:end-auto after:bottom-0 after:start-0 after:duration-500 font-normal hover:text-indigo-600 after:bg-indigo-600 duration-500 ease-in-out">Read
-                            More <i class="uil uil-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
+
+            <?php } ?>
         </div>
         <!--end grid-->
     </div>
@@ -233,6 +243,34 @@ $ucspLogoImgPath = "utils/assets/img/ucspyay/ucsp-logo-light.jpg";
     <script src="utils/assets/libs/feather-icons/feather.min.js"></script>
     <script src="utils/assets/js/plugins.init.js"></script>
     <script src="utils/assets/js/app.js"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const counters = document.querySelectorAll('.counter-value');
+            const duration = 5000; // Total duration in milliseconds (5 seconds)
+
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const start = +counter.getAttribute('data-start');
+                const range = target - start;
+                const stepTime = duration / range;
+
+                let count = start;
+                const updateCounter = () => {
+                    count++;
+                    counter.textContent = count;
+                    if (count < target) {
+                        setTimeout(updateCounter, stepTime);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+
+                updateCounter();
+            });
+        });
+    </script>
     <!-- JAVASCRIPTS -->
 </body>
 
