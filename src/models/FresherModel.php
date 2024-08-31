@@ -186,4 +186,12 @@ class FresherModel
             return $e->getMessage();
         }
     }
+
+    // public function deleteFresher($table, $id)
+    // {
+    //     try {
+    //         $query = "DELETE FROM $table WHERE id = :id";
+
+    //     }
+    // }
 }

@@ -546,4 +546,91 @@ class StudentAdmissionModel
             return $e->getMessage();
         }
     }
+
+    public function getStudentsYear($table)
+    {
+        try {
+            $query = "SELECT DISTINCT year FROM $table";
+            $statement = $this->db->prepare($query);
+            $statement->execute();
+            $result = $statement->fetchAll();
+            return $result;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getApprovedStudentsYear($table)
+    {
+        try {
+            $query = "SELECT DISTINCT year FROM $table WHERE status = 1";
+            $statement = $this->db->prepare($query);
+            $statement->execute();
+            $result = $statement->fetchAll();
+            return $result;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getStudentAdmissionTotalCount($table, $year)
+    {
+        try {
+            $query = "SELECT COUNT(*) as total FROM $table WHERE year=:year";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':year', $year);
+            $statement->execute();
+            $result = $statement->fetch();
+
+            return $result->total;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getStudentAdmissionApprovedCount($table, $year)
+    {
+        try {
+            $query = "SELECT COUNT(*) as total FROM $table WHERE year=:year AND status=1";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':year', $year);
+            $statement->execute();
+            $result = $statement->fetch();
+
+            return $result->total;
+
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getApprovedStudentsRollNum($table, $year)
+    {
+        try {
+            $query = "SELECT roll_num FROM $table WHERE status = 1 AND year = :year";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':year', $year);
+            $statement->execute();
+            $result = $statement->fetchAll();
+            return $result;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getStudentIdBetweenRollNum($table, $startRollNum, $endRollNum)
+    {
+        try {
+            $query = "SELECT id FROM $table WHERE roll_num BETWEEN :startRollNum AND :endRollNum";
+            $statement = $this->db->prepare($query);
+            $statement->execute([
+                ":startRollNum" => $startRollNum,
+                ":endRollNum" => $endRollNum
+            ]);
+            $result = $statement->fetchAll();
+            return $result;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
 }
