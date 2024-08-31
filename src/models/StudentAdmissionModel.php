@@ -449,24 +449,29 @@ class StudentAdmissionModel
             return $e->getMessage();
         }
     }
-    public function getAllFreshersByStatusAndYear($studentTbl, $status, $year)
+    public function getAllStudentsByStatusAndYear($studentTbl, $status, $year, $page, $limit)
     {
         try {
+            $offset = ($page - 1) * $limit;
+            $sql = "SELECT id, matriculation_reg_num, student_name_my, student_nrc
+                FROM $studentTbl 
+                WHERE year = 1 AND status = :status AND year(created_at) = :year
+                ORDER BY matriculation_reg_num ASC 
+                LIMIT :limit OFFSET :offset";
 
-            $sql = "SELECT id,matriculation_reg_num,student_name_my,student_nrc
-            FROM $studentTbl WHERE year=1 AND status=:status and YEAR(created_at) =:year
-            ORDER BY matriculation_reg_num ASC";
             $stmt = $this->db->prepare($sql);
-            $stmt->execute([
-                ":status" => $status,
-                ":year" => $year,
-            ]);
+            $stmt->bindParam(":status", $status, PDO::PARAM_STR);
+            $stmt->bindParam(":year", $year, PDO::PARAM_INT);
+            $stmt->bindParam(":limit", $limit, PDO::PARAM_INT);
+            $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
+            $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return array_values($data);
         } catch (PDOException $e) {
             return $e->getMessage();
         }
     }
+
 
     public function getStudentById($studentId)
     {
@@ -514,6 +519,26 @@ class StudentAdmissionModel
         }
     }
 
+    public function getTotalRows($table, $year, $status)
+    {
+        try {
+            if ($year) {
+                $query = "SELECT COUNT(*) as total FROM $table WHERE year = :year AND status=:status";
+                $statement = $this->db->prepare($query);
+                $statement->bindParam(':year', $year);
+                $statement->bindParam(':status', $status);
+            } else {
+                $query = "SELECT COUNT(*) as total FROM $table";
+                $statement = $this->db->prepare($query);
+            }
+            $statement->execute();
+            $result = $statement->fetch();
+            return $result->total;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
 
     public function approveFresher($studentTbl, $studentAuthTbl, $data)
     {
@@ -543,6 +568,122 @@ class StudentAdmissionModel
             return true;
         } catch (PDOException $e) {
             $this->db->rollBack();
+            return $e->getMessage();
+        }
+    }
+
+    public function getStudentsYear($table)
+    {
+        try {
+            $query = "SELECT DISTINCT year FROM $table";
+            $statement = $this->db->prepare($query);
+            $statement->execute();
+            $result = $statement->fetchAll();
+            return $result;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getApprovedStudentsYear($table)
+    {
+        try {
+            $query = "SELECT DISTINCT year FROM $table WHERE status = 1";
+            $statement = $this->db->prepare($query);
+            $statement->execute();
+            $result = $statement->fetchAll();
+            return $result;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getStudentAdmissionTotalCount($table, $year)
+    {
+        try {
+            $query = "SELECT COUNT(*) as total FROM $table WHERE year=:year";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':year', $year);
+            $statement->execute();
+            $result = $statement->fetch();
+
+            return $result->total;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getStudentAdmissionApprovedCount($table, $year)
+    {
+        try {
+            $query = "SELECT COUNT(*) as total FROM $table WHERE year=:year AND status=1";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':year', $year);
+            $statement->execute();
+            $result = $statement->fetch();
+
+            return $result->total;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+    // for credit transfer students
+    public function getStudentAdmissionTotalCountByStatus($table, $status)
+    {
+        try {
+            $query = "SELECT COUNT(*) as total FROM $table WHERE status=:status";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':status', $status);
+            $statement->execute();
+            $result = $statement->fetch();
+
+            return $result->total;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getApprovedStudentsRollNum($table, $year)
+    {
+        try {
+            $query = "SELECT roll_num FROM student_tbl WHERE status = 1 AND year = :year AND id NOT IN (SELECT student_id FROM student_section_tbl)";
+
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':year', $year);
+            $statement->execute();
+            $result = $statement->fetchAll();
+            return $result;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getStudentIdBetweenRollNum($table, $startRollNum, $endRollNum)
+    {
+        try {
+            $query = "SELECT id FROM $table WHERE roll_num BETWEEN :startRollNum AND :endRollNum";
+            $statement = $this->db->prepare($query);
+            $statement->execute([
+                ":startRollNum" => $startRollNum,
+                ":endRollNum" => $endRollNum
+            ]);
+            $result = $statement->fetchAll();
+            return array_values($result);
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function setStudentSection($table, $studentData)
+    {
+        try {
+            $columns = implode(", ", array_keys($studentData));
+            $placeholders = ":" . implode(", :", array_keys($studentData));
+            $query = "INSERT INTO $table ($columns) VALUES ($placeholders)";
+            $statement = $this->db->prepare($query);
+            $statement->execute($studentData);
+            return $this->db->lastInsertId();
+        } catch (PDOException $e) {
             return $e->getMessage();
         }
     }

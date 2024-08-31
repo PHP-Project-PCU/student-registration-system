@@ -2,6 +2,8 @@
 require '../../../vendor/autoload.php';
 include '../../../autoload.php';
 
+$json = file_get_contents('http://ucspyay.edu/utils/assets/json/nrc.json');
+
 session_start();
 
 use Shuchkin\SimpleXLSX;
@@ -69,7 +71,6 @@ if (isset($_POST['submit'])) {
 
         $fresherController = new FresherController($data, null, null);
         $fresherController->setFreshers();
-
     } else {
         echo "<script>alert('No data found in the Excel file.')</script>";
     }
@@ -78,7 +79,13 @@ if (isset($_POST['submit'])) {
 if (isset($_POST['addMoreFresher'])) {
     $student_name = $_POST['student_name'];
     $matriculation_roll_num = $_POST['matriculation_roll_num'];
-    $nrc_num = $_POST['nrc_num'];
+    $student_nrc_code = $_POST['student_nrc_code'];
+    $student_nrc_name = $_POST['student_nrc_name'];
+    $student_nrc_type = $_POST['student_nrc_type'];
+    $student_nrc_num = $_POST['student_nrc_num'];
+    $nrc_num = $student_nrc_code . $student_nrc_name . $student_nrc_type . $student_nrc_num;
+
+
     $matriculation_mark = $_POST['matriculation_mark'];
     $passing_year = $_POST['passing_year'];
     $data = [
@@ -90,20 +97,18 @@ if (isset($_POST['addMoreFresher'])) {
     ];
     $fresherController = new FresherController($data, null, null);
     $addingIndividualFresherFlag = $fresherController->setIndividualFresher();
-
 }
 //Filter with passed year logic
 if (isset($_POST['passed_year'])) {
     $_SESSION['selected_year'] = $_POST['passed_year'];
     header('Location: ?page=1');
-
 }
 $selectedYear = $_SESSION['selected_year'] ?? 'all';
 
 
 // Pagination Logic
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-$limit = 4;
+$limit = 10;
 
 $fresherController = new FresherController(null, $page, $limit, null, $selectedYear, null);
 $paginationFresherData = $fresherController->getFresherPaginationData();
@@ -131,6 +136,15 @@ if (isset($_POST['fresher_id'])) {
     header('Location: index.php');
 }
 
+if (isset($_POST['delete_fresher_id'])) {
+    $deleteData = array(
+        "id" => $_POST['delete_fresher_id']
+    );
+    $fresherController = new FresherController(null, null, null, null, null, $deleteData);
+    $deleteFlage = $fresherController->deleteFresher();
+    header('Location: index.php');
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -142,7 +156,7 @@ include("../../utils/components/admin/admin.links.php");
 ?>
 
 <body>
-    <div class="flex h-screen bg-gray-50 dark:bg-gray-900 " :class="{ 'overflow-hidden': isSideMenuOpen }">
+    <div class="flex h-screen dark:bg-gray-900 " :class="{ 'overflow-hidden': isSideMenuOpen }">
         <?php
         include("../../utils/components/admin/admin.sidebar.php");
         ?>
@@ -155,185 +169,211 @@ include("../../utils/components/admin/admin.links.php");
             <div class="w-full  rounded-lg shadow-xs">
 
                 <?php if ($paginationFresherData): ?>
-                    <div class="overflow-y-auto md:pt-16 px-4 pb-4">
-                        <form action="" method="post">
-                            <select id="file-type" name="passed_year" onchange="this.form.submit()"
-                                class="block w-50 px-3 py-2 mt-1 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:border-purple-400 focus:ring-purple-400 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:focus:ring-offset-gray-800">
-                                <option value="all" <?= $selectedYear == 'all' ? 'selected' : '' ?>>See All</option>
-                                <?php foreach ($fresherPassingYears as $year): ?>
-                                    <option value="<?= htmlspecialchars($year->passing_year) ?>"
-                                        <?= $selectedYear == $year->passing_year ? 'selected' : '' ?>>
-                                        <?= htmlspecialchars($year->passing_year) ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </form>
-                        <table class="w-full whitespace-no-wrap">
-                            <thead>
-                                <tr
-                                    class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                                    <th class="px-4 py-3">Name</th>
-                                    <th class="px-4 py-3">Roll Number</th>
-                                    <th class="px-4 py-3">NRC</th>
-                                    <th class="px-4 py-3">Mark</th>
-                                    <th class="px-4 py-3">Year Of Passing</th>
-                                    <th class="px-4 py-3">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                <?php foreach ($paginationFresherData as $fresher): ?>
-
-                                    <tr class="text-gray-700 dark:text-gray-400">
-                                        <td class="px-4 py-3 text-sm">
-                                            <?= htmlspecialchars($fresher->student_name); ?>
-                                        </td>
-                                        <td class="px-4 py-3 text-sm">
-                                            <?= htmlspecialchars($fresher->matriculation_roll_num); ?>
-                                        </td>
-                                        <td class="px-4 py-3 text-sm">
-                                            <?= htmlspecialchars($fresher->nrc_num); ?>
-                                        </td>
-                                        <td class="px-4 py-3 text-sm">
-                                            <?= htmlspecialchars($fresher->matriculation_mark); ?>
-                                        </td>
-                                        <td class="px-4 py-3 text-sm">
-                                            <?= htmlspecialchars($fresher->passing_year); ?>
-                                        </td>
-                                        <td class="px-4 py-3">
-                                            <div class="flex items-center space-x-4 text-sm">
-                                                <button @click="openModal"
-                                                    onclick="openEditModal('<?= $fresher->id ?>','<?= $fresher->student_name ?>','<?= $fresher->matriculation_roll_num ?>','<?= $fresher->nrc_num ?>','<?= $fresher->matriculation_mark ?>','<?= $fresher->passing_year ?>')"
-                                                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                    aria-label="Edit">
-                                                    <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
-                                                        viewBox="0 0 20 20">
-                                                        <path
-                                                            d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
-                                                        </path>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-
-                            </tbody>
-                        </table>
-                    </div>
-                    <div
-                        class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
-                        <span class="flex items-center col-span-3">
-                        </span>
-                        <span class="col-span-2"></span>
-                        <!-- Pagination -->
-                        <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
-                            <nav aria-label="Table navigation">
-                                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-
-                                    <ul class="inline-flex items-center">
-                                        <li>
-                                            <a href="?page=<?= $i; ?>"
-                                                class="text-black px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <?php if ($i == $page): ?> ' transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600' <?php endif; ?> ">
-                                                <?= $i; ?>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                <?php endfor; ?>
-                            </nav>
-                        </span>
-                    </div>
+                <div class="overflow-y-auto md:pt-16 px-4 pb-4">
                     <form action="" method="post">
-                        <div style="display:flex; padding:10px;">
-                            <label class="block text-sm" style="margin:10px;">
-                                <span class="text-gray-800 font-semibold dark:text-gray-500">Name</span>
-                                <input
-                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    name="student_name" placeholder="eg.Kaung Myat Thu" />
-                            </label>
-                            <label class="block text-sm" style="margin:10px;">
-                                <span class="text-gray-800 font-semibold dark:text-gray-500">Matriculation Roll
-                                    Number</span>
-                                <input
-                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    name="matriculation_roll_num" placeholder="eg.20" />
-                            </label>
+                        <select id="file-type" name="passed_year" onchange="this.form.submit()"
+                            class="block w-50 mb-4 px-3 py-2 mt-1 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:border-purple-400 focus:ring-purple-400 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:focus:ring-offset-gray-800">
+                            <option value="all" <?= $selectedYear == 'all' ? 'selected' : '' ?>>See All</option>
+                            <?php foreach ($fresherPassingYears as $year): ?>
+                            <option value="<?= htmlspecialchars($year->passing_year) ?>"
+                                <?= $selectedYear == $year->passing_year ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($year->passing_year) ?>
+                            </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </form>
+                    <table class="w-full whitespace-no-wrap">
+                        <thead>
+                            <tr
+                                class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                <th class="px-4 py-3">Name</th>
+                                <th class="px-4 py-3">Roll Number</th>
+                                <th class="px-4 py-3">NRC</th>
+                                <th class="px-4 py-3">Mark</th>
+                                <th class="px-4 py-3">Year Of Passing</th>
+                                <th class="px-4 py-3">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                            <?php foreach ($paginationFresherData as $fresher): ?>
 
-                            <label class="block text-sm" style="margin:10px;">
-                                <span class="text-gray-800 font-semibold dark:text-gray-500">NRC</span>
-                                <input
-                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    name="nrc_num" placeholder="eg.11/satana(naing)140333" />
-                            </label>
-                            <label class="block text-sm" style="margin:10px;">
-                                <span class="text-gray-800 font-semibold dark:text-gray-500">Mark</span>
-                                <input
-                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    name="matriculation_mark" placeholder="eg.410" />
-                            </label>
-                            <label class="block text-sm" style="margin:10px;">
-                                <span class="text-gray-800 font-semibold dark:text-gray-500">Year Of
-                                    Passing</span>
-                                <input
-                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    name="passing_year" placeholder="eg.2020" />
-                            </label>
+                            <tr class="text-gray-700 dark:text-gray-400">
+                                <td class="px-4 py-3 text-sm">
+                                    <?= htmlspecialchars($fresher->student_name); ?>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    <?= htmlspecialchars($fresher->matriculation_roll_num); ?>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    <?= htmlspecialchars($fresher->nrc_num); ?>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    <?= htmlspecialchars($fresher->matriculation_mark); ?>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    <?= htmlspecialchars($fresher->passing_year); ?>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <div class="flex items-center space-x-4 text-sm">
+                                        <button @click="openModal"
+                                            onclick="openEditModal('<?= $fresher->id ?>','<?= $fresher->student_name ?>','<?= $fresher->matriculation_roll_num ?>','<?= $fresher->nrc_num ?>','<?= $fresher->matriculation_mark ?>','<?= $fresher->passing_year ?>')"
+                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                            aria-label="Edit">
+                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
+                                                viewBox="0 0 20 20">
+                                                <path
+                                                    d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                        <button
+                                            class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                                            onclick="openDeleteModal('<?= $fresher->id ?>')" aria-label="Delete">
+                                            <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
+                                                viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd"
+                                                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div
+                    class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+                    <span class="flex items-center col-span-3">
+                    </span>
+                    <span class="col-span-2"></span>
+                    <!-- Pagination -->
+                    <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+                        <nav aria-label="Table navigation">
+                            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+
+                            <ul class="inline-flex items-center">
+                                <li>
+                                    <a href="?page=<?= $i; ?>"
+                                        class="text-gray-700 px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <?php if ($i == $page): ?> ' transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600' <?php endif; ?> ">
+                                        <?= $i; ?>
+                                    </a>
+                                </li>
+                            </ul>
+                            <?php endfor; ?>
+                        </nav>
+                    </span>
+                </div>
+                <form action="" method="post">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 p-4 gap-2">
+                        <label class="block text-sm mr-4">
+                            <span class="text-gray-800 font-semibold dark:text-gray-500">Name</span>
+                            <input
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                name="student_name" required placeholder="မောင်ကောင်းမြတ်သူ" />
+                        </label>
+                        <label class="block text-sm mr-4">
+                            <span class="text-gray-800 font-semibold dark:text-gray-500">Matriculation Roll
+                                Number</span>
+                            <input
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                name="matriculation_roll_num" required placeholder="" />
+                        </label>
+                        <label class="block text-sm mr-4">
+                            <span class="text-gray-800 font-semibold dark:text-gray-500">Mark</span>
+                            <input
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                name="matriculation_mark" required placeholder="410" />
+                        </label>
+                        <label class="block text-sm mr-4">
+                            <span class="text-gray-800 font-semibold dark:text-gray-500">Year Of
+                                Passing</span>
+                            <input
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                name="passing_year" required placeholder="2023" />
+                        </label>
+                        <div class="block text-sm mr-4 mt-4">
+                            <label for="student_nrc_code">နိုင်ငံသား စိစစ်ရေးအမှတ်</label>
+                            <select id="student_nrc_code" name="student_nrc_code"
+                                class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                            </select>
                         </div>
-                        <button name="addMoreFresher" style="margin:10px;"
-                            class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                            Add More
+                        <div class="block text-sm mr-4 mt-4">
+                            <label for="student_nrc_name">&nbsp;</label>
+                            <select id="student_nrc_name" name="student_nrc_name"
+                                class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                            </select>
+                        </div>
+                        <div class="block text-sm mr-4 mt-4">
+                            <label for="studen_nrc_type">&nbsp;</label>
+                            <select id="studen_nrc_type" name="student_nrc_type"
+                                class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                <option value="(သ)">(သ)</option>
+                                <option value="(သီ)">(သီ)</option>
+                                <option value="(နိုင်)">(နိုင်)</option>
+                                <option value="(ပြု)">(ပြု)</option>
+                                <option value="(ဧည့်)">(ဧည့်)</option>
+                            </select>
+                        </div>
+                        <div class="block text-sm mr-4 mt-4">
+                            <label for="student_nrc_num">&nbsp;</label>
+                            <input name="student_nrc_num" id="student_nrc_num" type="number"
+                                class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
+                                required placeholder="xxxxxx">
+                        </div>
+                    </div>
+                    <button name="addMoreFresher"
+                        class="px-4 py-2 m-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                        Add
+                    </button>
+                </form>
+
+
+                <div class="container  grid w-50 h-80 m-4 ">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <div class="relative">
+                            <span class="">Select an excel file to import fresher student data.</span>
+                            <div class="mt-4 m w-40">
+                                <label for="file-upload"
+                                    class="flex items-center justify-center px-4 py-2 bg-gray-200 text-gray-700 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-600">
+                                    <span>Select a file</span>
+                                </label>
+                                <input id="file-upload" type="file" name="excel" class="hidden"
+                                    onchange="updateFileDetails()" />
+                            </div>
+                            <div id="file-info" class="mt-3 text-sm text-gray-600 dark:text-gray-300"></div>
+                        </div>
+                        <button type="submit" name="submit"
+                            class=" px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                            Import
                         </button>
                     </form>
-
-
-                    <div class="container px-6 mx-auto grid w-50 h-80">
-                        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                            Add Fresher
-                        </h2>
-                        <form action="" method="post" enctype="multipart/form-data">
-                            <div class="relative">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Upload
-                                    File</label>
-                                <div class="mt-1">
-                                    <label for="file-upload"
-                                        class="flex items-center justify-center px-4 py-2 bg-gray-200 text-gray-700 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-600">
-                                        <span>Click to select a file</span>
-                                    </label>
-                                    <input id="file-upload" type="file" name="excel" class="hidden"
-                                        onchange="updateFileDetails()" />
-                                </div>
-                                <div id="file-info" class="mt-3 text-sm text-gray-600 dark:text-gray-300"></div>
-                            </div>
-                            <button type="submit" name="submit"
-                                class="m-5 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                Import
-                            </button>
-                        </form>
-                    </div>
+                </div>
                 <?php else: ?>
-                    <div class="container px-6 mx-auto grid w-50 h-80">
-                        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                            Add Fresher
-                        </h2>
-                        <form action="" method="post" enctype="multipart/form-data">
-                            <div class="relative">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Upload
-                                    File</label>
-                                <div class="mt-1">
-                                    <label for="file-upload"
-                                        class="flex items-center justify-center px-4 py-2 bg-gray-200 text-gray-700 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-600">
-                                        <span>Click to select a file</span>
-                                    </label>
-                                    <input id="file-upload" type="file" name="excel" class="hidden"
-                                        onchange="updateFileDetails()" />
-                                </div>
-                                <div id="file-info" class="mt-3 text-sm text-gray-600 dark:text-gray-300"></div>
+                <div class="container px-6 mx-auto grid w-50 h-80">
+                    <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                        Add Fresher
+                    </h2>
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <div class="relative">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Upload
+                                File</label>
+                            <div class="mt-1">
+                                <label for="file-upload"
+                                    class="flex items-center justify-center px-4 py-2 bg-gray-200 text-gray-700 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-600">
+                                    <span>Click to select a file</span>
+                                </label>
+                                <input id="file-upload" type="file" name="excel" class="hidden" required
+                                    onchange="updateFileDetails()" />
                             </div>
                             <button type="submit" name="submit"
-                                class="m-5 px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                class="m-5  py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                 Import
                             </button>
-                        </form>
-                    </div>
+                    </form>
+                </div>
                 <?php endif; ?>
             </div>
         </div>
@@ -416,12 +456,13 @@ include("../../utils/components/admin/admin.links.php");
         class="fixed inset-0 z-50 items-center justify-center hidden overflow-y-auto bg-gray-900 bg-opacity-50">
         <form action="" method="post">
             <div class="max-w-xl p-6 bg-white rounded-lg shadow-md">
+                <input type="hidden" id="deleteFresherId" name="delete_fresher_id">
                 <h2 class="text-xl font-bold mb-4">Confirm Deletion</h2>
-                <p class="mb-6">Are you sure you want to delete all data?</p>
+                <p class="mb-6">Are you sure you want to delete data?</p>
                 <div class="flex justify-end">
                     <button onclick="closeDeleteModal()"
                         class="px-4 py-2 mr-4 font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300">Cancel</button>
-                    <button type="submit" name="delete_all"
+                    <button type="submit" name="delete_fresher"
                         class="px-4 py-2 font-medium text-white bg-red-500 rounded hover:bg-red-600">Delete</button>
                 </div>
             </div>
@@ -431,32 +472,91 @@ include("../../utils/components/admin/admin.links.php");
 
 </html>
 
+
 <script>
-    function openEditModal(id, name, rollNum, nrc, mark, passedYear) {
-        document.getElementById('editFresherId').value = id;
-        document.getElementById('editFresherName').value = name;
-        document.getElementById('editFresherRollNum').value = rollNum;
-        document.getElementById('editFresherNRC').value = nrc;
-        document.getElementById('editFresherMark').value = mark;
-        document.getElementById('editFresherPassingYear').value = passedYear;
-    }
+function openEditModal(id, name, rollNum, nrc, mark, passedYear) {
+    document.getElementById('editFresherId').value = id;
+    document.getElementById('editFresherName').value = name;
+    document.getElementById('editFresherRollNum').value = rollNum;
+    document.getElementById('editFresherNRC').value = nrc;
+    document.getElementById('editFresherMark').value = mark;
+    document.getElementById('editFresherPassingYear').value = passedYear;
+}
 
-    function openDeleteModal() {
-        document.getElementById("deleteModal").style.display = "flex";
-    }
+function openDeleteModal(id) {
+    document.getElementById('deleteFresherId').value = id;
+    document.getElementById("deleteModal").style.display = "flex";
+}
 
-    function closeDeleteModal() {
-        document.getElementById("deleteModal").style.display = "none";
-    }
+function closeDeleteModal() {
+    document.getElementById("deleteModal").style.display = "none";
+}
 
-    function updateFileDetails() {
-        const fileInput = document.getElementById('file-upload');
-        const fileInfo = document.getElementById('file-info');
-        if (fileInput.files.length > 0) {
-            const file = fileInput.files[0];
-            fileInfo.textContent = `Selected file: ${file.name} (${file.type})`;
-        } else {
-            fileInfo.textContent = '';
+function updateFileDetails() {
+    const fileInput = document.getElementById('file-upload');
+    const fileInfo = document.getElementById('file-info');
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        fileInfo.textContent = `Selected file: ${file.name} (${file.type})`;
+    } else {
+        fileInfo.textContent = '';
+    }
+}
+// Fetch NRC
+fetch('nrc.json')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
+        return response.json();
+    })
+    .then(data => {
+        setupNrcDropdowns('student_nrc_code', 'student_nrc_name', data);
+    })
+    .catch(error => console.error('Error fetching the JSON data:', error));
+console.log('helel');
+
+
+
+
+/*********************/
+/*       NRC         */
+/*********************/
+
+function setupNrcDropdowns(nrcCodeSelectId, nrcNameSelectId, jsonData) {
+    const nrcCodeSelect = document.getElementById(nrcCodeSelectId);
+    const nrcNameSelect = document.getElementById(nrcNameSelectId);
+
+    const uniqueNrcCodes = [...new Set(jsonData.data.map(item => item.nrc_code))];
+
+    uniqueNrcCodes.forEach(code => {
+        let optionCode = document.createElement('option');
+        optionCode.value = code;
+        optionCode.textContent = code;
+        nrcCodeSelect.appendChild(optionCode);
+    });
+
+    function updateNrcNameOptions(selectedCode) {
+        nrcNameSelect.innerHTML = '';
+
+        const filteredNames = jsonData.data.filter(item => item.nrc_code === selectedCode);
+
+        filteredNames.forEach(item => {
+            let optionName = document.createElement('option');
+            let nrcName = item.name_mm.match(/\((.*?)\)/);
+            optionName.value = nrcName[1];
+            optionName.textContent = nrcName[1];
+            nrcNameSelect.appendChild(optionName);
+        });
     }
+
+    nrcCodeSelect.addEventListener('change', (event) => {
+        updateNrcNameOptions(event.target.value);
+    });
+
+    if (uniqueNrcCodes.length > 0) {
+        nrcCodeSelect.value = uniqueNrcCodes[0];
+        updateNrcNameOptions(uniqueNrcCodes[0]);
+    }
+}
 </script>

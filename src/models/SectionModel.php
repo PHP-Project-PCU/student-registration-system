@@ -29,4 +29,16 @@ class SectionModel
             return $e->getMessage();
         }
     }
+
+    public function getSectionId($table, $section)
+    {
+        try {
+
+        } catch (PDOException $e) {
+
+        }
+    }
+
+
+
 }

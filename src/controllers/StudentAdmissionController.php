@@ -25,16 +25,60 @@ class StudentAdmissionController
     {
         return $this->studentAdmissionModel->setStudentAdmissionsByStatus(Constants::$STUDENT_TBL, $data);
     }
-    public function getAllFreshersByStatus($status, $year)
+    public function getAllStudentsByStatusAndYear($status, $year, $page, $limit)
     {
-        return $this->studentAdmissionModel->getAllFreshersByStatusAndYear(Constants::$STUDENT_TBL, $status, $year);
+        return $this->studentAdmissionModel->getAllStudentsByStatusAndYear(Constants::$STUDENT_TBL, $status, $year, $page, $limit);
     }
     public function getStudentById($status)
     {
         return $this->studentAdmissionModel->getStudentById($status);
     }
+    public function getTotalRows($year, $status)
+    {
+        return  $this->studentAdmissionModel->getTotalRows(Constants::$STUDENT_TBL, $year, $status);
+    }
     public function approveFresher($data)
     {
         return $this->studentAdmissionModel->approveFresher(Constants::$STUDENT_TBL, Constants::$STUDENT_AUTH_TBL, $data);
+    }
+
+    public function getStudentsYear()
+    {
+        return $this->studentAdmissionModel->getStudentsYear(Constants::$STUDENT_TBL);
+    }
+
+    public function getApprovedStudentsYear()
+    {
+        return $this->studentAdmissionModel->getApprovedStudentsYear(Constants::$STUDENT_TBL);
+    }
+
+    public function getStudentAdmissionTotalCount($studentYear)
+    {
+        return $this->studentAdmissionModel->getStudentAdmissionTotalCount(Constants::$STUDENT_TBL, $studentYear);
+    }
+
+    public function getStudentAdmissionApprovedCount($studentYear)
+    {
+        return $this->studentAdmissionModel->getStudentAdmissionApprovedCount(Constants::$STUDENT_TBL, $studentYear);
+    }
+
+    public function getStudentAdmissionTotalCountByStatus($status)
+    {
+        return $this->studentAdmissionModel->getStudentAdmissionTotalCount(Constants::$STUDENT_TBL, $status);
+    }
+
+    public function getApprovedStudentsRollNum($studentYear)
+    {
+        return $this->studentAdmissionModel->getApprovedStudentsRollNum(Constants::$STUDENT_TBL, $studentYear);
+    }
+
+    public function getStudentIdBetweenRollNum($startRollNum, $endRollNum)
+    {
+        return $this->studentAdmissionModel->getStudentIdBetweenRollNum(Constants::$STUDENT_TBL, $startRollNum, $endRollNum);
+    }
+
+    public function setStudentSection($studentData)
+    {
+        return $this->studentAdmissionModel->setStudentSection(Constants::$STUDENT_SECTION_TBL, $studentData);
     }
 }

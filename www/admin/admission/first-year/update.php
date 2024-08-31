@@ -10,10 +10,13 @@ use controllers\MailController;
 
 $id = $_GET['id'];
 $imageBasePath = "http://ucspyay.edu/utils/uploads/admission/$id/";
+$logoImage = "http://ucspyay.edu/utils/assets/img/ucspyay/ucsp-logo-light.jpg";
+
 $studentAdmissionController = new StudentAdmissionController();
 
 $studentData = $studentAdmissionController->getStudentById($id);
 $email = $studentData['student']['student_email'];
+$isApproved = false;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = [
@@ -27,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result) {
         $mailController = new MailController($email);
         $mailController->sendMail($data);
+        $isApproved = true;
         header("location:index.php");
     }
 }
@@ -98,7 +102,11 @@ include("../../../utils/components/admin/admin.links.php");
                     <section class="w-full my-6" id="first-tbl">
                         <div class="grid grid-cols-1 lg:grid-cols-2">
                             <div class="text-center mx-auto">
-                                <img src="<?= $imageBasePath . htmlspecialchars($studentData['files']['passport_photo']); ?>" class="w-36 my-6" alt="Profile" onclick="openLightbox(this);">
+                                <img src="<?php if (!empty($studentData['files']['passport_photo'])) {
+                                                echo $imageBasePath . htmlspecialchars($studentData['files']['passport_photo']);
+                                            } else {
+                                                echo $logoImage;
+                                            } ?>" class="w-36 my-6" alt="Profile Image" onclick="openLightbox(this);">
                             </div>
                             <div class=" w-full">
                                 <table class="w-full table-fixed">
@@ -459,5 +467,12 @@ include("../../../utils/components/admin/admin.links.php");
                 <img class="lightbox-content" id="lightbox-img">
             </div>
 </body>
+<script>
+    <?php if (!$isApproved && $_SERVER['REQUEST_METHOD'] == 'POST'): ?>
+        alertify.warning('အတည်ပြုခြင်းမအောင်မြင်ပါ။');
+    <?php elseif ($isApproved): ?>
+        alertify.success('အတည်ပြုပြီးပါပြီ။');
+    <?php endif ?>
+</script>
 
 </html>

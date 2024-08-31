@@ -17,6 +17,7 @@ class FresherController
     private $passingYear;
 
     private $deleteData;
+
     public function __construct($data = null, $page = null, $limit = null, $updateData = null, $passingYear = null, $deleteData = null)
     {
         $this->data = $data;
@@ -112,6 +113,15 @@ class FresherController
         $fresherModel = new FresherModel(new MySQL());
         if ($fresherModel) {
             $fresherPassingYears = $fresherModel->getFresherPassingYear(Constants::$FRESHER_TBL);
+            return $fresherPassingYears;
+        }
+    }
+
+    public function deleteFresher()
+    {
+        $fresherModel = new FresherModel(new MySQL());
+        if ($fresherModel) {
+            $fresherPassingYears = $fresherModel->deleteFresher(Constants::$FRESHER_TBL, $this->deleteData['id']);
             return $fresherPassingYears;
         }
     }
