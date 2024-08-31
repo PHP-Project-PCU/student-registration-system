@@ -37,4 +37,34 @@ class StudentAdmissionController
     {
         return $this->studentAdmissionModel->approveFresher(Constants::$STUDENT_TBL, Constants::$STUDENT_AUTH_TBL, $data);
     }
+
+    public function getStudentsYear()
+    {
+        return $this->studentAdmissionModel->getStudentsYear(Constants::$STUDENT_TBL);
+    }
+
+    public function getApprovedStudentsYear()
+    {
+        return $this->studentAdmissionModel->getApprovedStudentsYear(Constants::$STUDENT_TBL);
+    }
+
+    public function getStudentAdmissionTotalCount($studentYear)
+    {
+        return $this->studentAdmissionModel->getStudentAdmissionTotalCount(Constants::$STUDENT_TBL, $studentYear);
+    }
+
+    public function getStudentAdmissionApprovedCount($studentYear)
+    {
+        return $this->studentAdmissionModel->getStudentAdmissionApprovedCount(Constants::$STUDENT_TBL, $studentYear);
+    }
+
+    public function getApprovedStudentsRollNum($studentYear)
+    {
+        return $this->studentAdmissionModel->getApprovedStudentsRollNum(Constants::$STUDENT_TBL, $studentYear);
+    }
+
+    public function getStudentIdBetweenRollNum($startRollNum, $endRollNum)
+    {
+        return $this->studentAdmissionModel->getStudentIdBetweenRollNum(Constants::$STUDENT_TBL, $startRollNum, $endRollNum);
+    }
 }
