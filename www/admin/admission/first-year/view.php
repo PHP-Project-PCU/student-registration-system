@@ -10,6 +10,7 @@ use controllers\MailController;
 
 $id = $_GET['id'];
 $imageBasePath = "http://ucspyay.edu/utils/uploads/admission/$id/";
+$logoImage = "http://ucspyay.edu/utils/assets/img/ucspyay/ucsp-logo-light.jpg";
 $studentAdmissionController = new StudentAdmissionController();
 
 $studentData = $studentAdmissionController->getStudentById($id);
@@ -106,17 +107,6 @@ include("../../../utils/components/admin/admin.links.php");
     }
 </style>
 
-
-<!-- <body>
-    <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
-        <?php
-        // include("../../../utils/components/admin/admin.sidebar.php");
-        ?>
-        <div class=" flex flex-col flex-1 w-full">
-            <?php
-            // inclu    de("../../../utils/components/admin/admin.navigation.php");
-            ?> -->
-
 <body>
     <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
         <!-- Sidebar -->
@@ -152,7 +142,11 @@ include("../../../utils/components/admin/admin.links.php");
                     <section class="w-full my-6" id="first-tbl">
                         <div class="grid grid-cols-1 lg:grid-cols-2">
                             <div class="text-center mx-auto">
-                                <img src="<?= $imageBasePath . htmlspecialchars($studentData['files']['passport_photo']); ?>" class="w-36 my-6" alt="Profile" onclick="openLightbox(this);">
+                                <img src="<?php if (!empty($studentData['files']['passport_photo'])) {
+                                                echo $imageBasePath . htmlspecialchars($studentData['files']['passport_photo']);
+                                            } else {
+                                                echo $logoImage;
+                                            } ?>" class="w-36 my-6" alt="Profile Image" onclick="openLightbox(this);">
                             </div>
                             <div class=" w-full">
                                 <table class="w-full table-fixed">

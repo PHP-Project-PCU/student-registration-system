@@ -6,6 +6,9 @@
     <title>UCSPYAY ADMIN Dashboard</title>
     <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" /> -->
+    <!-- favicon -->
+    <link rel="shortcut icon" href="http://ucspyay.edu/utils/assets/img/ucspyay/ucsp-logo-light.jpg">
+
 
     <link rel="stylesheet" href="http://ucspyay.edu/utils/assets/css/tailwind.output.css" />
     <link rel="stylesheet" href="http://ucspyay.edu/utils/assets/css/alertify.css">
