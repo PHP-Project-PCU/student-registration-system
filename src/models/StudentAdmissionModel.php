@@ -575,7 +575,7 @@ class StudentAdmissionModel
     public function getStudentsYear($table)
     {
         try {
-            $query = "SELECT DISTINCT year FROM $table";
+            $query = "SELECT DISTINCT year FROM $table WHERE status = 0 OR status = 1";
             $statement = $this->db->prepare($query);
             $statement->execute();
             $result = $statement->fetchAll();
