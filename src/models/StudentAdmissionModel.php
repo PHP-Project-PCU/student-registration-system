@@ -607,7 +607,8 @@ class StudentAdmissionModel
     public function getApprovedStudentsRollNum($table, $year)
     {
         try {
-            $query = "SELECT roll_num FROM $table WHERE status = 1 AND year = :year";
+            $query = "SELECT roll_num FROM student_tbl WHERE status = 1 AND year = :year AND id NOT IN (SELECT student_id FROM student_section_tbl)";
+
             $statement = $this->db->prepare($query);
             $statement->bindParam(':year', $year);
             $statement->execute();
@@ -628,7 +629,21 @@ class StudentAdmissionModel
                 ":endRollNum" => $endRollNum
             ]);
             $result = $statement->fetchAll();
-            return $result;
+            return array_values($result);
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function setStudentSection($table, $studentData)
+    {
+        try {
+            $columns = implode(", ", array_keys($studentData));
+            $placeholders = ":" . implode(", :", array_keys($studentData));
+            $query = "INSERT INTO $table ($columns) VALUES ($placeholders)";
+            $statement = $this->db->prepare($query);
+            $statement->execute($studentData);
+            return $this->db->lastInsertId();
         } catch (PDOException $e) {
             return $e->getMessage();
         }
