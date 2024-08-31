@@ -89,7 +89,7 @@ class FresherModel
         try {
             if ($passingYear) {
                 $statement = $this->db->prepare("
-                    SELECT * FROM $table WHERE passing_year = :passingYear ORDER BY id LIMIT :limit OFFSET :offset 
+                    SELECT * FROM $table WHERE passing_year = :passingYear ORDER BY id,matriculation_mark DESC LIMIT :limit OFFSET :offset 
                 ");
                 // Bind the values as integers
                 $statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
@@ -201,10 +201,3 @@ class FresherModel
         }
     }
 }
-    // public function deleteFresher($table, $id)
-    // {
-    //     try {
-    //         $query = "DELETE FROM $table WHERE id = :id";
-
-    //     }
-    // }
