@@ -22,9 +22,14 @@ function getYear($year)
     $part = explode('-', $year);
     return $part[0];
 }
-$studentAdmissionController = new StudentAdmissionController();
-$freshers = $studentAdmissionController->getAllFreshersByStatus($status, $selectedYear);
+// Pagination Logic
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$limit = 10;
 
+$studentAdmissionController = new StudentAdmissionController();
+$freshers = $studentAdmissionController->getAllStudentsByStatusAndYear($status, $selectedYear, $page, $limit);
+$getStudentsTotalRows = $studentAdmissionController->getTotalRows(1, $status); // for first year
+$totalPages = ceil($getStudentsTotalRows / $limit);
 ?>
 
 <!DOCTYPE html>
@@ -62,17 +67,17 @@ include("../../../utils/components/admin/admin.links.php");
                             <select id="status" name="status" onchange="this.form.submit()"
                                 class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                 <option value="0" <?php if ($status == 0)
-                                    echo 'selected'; ?>>
+                                                        echo 'selected'; ?>>
                                     အတည်မပြုရသေးသောလျှောက်လွှာများ</option>
                                 <option value="1" <?php if ($status == 1)
-                                    echo 'selected'; ?>>
+                                                        echo 'selected'; ?>>
                                     အတည်ပြုပြီးသောလျှောက်လွှာများ</option>
                             </select>
                             <select id="selected_year" name="selected_year" onchange="this.form.submit()"
                                 class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                 <?php foreach ($academicYears as $year): ?>
                                     <option value="<?= $year["academic_year"] ?>" <?php if ($selectedYear == getYear($year['academic_year']))
-                                          echo 'selected' ?>>
+                                                                                        echo 'selected' ?>>
                                         <?= $year['academic_year'] . " (ပညာသင်နှစ်)" ?>
                                     </option>
                                 <?php endforeach ?>
@@ -102,7 +107,7 @@ include("../../../utils/components/admin/admin.links.php");
                                     foreach ($freshers as $fresher) {
                                         $id = $fresher['id'];
 
-                                        ?>
+                                    ?>
                                         <tr class="text-gray-700 dark:text-gray-400">
                                             <td class="px-4 py-3">
                                                 <?= $count ?>
@@ -126,12 +131,32 @@ include("../../../utils/components/admin/admin.links.php");
                                                 <?php endif ?>
                                             </td>
                                         </tr>
-                                        <?php $count++;
+                                    <?php $count++;
                                     } ?>
                                 </tbody>
                             </table>
                         </div>
 
+                    </div>
+
+                    <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+                        <span class="flex items-center col-span-3"></span>
+                        <span class="col-span-2"></span>
+                        <!-- Pagination -->
+                        <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+                            <nav aria-label="Table navigation">
+                                <ul class="inline-flex items-center">
+                                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                        <li>
+                                            <a href="?page=<?= $i; ?>"
+                                                class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple transition-colors duration-150 <?= ($i == $page) ? 'bg-purple-600 text-white' : 'text-gray-700'; ?>">
+                                                <?= $i; ?>
+                                            </a>
+                                        </li>
+                                    <?php endfor; ?>
+                                </ul>
+                            </nav>
+                        </span>
                     </div>
                 </div>
 

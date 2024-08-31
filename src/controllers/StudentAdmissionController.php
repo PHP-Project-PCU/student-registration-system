@@ -25,13 +25,17 @@ class StudentAdmissionController
     {
         return $this->studentAdmissionModel->setStudentAdmissionsByStatus(Constants::$STUDENT_TBL, $data);
     }
-    public function getAllFreshersByStatus($status, $year)
+    public function getAllStudentsByStatusAndYear($status, $year, $page, $limit)
     {
-        return $this->studentAdmissionModel->getAllFreshersByStatusAndYear(Constants::$STUDENT_TBL, $status, $year);
+        return $this->studentAdmissionModel->getAllStudentsByStatusAndYear(Constants::$STUDENT_TBL, $status, $year, $page, $limit);
     }
     public function getStudentById($status)
     {
         return $this->studentAdmissionModel->getStudentById($status);
+    }
+    public function getTotalRows($year, $status)
+    {
+        return  $this->studentAdmissionModel->getTotalRows(Constants::$STUDENT_TBL, $year, $status);
     }
     public function approveFresher($data)
     {

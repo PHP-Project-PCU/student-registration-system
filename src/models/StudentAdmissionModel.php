@@ -449,24 +449,29 @@ class StudentAdmissionModel
             return $e->getMessage();
         }
     }
-    public function getAllFreshersByStatusAndYear($studentTbl, $status, $year)
+    public function getAllStudentsByStatusAndYear($studentTbl, $status, $year, $page, $limit)
     {
         try {
+            $offset = ($page - 1) * $limit;
+            $sql = "SELECT id, matriculation_reg_num, student_name_my, student_nrc
+                FROM $studentTbl 
+                WHERE year = 1 AND status = :status AND year(created_at) = :year
+                ORDER BY matriculation_reg_num ASC 
+                LIMIT :limit OFFSET :offset";
 
-            $sql = "SELECT id,matriculation_reg_num,student_name_my,student_nrc
-            FROM $studentTbl WHERE year=1 AND status=:status and YEAR(created_at) =:year
-            ORDER BY matriculation_reg_num ASC";
             $stmt = $this->db->prepare($sql);
-            $stmt->execute([
-                ":status" => $status,
-                ":year" => $year,
-            ]);
+            $stmt->bindParam(":status", $status, PDO::PARAM_STR);
+            $stmt->bindParam(":year", $year, PDO::PARAM_INT);
+            $stmt->bindParam(":limit", $limit, PDO::PARAM_INT);
+            $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
+            $stmt->execute();
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return array_values($data);
         } catch (PDOException $e) {
             return $e->getMessage();
         }
     }
+
 
     public function getStudentById($studentId)
     {
@@ -511,6 +516,26 @@ class StudentAdmissionModel
         } catch (PDOException $e) {
             echo "Failed to retrieve student data: " . $e->getMessage();
             return null;
+        }
+    }
+
+    public function getTotalRows($table, $year, $status)
+    {
+        try {
+            if ($year) {
+                $query = "SELECT COUNT(*) as total FROM $table WHERE year = :year AND status=:status";
+                $statement = $this->db->prepare($query);
+                $statement->bindParam(':year', $year);
+                $statement->bindParam(':status', $status);
+            } else {
+                $query = "SELECT COUNT(*) as total FROM $table";
+                $statement = $this->db->prepare($query);
+            }
+            $statement->execute();
+            $result = $statement->fetch();
+            return $result->total;
+        } catch (PDOException $e) {
+            return $e->getMessage();
         }
     }
 
@@ -598,7 +623,6 @@ class StudentAdmissionModel
             $result = $statement->fetch();
 
             return $result->total;
-
         } catch (PDOException $e) {
             return $e->getMessage();
         }
