@@ -165,7 +165,7 @@ include("../../utils/components/admin/admin.links.php");
                             </form>
                         </div>
                     </div>
-                    <?php if ($studentDataInsertFlag): ?>
+                    <?php if ($studentDataInsertFlag ||  $_SESSION['isAddSection']): ?>
                     <div class="overflow-y-auto md:pt-16 px-4 pb-4">
                         <div class="flex gap-2">
                             <form action="" method="post">
