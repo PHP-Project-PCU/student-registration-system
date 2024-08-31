@@ -8,6 +8,7 @@ use controllers\AcademicYearController;
 use controllers\StudentAdmissionController;
 
 $status = 0;
+
 $academicYearController = new AcademicYearController();
 $academicYears = $academicYearController->index();
 $selectedYear = getYear($academicYears[0]['academic_year']);

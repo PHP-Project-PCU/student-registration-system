@@ -627,6 +627,21 @@ class StudentAdmissionModel
             return $e->getMessage();
         }
     }
+    // for credit transfer students
+    public function getStudentAdmissionTotalCountByStatus($table, $status)
+    {
+        try {
+            $query = "SELECT COUNT(*) as total FROM $table WHERE status=:status";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':status', $status);
+            $statement->execute();
+            $result = $statement->fetch();
+
+            return $result->total;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
 
     public function getApprovedStudentsRollNum($table, $year)
     {
