@@ -178,7 +178,7 @@ class FresherModel
     public function getFresherPassingYear($table)
     {
         try {
-            $query = "SELECT DISTINCT passing_year FROM $table";
+            $query = "SELECT DISTINCT passing_year FROM $table ORDER BY passing_year DESC";
             $statement = $this->db->prepare($query);
             $statement->execute();
             return $statement->fetchAll();
@@ -201,3 +201,10 @@ class FresherModel
         }
     }
 }
+    // public function deleteFresher($table, $id)
+    // {
+    //     try {
+    //         $query = "DELETE FROM $table WHERE id = :id";
+
+    //     }
+    // }
