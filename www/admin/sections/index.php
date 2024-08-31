@@ -26,6 +26,8 @@ $approvedStudentSelectedYear = $_SESSION['approved_student_selected_year'] ?? nu
 
 $studentsRollNum = $studentAdmissionController->getApprovedStudentsRollNum($approvedStudentSelectedYear);
 
+$studentDataInsertFlag = false;
+
 
 if (isset($_POST['add_section'])) {
     $startRollNum = $_POST['start_roll_num'];
@@ -33,7 +35,17 @@ if (isset($_POST['add_section'])) {
 
     // echo $endRollNum;
     $studentIdBetweenRollNum = $studentAdmissionController->getStudentIdBetweenRollNum($startRollNum, $endRollNum);
-    var_dump($studentIdBetweenRollNum);
+
+    for ($index = 0; $index < count($studentIdBetweenRollNum); $index++) {
+        $studentData = [
+            "student_id" => $studentIdBetweenRollNum[$index]->id,
+            "semester_id" => $_POST['semester_id'],
+            "section_id" => $_POST['section_id'],
+        ];
+        $studentDataInsertFlag = $studentAdmissionController->setStudentSection($studentData);
+    }
+
+
 }
 
 
@@ -125,7 +137,7 @@ include("../../utils/components/admin/admin.links.php");
                                     <label class=" block text-sm ">
                                         <span
                                             class="text-gray-700 pt-4 font-semibold dark:text-gray-500">Sections</span>
-                                        <select id="semester_id" name="semester_id"
+                                        <select id="section_id" name="section_id"
                                             class="form-input my-4  w-full  px-3 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                             <?php foreach ($sections as $section): ?>
                                                 <option value="<?= $section['id'] ?>"><?= $section['section'] ?></option>
@@ -143,6 +155,9 @@ include("../../utils/components/admin/admin.links.php");
                             </form>
                         </div>
                     </div>
+                    <?php if ($studentDataInsertFlag): ?>
+                        <h1>Table</h1>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

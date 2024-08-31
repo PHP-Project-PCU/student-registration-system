@@ -67,4 +67,9 @@ class StudentAdmissionController
     {
         return $this->studentAdmissionModel->getStudentIdBetweenRollNum(Constants::$STUDENT_TBL, $startRollNum, $endRollNum);
     }
+
+    public function setStudentSection($studentData)
+    {
+        return $this->studentAdmissionModel->setStudentSection(Constants::$STUDENT_SECTION_TBL, $studentData);
+    }
 }

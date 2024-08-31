@@ -187,11 +187,17 @@ class FresherModel
         }
     }
 
-    // public function deleteFresher($table, $id)
-    // {
-    //     try {
-    //         $query = "DELETE FROM $table WHERE id = :id";
-
-    //     }
-    // }
+    public function deleteFresher($table, $id)
+    {
+        try {
+            $query = "DELETE FROM $table WHERE id = :id";
+            $statement = $this->db->prepare($query);
+            $statement->execute([
+                ":id" => $id,
+            ]);
+            return $statement->fetch();
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
 }
