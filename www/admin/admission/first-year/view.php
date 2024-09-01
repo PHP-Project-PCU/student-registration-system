@@ -5,8 +5,6 @@ require '../../../../vendor/autoload.php';
 include '../../../../autoload.php';
 
 use controllers\StudentAdmissionController;
-use controllers\MailController;
-
 
 $id = $_GET['id'];
 $imageBasePath = "http://ucspyay.edu/utils/uploads/admission/$id/";
@@ -15,22 +13,6 @@ $studentAdmissionController = new StudentAdmissionController();
 
 $studentData = $studentAdmissionController->getStudentById($id);
 $email = $studentData['student']['student_email'];
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $data = [
-        "id" => $id,
-        "name" => $studentData['student']['student_name_my'],
-        "roll_num" => $_POST['roll_num'],
-        "edu_mail" => $_POST['edu_mail'],
-        "password" => $_POST['password'],
-    ];
-    $result = $studentAdmissionController->approveFresher($data);
-    if ($result) {
-        $mailController = new MailController($email);
-        $mailController->sendMail($data);
-        header("location:index.php");
-    }
-}
 
 function formatDate($date)
 {
@@ -126,7 +108,7 @@ include("../../../utils/components/admin/admin.links.php");
                 <div class="p-4">
                     <div class="flex justify-start pb-4">
                         <button
-                            onclick="history.back()"
+                            onclick="window.location.href='/admission/first-year'"
                             class="px-4 py-2 my-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                             &larr;
                         </button>
