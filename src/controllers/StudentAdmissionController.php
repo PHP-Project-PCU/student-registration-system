@@ -35,7 +35,7 @@ class StudentAdmissionController
     }
     public function getTotalRows($year, $status)
     {
-        return  $this->studentAdmissionModel->getTotalRows(Constants::$STUDENT_TBL, $year, $status);
+        return $this->studentAdmissionModel->getTotalRows(Constants::$STUDENT_TBL, $year, $status);
     }
     public function approveFresher($data)
     {
@@ -74,6 +74,11 @@ class StudentAdmissionController
     public function getApprovedStudentsRollNum($studentYear)
     {
         return $this->studentAdmissionModel->getApprovedStudentsRollNum(Constants::$STUDENT_TBL, $studentYear);
+    }
+
+    public function getStudentNameAndRollNumAndSemesterAndSectionPaginationData($page, $limit, $semester, $section)
+    {
+        return $this->studentAdmissionModel->getStudentNameAndRollNumAndSemesterAndSectionPaginationData($page, $limit, $semester, $section);
     }
 
     public function getStudentIdBetweenRollNum($startRollNum, $endRollNum)
