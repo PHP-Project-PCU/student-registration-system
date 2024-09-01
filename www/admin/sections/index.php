@@ -14,6 +14,7 @@ $sectionController = new SectionController();
 $sections = $sectionController->index();
 
 $studentAdmissionController = new StudentAdmissionController();
+
 $studentsYears = $studentAdmissionController->getApprovedStudentsYear();
 
 $years = array("1" => "ပထမနှစ်", "2" => "ဒုတိယနှစ်", "3" => "တတိယနှစ်", "4" => "စတုတ္ထနှစ်", "5" => "ပဥ္စမနှစ်");
@@ -26,7 +27,6 @@ $approvedStudentSelectedYear = $_SESSION['approved_student_selected_year'] ?? nu
 
 $studentsRollNum = $studentAdmissionController->getApprovedStudentsRollNum($approvedStudentSelectedYear);
 
-$studentDataInsertFlag = $_SESSION['isAddSection'] ?? false;
 
 
 if (isset($_POST['add_section'])) {
@@ -41,24 +41,46 @@ if (isset($_POST['add_section'])) {
             "semester_id" => $_POST['semester_id'],
             "section_id" => $_POST['section_id'],
         ];
-        $_SESSION['isAddSection'] = $studentAdmissionController->setStudentSection($studentData);
-        $studentDataInsertFlag = $_SESSION['isAddSection'];
+        $studentDataInsertFlag = $studentAdmissionController->setStudentSection($studentData);
     }
     header('Location: http://admin.ucspyay.edu/sections/');
 
 }
 
-if (isset($_POST['student_semester'])) {
+
+
+
+if (isset($_POST['student_section_filter'])) {
     $_SESSION['student_semester'] = $_POST['student_semester'];
-}
-
-
-if (isset($_POST['student_section'])) {
     $_SESSION['student_section'] = $_POST['student_section'];
 }
 
+
+//Pagination Logic
 $studentSemester = $_SESSION['student_semester'] ?? null;
 $studentSection = $_SESSION['student_section'] ?? null;
+
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$limit = 4;
+$getStudentNameAndRollNumAndSemesterAndSectionPaginationData = $studentAdmissionController->getStudentNameAndRollNumAndSemesterAndSectionPaginationData($page, $limit, $studentSemester, $studentSection);
+$getStudentSectionTotalRows = $sectionController->getTotalRows($studentSemester, $studentSection);
+$totalPages = ceil($getStudentSectionTotalRows / $limit);
+
+
+if (isset($_POST['update_student_section_and_semester'])) {
+    $semesterId = $_POST['student_semester'];
+    $sectionId = $_POST['student_section'];
+    $studentId = $_POST['student_id'];
+
+    $sectionController->updateStudentSemesterAndSection($semesterId, $sectionId, $studentId);
+    header('Location: http://admin.ucspyay.edu/sections/');
+}
+
+if (isset($_POST['delete_student_id'])) {
+    $studentId = $_POST['delete_student_id'];
+    $sectionController->deleteStudentSemesterAndSection($studentId);
+    header('Location: http://admin.ucspyay.edu/sections/');
+}
 
 ?>
 
@@ -165,55 +187,61 @@ include("../../utils/components/admin/admin.links.php");
                             </form>
                         </div>
                     </div>
-                    <?php if ($studentDataInsertFlag ||  $_SESSION['isAddSection']): ?>
+
                     <div class="overflow-y-auto md:pt-16 px-4 pb-4">
-                        <div class="flex gap-2">
-                            <form action="" method="post">
-                                <select id="file-type" name="student_semester" onchange="this.form.submit()"
-                                    class="block w-50 mb-4 px-3 py-2 mt-1 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:border-purple-400 focus:ring-purple-400 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:focus:ring-offset-gray-800">
-                                    <option value="all">See All</option>
-                                    <?php foreach ($semesters as $semester): ?>
-                                    <option value="<?= $semester['id'] ?>"
-                                        <?= $studentSemester == $semester['id'] ? 'selected' : '' ?>>
-                                        <?= $semester['semester'] ?>
-                                    </option>
-                                    <?php endforeach ?>
-                                </select>
-                            </form>
-                            <form action="" method="post">
-                                <select id="file-type" name="student_section" onchange="this.form.submit()"
-                                    class="block w-50 mb-4 px-3 py-2 mt-1 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:border-purple-400 focus:ring-purple-400 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:focus:ring-offset-gray-800">
-                                    <option value="all">See All</option>
-                                    <?php foreach ($sections as $section): ?>
-                                    <option value="<?= $section['id'] ?>"
-                                        <?= $studentSection == $section['id'] ? 'selected' : '' ?>>
-                                        <?= $section['section'] ?>
-                                    </option>
-                                    <?php endforeach ?>
-                                </select>
-                            </form>
-                        </div>
+                        <form action="" method="post" class="flex gap-2 items-center justify-end">
+                            <select id="file-type" name="student_semester"
+                                class="block w-50 mb-4 px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:border-purple-400 focus:ring-purple-400 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:focus:ring-offset-gray-800">
+                                <?php foreach ($semesters as $semester): ?>
+                                <option value="<?= $semester['id'] ?>"
+                                    <?= $studentSemester == $semester['id'] ? 'selected' : '' ?>>
+                                    <?= $semester['semester'] ?>
+                                </option>
+                                <?php endforeach ?>
+                            </select>
+                            <select id="file-type" name="student_section"
+                                class="block w-50 mb-4 px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:border-purple-400 focus:ring-purple-400 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:focus:ring-offset-gray-800">
+                                <?php foreach ($sections as $section): ?>
+                                <option value="<?= $section['id'] ?>"
+                                    <?= $studentSection == $section['id'] ? 'selected' : '' ?>>
+                                    <?= $section['section'] ?>
+                                </option>
+                                <?php endforeach ?>
+                            </select>
+                            <button type="submit" name="student_section_filter"
+                                class=" p-2 mb-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                Filter
+                            </button>
+                        </form>
                         <table class="w-full whitespace-no-wrap">
                             <thead>
                                 <tr
                                     class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
                                     <th class="px-4 py-3">Name</th>
                                     <th class="px-4 py-3">Roll Number</th>
+                                    <th class="px-4 py-3">Semester</th>
+                                    <th class="px-4 py-3">Section</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-
-
+                                <?php foreach ($getStudentNameAndRollNumAndSemesterAndSectionPaginationData as $students): ?>
                                 <tr class="text-gray-700 dark:text-gray-400">
                                     <td class="px-4 py-3 text-sm">
-                                        Kaung Myat Thu
+                                        <?= $students->student_name_en ?>
                                     </td>
                                     <td class="px-4 py-3 text-sm">
-                                        20
+                                        <?= $students->roll_num ?>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <?= $students->semester ?>
+                                    </td>
+                                    <td class="px-4 py-3 text-sm">
+                                        <?= $students->section ?>
                                     </td>
                                     <td class="px-4 py-3">
                                         <div class="flex items-center space-x-4 text-sm">
                                             <button @click="openModal"
+                                                onclick="openEditModal('<?= $students->student_id ?>','<?= $students->semester_id ?>','<?= $students->section_id ?>','<?= $students->student_name_en ?>','<?= $students->roll_num ?>')"
                                                 class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                 aria-label="Edit">
                                                 <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
@@ -223,7 +251,8 @@ include("../../utils/components/admin/admin.links.php");
                                                     </path>
                                                 </svg>
                                             </button>
-                                            <button
+                                            <button onclick="openDeleteModal('<?= $students->student_id ?>')"
+                                                aria-label="Delete"
                                                 class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray">
                                                 <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
                                                     viewBox="0 0 20 20">
@@ -235,14 +264,159 @@ include("../../utils/components/admin/admin.links.php");
                                         </div>
                                     </td>
                                 </tr>
-
+                                <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
-                    <?php endif; ?>
+                    <div
+                        class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+                        <span class="flex items-center col-span-3">
+                        </span>
+                        <span class="col-span-2"></span>
+                        <!-- Pagination -->
+                        <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+                            <nav aria-label="Table navigation">
+                                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+
+                                <ul class="inline-flex items-center">
+                                    <li>
+                                        <a href="?page=<?= $i; ?>"
+                                            class="text-gray-700 px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple <?php if ($i == $page): ?> ' transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600' <?php endif; ?> ">
+                                            <?= $i; ?>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <?php endfor; ?>
+                            </nav>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- Modal For Edit -->
+        <!-- Modal backdrop. This what you want to place close to the closing body tag -->
+        <div id="editModal" x-show="isModalOpen" x-transition:enter="transition ease-out duration-150"
+            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            class="fixed inset-0 z-30 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center">
+            <!-- Modal -->
+            <div x-show="isModalOpen" x-transition:enter="transition ease-out duration-150"
+                x-transition:enter-start="opacity-0 transform translate-y-1/2" x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0  transform translate-y-1/2" @click.away="closeModal"
+                @keydown.escape="closeModal"
+                class="w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4 sm:max-w-xl"
+                role="dialog" id="modal">
+
+                <!-- Modal body -->
+                <div class="mt-4 mb-6">
+                    <!-- Modal title -->
+
+                    <!-- Modal description -->
+                    <form action="" method="POST">
+                        <input type="hidden" name="student_id" id="editStudentId">
+                        <label class="block text-sm">
+                            <span class="text-gray-800 font-semibold dark:text-gray-500">Semester</span>
+                            <select id="editStudentSemester" name="student_semester"
+                                class="block w-50 mb-4 px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:border-purple-400 focus:ring-purple-400 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:focus:ring-offset-gray-800">
+                                <?php foreach ($semesters as $semester): ?>
+                                <option value="<?= $semester['id'] ?>"
+                                    <?= $studentSemester == $semester['id'] ? 'selected' : '' ?>>
+                                    <?= $semester['semester'] ?>
+                                </option>
+                                <?php endforeach ?>
+                            </select>
+                        </label>
+                        <label class="block text-sm">
+                            <span class="text-gray-800 font-semibold dark:text-gray-500">Section</span>
+                            <select id="editStudentSection" name="student_section"
+                                class="block w-50 mb-4 px-3 py-2 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:border-purple-400 focus:ring-purple-400 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:focus:ring-offset-gray-800">
+                                <?php foreach ($sections as $section): ?>
+                                <option value="<?= $section['id'] ?>"
+                                    <?= $studentSection == $section['id'] ? 'selected' : '' ?>>
+                                    <?= $section['section'] ?>
+                                </option>
+                                <?php endforeach ?>
+                            </select>
+                        </label>
+
+                        <label class="block text-sm">
+                            <span class="text-gray-800 font-semibold dark:text-gray-500">Name</span>
+                            <input disabled
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                name="student_name" id="editStudentName" />
+                        </label>
+                        <label class="block text-sm">
+                            <span class="text-gray-800 font-semibold dark:text-gray-500">Roll Number</span>
+                            <input disabled
+                                class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                name="matriculation_roll_num" id="editStudentRollNum" />
+                        </label>
+                </div>
+                <footer
+                    class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800">
+                    <button @click="closeModal"
+                        class="w-full px-5 py-3 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray">
+                        Cancel
+                    </button>
+                    <button type="submit" name="update_student_section_and_semester"
+                        class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                        Save
+                    </button>
+                </footer>
+                </form>
+            </div>
+        </div>
+
+        <!-- Delete Modal -->
+        <div id="deleteModal"
+            class="fixed inset-0 z-50 items-center justify-center hidden overflow-y-auto bg-gray-900 bg-opacity-50">
+            <form action="" method="post">
+                <div class="max-w-xl p-6 bg-white rounded-lg shadow-md">
+                    <input type="hidden" id="deleteStudentSectionAndSemesterId" name="delete_student_id">
+                    <h2 class="text-xl font-bold mb-4">Confirm Deletion</h2>
+                    <p class="mb-6">Are you sure you want to delete data?</p>
+                    <div class="flex justify-end">
+                        <button onclick="closeDeleteModal()"
+                            class="px-4 py-2 mr-4 font-medium text-gray-700 bg-gray-200 rounded hover:bg-gray-300">Cancel</button>
+                        <button type="submit" name="delete_fresher"
+                            class="px-4 py-2 font-medium text-white bg-red-500 rounded hover:bg-red-600">Delete</button>
+                    </div>
+                </div>
+            </form>
+        </div>
 </body>
+<script>
+function openEditModal(id, semesterId, sectionId, name, rollNum) {
+    document.getElementById('editStudentId').value = id;
+    document.getElementById('editStudentSemester').value = semesterId;
+    document.getElementById('editStudentSection').value = sectionId;
+
+    document.getElementById('editStudentName').value = name;
+    document.getElementById('editStudentRollNum').value = rollNum;
+}
+
+function openDeleteModal(id) {
+    document.getElementById('deleteStudentSectionAndSemesterId').value = id;
+    document.getElementById("deleteModal").style.display = "flex";
+}
+
+function closeDeleteModal() {
+    document.getElementById("deleteModal").style.display = "none";
+}
+
+function updateFileDetails() {
+    const fileInput = document.getElementById('file-upload');
+    const fileInfo = document.getElementById('file-info');
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        fileInfo.textContent = `Selected file: ${file.name} (${file.type})`;
+    } else {
+        fileInfo.textContent = '';
+    }
+}
+</script>
 
 </html>
