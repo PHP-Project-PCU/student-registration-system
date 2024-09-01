@@ -25,9 +25,9 @@ class StudentAdmissionController
     {
         return $this->studentAdmissionModel->setStudentAdmissionsByStatus(Constants::$STUDENT_TBL, $data);
     }
-    public function getAllStudentsByStatusAndYear($status, $year, $page, $limit)
+    public function getAllStudentsByStatusAndYear($status, $year, $academicYear, $page, $limit)
     {
-        return $this->studentAdmissionModel->getAllStudentsByStatusAndYear(Constants::$STUDENT_TBL, $status, $year, $page, $limit);
+        return $this->studentAdmissionModel->getAllStudentsByStatusAndYear(Constants::$STUDENT_TBL, $status, $year, $academicYear, $page, $limit);
     }
     public function getStudentById($status)
     {
@@ -40,6 +40,10 @@ class StudentAdmissionController
     public function approveFresher($data)
     {
         return $this->studentAdmissionModel->approveFresher(Constants::$STUDENT_TBL, Constants::$STUDENT_AUTH_TBL, $data);
+    }
+    public function approveOldStudent($data)
+    {
+        return $this->studentAdmissionModel->approveOldStudent(Constants::$STUDENT_TBL, $data);
     }
 
     public function getStudentsYear()
