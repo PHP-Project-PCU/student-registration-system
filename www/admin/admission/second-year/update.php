@@ -15,19 +15,18 @@ $logoImage = "http://ucspyay.edu/utils/assets/img/ucspyay/ucsp-logo-light.jpg";
 $studentAdmissionController = new StudentAdmissionController();
 
 $studentData = $studentAdmissionController->getStudentById($id);
-$email = $studentData['student']['student_email'];
+$email = $studentData['student']['student_email'];  # change edu mail
 $_SESSION['isApproved'] = null;
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['approve_btn'])) {
     $data = [
         "id" => $id,
         "name" => $studentData['student']['student_name_my'],
-        "roll_num" => $_POST['roll_num'],
-        "edu_mail" => $_POST['edu_mail'],
+        "year" => 2,
         "email" => $email,
-        "password" => $_POST['password'],
     ];
-    $result = $studentAdmissionController->approveFresher($data);
+    $result = $studentAdmissionController->approveOldStudent($data);
     if ($result) {
         $mailController = new MailController($data);
         $mailController->sendMail($data);
@@ -119,10 +118,10 @@ include("../../../utils/components/admin/admin.links.php");
                                         <td class="text-start">အထူးပြုဘာသာ</td>
                                         <td class="text-indigo-600"><?= htmlspecialchars($studentData['student']['major']); ?></td>
                                     </tr>
-                                    <!-- <tr>
-                                    <td class="text-start">ခုံအမှတ်</td>
-                                    <td class="text-indigo-600"><?= htmlspecialchars($studentData['student']['roll_num']); ?></td>
-                                </tr> -->
+                                    <tr>
+                                        <td class="text-start">ခုံအမှတ်</td>
+                                        <td class="text-indigo-600"><?= htmlspecialchars($studentData['student']['roll_num']); ?></td>
+                                    </tr>
                                     <tr>
                                         <td class="text-start">တက္ကသိုလ်မှတ်ပုံတင်အမှတ်</td>
                                         <td class="text-indigo-600"><?= htmlspecialchars($studentData['student']['matriculation_reg_num']); ?></td>
@@ -428,37 +427,15 @@ include("../../../utils/components/admin/admin.links.php");
 
 
                     <!-- Admin Approve Section -->
-                    <div class="md:w-1/2 px-4 py-3 my-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                        <form action="" method="POST">
-                            <h3 class="font-semibold text-xl" class="font-semibold text-xl">Student Portal အားဝင်ရောက်အသုံးပြုနိုင်ရန်</h3>
-                            <label class="block text-sm pt-4">
-                                <span class="text-gray-700 pt-4 font-semibold dark:text-gray-500">Roll No:</span>
-                                <input
-                                    class="mt-4 mb-2 block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    name="roll_num" placeholder="XXXXXX" required />
-                            </label>
-                            <label class="block text-sm py-4">
-                                <span class="text-gray-700 pt-4 font-semibold dark:text-gray-500">Edu Mail</span>
-                                <input
-                                    class="mt-4 mb-2 block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    name="edu_mail" placeholder="student@ucspyay.edu.mm" required />
-                            </label>
-                            <label class="block text-sm">
-                                <span class="text-gray-700 pt-4 font-semibold dark:text-gray-500">Password</span>
-                                <input
-                                    class="mt-4 mb-2 block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    name="password" placeholder="" required />
-                            </label>
+                    <form action="" method="POST">
+                        <button
+                            name="approve_btn"
+                            class="px-4 py-2 my-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                            အတည်ပြု၍ mail ပို့မည်
+                        </button>
+                    </form>
 
-                            <div class="flex justify-end">
-                                <button
-                                    name="approve_btn"
-                                    class="px-4 py-2 my-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                                    အတည်ပြု၍ mail ပို့မည်
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+
                 </div>
             </div>
 
@@ -468,6 +445,5 @@ include("../../../utils/components/admin/admin.links.php");
                 <img class="lightbox-content" id="lightbox-img">
             </div>
 </body>
-
 
 </html>

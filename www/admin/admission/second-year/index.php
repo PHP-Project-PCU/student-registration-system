@@ -7,9 +7,9 @@ include '../../../../autoload.php';
 use controllers\AcademicYearController;
 use controllers\StudentAdmissionController;
 
-session_start();
 $status = 0;
 
+session_start();
 
 $academicYearController = new AcademicYearController();
 $academicYears = $academicYearController->index();
@@ -30,8 +30,8 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $limit = 10;
 
 $studentAdmissionController = new StudentAdmissionController();
-$freshers = $studentAdmissionController->getAllStudentsByStatusAndYear($status, 1, $selectedYear, $page, $limit);
-$getStudentsTotalRows = $studentAdmissionController->getTotalRows(1, $status); // for first year
+$freshers = $studentAdmissionController->getAllStudentsByStatusAndYear($status, 2, $selectedYear, $page, $limit);
+$getStudentsTotalRows = $studentAdmissionController->getTotalRows(2, $status); // 2 for second year
 $totalPages = ceil($getStudentsTotalRows / $limit);
 ?>
 
@@ -64,7 +64,7 @@ include("../../../utils/components/admin/admin.links.php");
                             &larr;
                         </button>
                         <h4 class="m-4 text-2xl font-semibold text-gray-800 dark:text-gray-300">
-                            ပထမနှစ်ဝင်ခွင့်လျှောက်ထားသူများ
+                            ဒုတိယနှစ်ဝင်ခွင့်လျှောက်ထားသူများ
                         </h4>
                         <form action="" method="POST">
                             <select id="status" name="status" onchange="this.form.submit()"
@@ -173,7 +173,6 @@ include("../../../utils/components/admin/admin.links.php");
     if ($_SESSION['isApproved'] === false) {
         echo "alertify.warning('အတည်ပြုခြင်းမအောင်မြင်ပါ။');";
     } elseif ($_SESSION['isApproved'] == null) {
-        // echo "alertify.success('အတည်ပြုပြီးပါပြီ။');";
         return;
     } elseif (isset($_SESSION['isApproved'])) {
         echo "alertify.success('အတည်ပြုပြီးပါပြီ။');";
@@ -186,7 +185,5 @@ include("../../../utils/components/admin/admin.links.php");
     session_destroy();
     ?>
 </script>
-
-
 
 </html>

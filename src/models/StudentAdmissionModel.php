@@ -449,19 +449,20 @@ class StudentAdmissionModel
             return $e->getMessage();
         }
     }
-    public function getAllStudentsByStatusAndYear($studentTbl, $status, $year, $page, $limit)
+    public function getAllStudentsByStatusAndYear($studentTbl, $status, $year, $academicYear, $page, $limit)
     {
         try {
             $offset = ($page - 1) * $limit;
             $sql = "SELECT id, matriculation_reg_num, student_name_my, student_nrc
                 FROM $studentTbl 
-                WHERE year = 1 AND status = :status AND year(created_at) = :year
+                WHERE year = :year AND status = :status AND year(created_at) = :academicYear
                 ORDER BY matriculation_reg_num ASC 
                 LIMIT :limit OFFSET :offset";
 
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(":status", $status, PDO::PARAM_STR);
             $stmt->bindParam(":year", $year, PDO::PARAM_INT);
+            $stmt->bindParam(":academicYear", $academicYear, PDO::PARAM_INT);
             $stmt->bindParam(":limit", $limit, PDO::PARAM_INT);
             $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
             $stmt->execute();
@@ -564,6 +565,26 @@ class StudentAdmissionModel
                 ":password" => $data['password'],
             ]);
 
+            $this->db->commit();
+            return true;
+        } catch (PDOException $e) {
+            $this->db->rollBack();
+            return $e->getMessage();
+        }
+    }
+
+    // approve old student admissions
+    public function approveOldStudent($studentTbl, $data)
+    {
+        try {
+            $this->db->beginTransaction();
+            $sql = "UPDATE $studentTbl SET year=:year, status=:status WHERE id=:id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                ":year" => $data['year'],
+                ":status" => 1,
+                ":id" => $data['id'],
+            ]);
             $this->db->commit();
             return true;
         } catch (PDOException $e) {
