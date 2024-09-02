@@ -129,6 +129,7 @@ class MailController
       /*
          Assigning the incoming message to the $mail->body property.
        */
+
       if ($data['year'] == 1) {
          $mail->Body = "
       <div style='color:#000;'>
