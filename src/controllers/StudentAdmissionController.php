@@ -68,7 +68,7 @@ class StudentAdmissionController
 
     public function getStudentAdmissionTotalCountByStatus($status)
     {
-        return $this->studentAdmissionModel->getStudentAdmissionTotalCount(Constants::$STUDENT_TBL, $status);
+        return $this->studentAdmissionModel->getStudentAdmissionTotalCountByStatus(Constants::$STUDENT_TBL, $status);
     }
 
     public function getApprovedStudentsRollNum($studentYear)

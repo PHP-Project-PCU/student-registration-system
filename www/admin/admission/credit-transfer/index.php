@@ -7,18 +7,21 @@ include '../../../../autoload.php';
 use controllers\AcademicYearController;
 use controllers\StudentAdmissionController;
 
-session_start();
+$status = 2;
 
+session_start();
 
 $academicYearController = new AcademicYearController();
 $academicYears = $academicYearController->index();
 $selectedYear = getYear($academicYears[0]['academic_year']);
-$status = $_SESSION['status'] ?? 0;
+// $status = $_SESSION['status'] ?? 2;
+$year = $_SESSION['year'] ?? 1;
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $_SESSION['status'] = $_POST['status'];
-    // $status = $_POST['status'];
+    // $_SESSION['status'] = $_POST['status'];
+    $_SESSION['year'] = $_POST['year'];
+    $status = $_POST['status'];
     $selectedYear = getYear($_POST['selected_year']);
 
     // Redirect to the same page to apply the session changes immediately
@@ -36,8 +39,8 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $limit = 10;
 
 $studentAdmissionController = new StudentAdmissionController();
-$freshers = $studentAdmissionController->getAllStudentsByStatusAndYear($status, 1, $selectedYear, $page, $limit);
-$getStudentsTotalRows = $studentAdmissionController->getTotalRows(1, $status); // for first year
+$freshers = $studentAdmissionController->getAllStudentsByStatusAndYear($status, $year, $selectedYear, $page, $limit);
+$getStudentsTotalRows = $studentAdmissionController->getTotalRows($year, $status);
 $totalPages = ceil($getStudentsTotalRows / $limit);
 ?>
 
@@ -70,7 +73,7 @@ include("../../../utils/components/admin/admin.links.php");
                             &larr;
                         </button>
                         <h4 class="m-4 text-2xl font-semibold text-gray-800 dark:text-gray-300">
-                            ပထမနှစ်ဝင်ခွင့်လျှောက်ထားသူများ
+                            ကျောင်းပြောင်းလျှောက်ထားသူများ
                         </h4>
                         <form action="" method="POST">
                             <select id="status" name="status" onchange="this.form.submit()"
@@ -81,6 +84,24 @@ include("../../../utils/components/admin/admin.links.php");
                                 <option value="1" <?php if ($status == 1)
                                                         echo 'selected'; ?>>
                                     အတည်ပြုပြီးသောလျှောက်လွှာများ</option>
+                            </select>
+                            <select id="year" name="year" onchange="this.form.submit()"
+                                class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                <option value="1" <?php if ($year == 1)
+                                                        echo 'selected'; ?>>ပထမနှစ်
+                                </option>
+                                <option value="2" <?php if ($year == 2)
+                                                        echo 'selected'; ?>>ဒုတိယနှစ်
+                                </option>
+                                <option value="3" <?php if ($year == 3)
+                                                        echo 'selected'; ?>>တတိယနှစ်
+                                </option>
+                                <option value="4" <?php if ($year == 4)
+                                                        echo 'selected'; ?>>စတုတ္ထနှစ်
+                                </option>
+                                <option value="5" <?php if ($year == 5)
+                                                        echo 'selected'; ?>>ပဥ္စမနှစ်
+                                </option>
                             </select>
                             <select id="selected_year" name="selected_year" onchange="this.form.submit()"
                                 class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
@@ -148,8 +169,7 @@ include("../../../utils/components/admin/admin.links.php");
 
                     </div>
 
-                    <div
-                        class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+                    <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
                         <span class="flex items-center col-span-3"></span>
                         <span class="col-span-2"></span>
                         <!-- Pagination -->
@@ -180,7 +200,6 @@ include("../../../utils/components/admin/admin.links.php");
     if ($_SESSION['isApproved'] === false) {
         echo "alertify.warning('အတည်ပြုခြင်းမအောင်မြင်ပါ။');";
     } elseif ($_SESSION['isApproved'] == null) {
-        // echo "alertify.success('အတည်ပြုပြီးပါပြီ။');";
         return;
     } elseif (isset($_SESSION['isApproved'])) {
         echo "alertify.success('အတည်ပြုပြီးပါပြီ။');";
@@ -193,7 +212,5 @@ include("../../../utils/components/admin/admin.links.php");
     session_destroy();
     ?>
 </script>
-
-
 
 </html>

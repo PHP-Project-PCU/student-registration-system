@@ -123,10 +123,10 @@ include("../../../utils/components/admin/admin.links.php");
                         <div class="grid grid-cols-1 lg:grid-cols-2">
                             <div class="text-center mx-auto">
                                 <img src="<?php if (!empty($studentData['files']['passport_photo'])) {
-                                    echo $imageBasePath . htmlspecialchars($studentData['files']['passport_photo']);
-                                } else {
-                                    echo $logoImage;
-                                } ?>" class="w-36 my-6" alt="Profile Image" onclick="openLightbox(this);">
+                                                echo $imageBasePath . htmlspecialchars($studentData['files']['passport_photo']);
+                                            } else {
+                                                echo $logoImage;
+                                            } ?>" class="w-36 my-6" alt="Profile Image" onclick="openLightbox(this);">
                             </div>
                             <div class=" w-full">
                                 <table class="w-full table-fixed">

@@ -87,7 +87,7 @@ include("../../../utils/components/admin/admin.links.php");
 
                 <div class="p-4">
                     <div class="flex justify-start pb-4">
-                        <button onclick="history.back()"
+                        <button onclick="window.location.href='/admission/first-year'"
                             class="px-4 py-2 my-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                             &larr;
                         </button>
@@ -103,10 +103,10 @@ include("../../../utils/components/admin/admin.links.php");
                         <div class="grid grid-cols-1 lg:grid-cols-2">
                             <div class="text-center mx-auto">
                                 <img src="<?php if (!empty($studentData['files']['passport_photo'])) {
-                                    echo $imageBasePath . htmlspecialchars($studentData['files']['passport_photo']);
-                                } else {
-                                    echo $logoImage;
-                                } ?>" class="w-36 my-6" alt="Profile Image" onclick="openLightbox(this);">
+                                                echo $imageBasePath . htmlspecialchars($studentData['files']['passport_photo']);
+                                            } else {
+                                                echo $logoImage;
+                                            } ?>" class="w-36 my-6" alt="Profile Image" onclick="openLightbox(this);">
                             </div>
                             <div class=" w-full">
                                 <table class="w-full table-fixed">

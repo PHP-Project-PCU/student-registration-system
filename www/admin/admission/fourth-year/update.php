@@ -7,15 +7,33 @@ include '../../../../autoload.php';
 use controllers\StudentAdmissionController;
 use controllers\MailController;
 
-
+session_start();
 $id = $_GET['id'];
 $imageBasePath = "http://ucspyay.edu/utils/uploads/admission/$id/";
 $logoImage = "http://ucspyay.edu/utils/assets/img/ucspyay/ucsp-logo-light.jpg";
+
 $studentAdmissionController = new StudentAdmissionController();
 
 $studentData = $studentAdmissionController->getStudentById($id);
-$email = $studentData['student']['student_email'];
+$email = $studentData['student']['student_email'];  # change edu mail
+$_SESSION['isApproved'] = null;
 
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['approve_btn'])) {
+    $data = [
+        "id" => $id,
+        "name" => $studentData['student']['student_name_my'],
+        "year" => 4,
+        "email" => $email,
+    ];
+    $result = $studentAdmissionController->approveOldStudent($data);
+    if ($result) {
+        $mailController = new MailController($data);
+        $mailController->sendMail($data);
+        $_SESSION['isApproved'] = true;
+        header("location:index.php");
+    }
+}
 
 function formatDate($date)
 {
@@ -47,49 +65,6 @@ include("../../../utils/components/admin/admin.links.php");
     .tbl td {
         border: none;
     }
-
-    /* Lightbox styles */
-    /* Lightbox styles */
-    .lightbox {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.8);
-        text-align: center;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .lightbox-content {
-        margin: auto;
-        display: block;
-        max-width: 90%;
-        max-height: 90%;
-        width: auto;
-        height: 100%;
-        object-fit: contain;
-    }
-
-    .close {
-        position: absolute;
-        top: 20px;
-        right: 35px;
-        color: #fff;
-        font-size: 40px;
-        font-weight: bold;
-        transition: 0.3s;
-        cursor: pointer;
-    }
-
-    .close:hover,
-    .close:focus {
-        color: #bbb;
-    }
 </style>
 
 <body>
@@ -105,13 +80,13 @@ include("../../../utils/components/admin/admin.links.php");
             include("../../../utils/components/admin/admin.navigation.php");
             ?>
             <!-- Scrollable content section -->
-            <div class="overflow-y-auto pt-16 px-4 pb-4 h-full">
+            <div class="overflow-y-auto md:pt-16 px-4 pb-4 h-full">
 
 
                 <div class="p-4">
                     <div class="flex justify-start pb-4">
                         <button
-                            onclick="window.location.href='/admission/second-year'"
+                            onclick="window.location.href='/admission/fourth-year'"
                             class="px-4 py-2 my-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                             &larr;
                         </button>
@@ -137,7 +112,7 @@ include("../../../utils/components/admin/admin.links.php");
                                 <table class="w-full table-fixed">
                                     <tr>
                                         <td class="text-start">သင်တန်းနှစ်</td>
-                                        <td class="text-indigo-600"><?php if (($studentData['student']['year']) == 2) echo "ဒုတိယနှစ်"; ?></td>
+                                        <td class="text-indigo-600"><?php if (($studentData['student']['year']) == 4) echo "စတုတ္ထနှစ်"; ?></td>
                                     </tr>
                                     <tr>
                                         <td class="text-start">အထူးပြုဘာသာ</td>
@@ -145,7 +120,7 @@ include("../../../utils/components/admin/admin.links.php");
                                     </tr>
                                     <tr>
                                         <td class="text-start">ခုံအမှတ်</td>
-                                        <td class="text-indigo-600"><?= 'PaKaPaTa - ' .  htmlspecialchars($studentData['student']['roll_num']); ?></td>
+                                        <td class="text-indigo-600"><?= 'PaKaPaTa - ' . htmlspecialchars($studentData['student']['roll_num']); ?></td>
                                     </tr>
                                     <tr>
                                         <td class="text-start">တက္ကသိုလ်မှတ်ပုံတင်အမှတ်</td>
@@ -449,6 +424,18 @@ include("../../../utils/components/admin/admin.links.php");
                         </table>
                     </div>
 
+
+
+                    <!-- Admin Approve Section -->
+                    <form action="" method="POST">
+                        <button
+                            name="approve_btn"
+                            class="px-4 py-2 my-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                            အတည်ပြု၍ mail ပို့မည်
+                        </button>
+                    </form>
+
+
                 </div>
             </div>
 
@@ -457,22 +444,6 @@ include("../../../utils/components/admin/admin.links.php");
                 <span class="close">&times;</span>
                 <img class="lightbox-content" id="lightbox-img">
             </div>
-
-
 </body>
-<script>
-    function openLightbox(element) {
-        var lightbox = document.getElementById('lightbox');
-        var lightboxImg = document.getElementById('lightbox-img');
-        lightboxImg.src = element.src;
-        lightbox.style.display = 'flex';
-    }
-
-    function closeLightbox() {
-        var lightbox = document.getElementById('lightbox');
-        lightbox.style.display = 'none';
-    }
-</script>
-
 
 </html>

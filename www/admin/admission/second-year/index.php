@@ -14,10 +14,16 @@ session_start();
 $academicYearController = new AcademicYearController();
 $academicYears = $academicYearController->index();
 $selectedYear = getYear($academicYears[0]['academic_year']);
+$status = $_SESSION['status'] ?? 0;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $status = $_POST['status'];
+    $_SESSION['status'] = $_POST['status'];
+    // $status = $_POST['status'];
     $selectedYear = getYear($_POST['selected_year']);
+
+    // Redirect to the same page to apply the session changes immediately
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit;
 }
 
 function getYear($year)
