@@ -111,7 +111,7 @@ include("../../../utils/components/admin/admin.links.php");
                 <div class="p-4">
                     <div class="flex justify-start pb-4">
                         <button
-                            onclick="window.location.href='/admission/second-year'"
+                            onclick="window.location.href='/admission/credit-transfer'"
                             class="px-4 py-2 my-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                             &larr;
                         </button>
@@ -137,15 +137,31 @@ include("../../../utils/components/admin/admin.links.php");
                                 <table class="w-full table-fixed">
                                     <tr>
                                         <td class="text-start">သင်တန်းနှစ်</td>
-                                        <td class="text-indigo-600"><?php if (($studentData['student']['year']) == 2) echo "ဒုတိယနှစ်"; ?></td>
-                                    </tr>
+                                        <td class="text-indigo-600"><?php switch ($studentData['student']['year']) {
+                                                                        case 1:
+                                                                            echo "ပထမနှစ်";
+                                                                            break;
+                                                                        case 2:
+                                                                            echo "ဒုတိယနှစ်";
+                                                                            break;
+                                                                        case 3:
+                                                                            echo "တတိယနှစ်";
+                                                                            break;
+                                                                        case 4:
+                                                                            echo "စတုတ္ထနှစ်";
+                                                                            break;
+                                                                        case 5:
+                                                                            echo "ပဥ္စမနှစ်";
+                                                                            break;
+                                                                    }
+                                                                    ?></td>
                                     <tr>
                                         <td class="text-start">အထူးပြုဘာသာ</td>
                                         <td class="text-indigo-600"><?= htmlspecialchars($studentData['student']['major']); ?></td>
                                     </tr>
                                     <tr>
                                         <td class="text-start">ခုံအမှတ်</td>
-                                        <td class="text-indigo-600"><?= 'PaKaPaTa - ' .  htmlspecialchars($studentData['student']['roll_num']); ?></td>
+                                        <td class="text-indigo-600"><?= 'PaKaPaTa - ' . htmlspecialchars($studentData['student']['roll_num']); ?></td>
                                     </tr>
                                     <tr>
                                         <td class="text-start">တက္ကသိုလ်မှတ်ပုံတင်အမှတ်</td>

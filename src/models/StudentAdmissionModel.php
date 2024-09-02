@@ -692,7 +692,6 @@ class StudentAdmissionModel
                 $statement->bindValue(':offset', $offset, \PDO::PARAM_INT);
                 $statement->bindValue(':semester', $semester, \PDO::PARAM_INT);
                 $statement->bindValue(':section', $section, \PDO::PARAM_INT);
-
             } else {
                 $query = "SELECT s.id AS student_id, s.roll_num,s.student_name_en,sem.semester,sem.id AS semester_id,sec.section,sec.id AS section_id FROM student_tbl s JOIN  student_section_tbl ss ON s.id = ss.student_id JOIN  semester_tbl sem ON ss.semester_id = sem.id JOIN   section_tbl sec ON ss.section_id = sec.id ORDER BY   s.id LIMIT :limit OFFSET :offset";
                 $statement = $this->db->prepare($query);
