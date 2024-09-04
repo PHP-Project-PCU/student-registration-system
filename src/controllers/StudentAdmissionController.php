@@ -19,6 +19,11 @@ class StudentAdmissionController
     {
         return $this->studentAdmissionModel->setStudentAdmissions(Constants::$STUDENT_TBL, $data);
     }
+    // old student admission
+    public function setOldStudentAdmissions($id, $data, $files)
+    {
+        return $this->studentAdmissionModel->setOldStudentAdmissions($id, $data, $files);
+    }
 
     // for credit transfer students status=2
     public function setStudentAdmissionsByStatus($data)

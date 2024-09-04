@@ -449,6 +449,84 @@ class StudentAdmissionModel
             return $e->getMessage();
         }
     }
+
+    public function setOldStudentAdmissions($id, $data, $files)
+    {
+        try {
+            $this->db->beginTransaction();
+            // list($major, $scholarship, $passport_photo, $one_inch_photo, $covid_photo, $quarter_approved_letter, $police_approved_letter, $payment_screenshot) = $data;
+            $major = $data['major'];
+            $scholarship = $data['scholarship'];
+            $passport_photo = $files['passport_photo'];
+            $one_inch_photo = $files['one_inch_photo'];
+            $covid_photo = $files['covid_photo'];
+            $quarter_approved_letter = $files['quarter_approved_letter'];
+            $police_approved_letter = $files['police_approved_letter'];
+            $payment_screenshot = $files['payment_screenshot'];
+
+            $student_sql = "UPDATE student_tbl SET
+            year= year+1,
+            status=3,
+            major=:major,scholarship=:scholarship WHERE id=:id";
+            $stmt = $this->db->prepare($student_sql);
+            $stmt->execute([
+                ":major" => $major,
+                ":scholarship" => $scholarship,
+                ":id" => $id
+            ]);
+
+            // Create a directory for the student if it doesn't exist
+            $uploadDir = 'C:\xampp\htdocs\student-registration-system\www\utils\uploads\admission/' . $id . '/';
+            if (!file_exists($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+
+            // Function to upload a file
+            function uploadFiless($fileInput, $uploadDir)
+            {
+                if (isset($_FILES[$fileInput]) && $_FILES[$fileInput]['error'] == 0) {
+                    $fileName = basename($_FILES[$fileInput]['name']);
+                    $targetFile = $uploadDir . $fileName;
+
+                    if (move_uploaded_file($_FILES[$fileInput]['tmp_name'], $targetFile)) {
+                        return $fileName;  // Return the file name only
+                    } else {
+                        echo "Error from upload file fn: $fileName";
+                        return null;
+                    }
+                }
+                return null;
+            } // Upload files
+            $passportPhoto = uploadFiless('passport_photo', $uploadDir);
+            $oneInchPhoto = uploadFiless('one_inch_photo', $uploadDir);
+            $covidPhoto = uploadFiless('covid_photo', $uploadDir);
+            $quarterApprovedLetter = uploadFiless('quarter_approved_letter', $uploadDir);
+            $policeApprovedLetter = uploadFiless('police_approved_letter', $uploadDir);
+            $paymentScreenshot = uploadFiless('payment_screenshot', $uploadDir);
+
+            $file_sql = "UPDATE student_admission_required_file_tbl
+            SET passport_photo=:passport_photo, one_inch_photo=:one_inch_photo,
+                covid_photo=:covid_photo,quarter_approved_letter=:quarter_approved_letter,
+                police_approved_letter=:police_approved_letter,payment_screenshot=:payment_screenshot
+            WHERE student_id=:id";
+            $stmt = $this->db->prepare($file_sql);
+            $stmt->execute([
+                ":passport_photo" => $passportPhoto,
+                ":one_inch_photo" => $oneInchPhoto,
+                ":covid_photo" => $covidPhoto,
+                ":quarter_approved_letter" => $quarterApprovedLetter,
+                ":police_approved_letter" => $policeApprovedLetter,
+                ":payment_screenshot" => $paymentScreenshot,
+                ":id" => $id
+
+            ]);
+
+            $this->db->commit();
+            return true;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
     public function getAllStudentsByStatusAndYear($studentTbl, $status, $year, $academicYear, $page, $limit)
     {
         try {
