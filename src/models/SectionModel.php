@@ -29,6 +29,20 @@ class SectionModel
             return $e->getMessage();
         }
     }
+    public function getByStudentId($table, $id)
+    {
+        try {
+            $sql = "SELECT * FROM $table where student_id=:id";
+            $statement = $this->db->prepare($sql);
+            $statement->execute([
+                ":id" => $id
+            ]);
+            $data = $statement->fetchAll((PDO::FETCH_ASSOC));
+            return $data;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
 
     public function getTotalRows($table, $semester = null, $section = null)
     {
@@ -78,5 +92,4 @@ class SectionModel
             return $e->getMessage();
         }
     }
-
 }

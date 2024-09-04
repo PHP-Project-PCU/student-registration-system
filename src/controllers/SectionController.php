@@ -18,6 +18,10 @@ class SectionController
         $sections = $this->sectionModel->getAllSections(Constants::$SECTION_TBL);
         return $sections;
     }
+    public function getByStudentId($id)
+    {
+        return $this->sectionModel->getByStudentId(Constants::$STUDENT_SECTION_TBL, $id);
+    }
 
     public function getTotalRows($semester, $section)
     {
