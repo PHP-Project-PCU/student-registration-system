@@ -14,14 +14,14 @@ session_start();
 $academicYearController = new AcademicYearController();
 $academicYears = $academicYearController->index();
 $selectedYear = $_SESSION['selected_year'] ??  getYear($academicYears[0]['academic_year']);
-$status = $_SESSION['status'] ?? 2;
+$status = $_SESSION['credit-status'] ?? 2;
 $year = $_SESSION['year'] ?? 1;
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // $_SESSION['status'] = $_POST['status'];
+    // $_SESSION['credit-status'] = $_POST['status'];
     $_SESSION['year'] = $_POST['year'];
-    $_SESSION['status'] = $_POST['status'];
+    $_SESSION['credit-status'] = $_POST['status'];
     $_SESSION['selected_year'] = $_POST['selected_year'];
     // Redirect to the same page to apply the session changes immediately
     header('Location: ' . $_SERVER['PHP_SELF']);
