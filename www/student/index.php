@@ -22,12 +22,19 @@ $data = [];
 
 $validStudent = false;
 $isRegister = false;
+$found = true;
+$pass = true;
+$isFound = false;
 
 $studentId = $_SESSION['studentId'];
 $studentAdmissionController = new StudentAdmissionController($data);
 $studentData = $studentAdmissionController->getStudentById($studentId);
 $rollNum = $studentData["student"]['roll_num'];
+$year = $studentData["student"]['year'];
+$major = $studentData["student"]['major'];
 $status = $studentData["student"]['status'];
+
+
 
 
 $sectionController = new SectionController();
@@ -40,11 +47,22 @@ $checkData = [$rollNum, $semesterID, $academicYear];
 
 
 // check achievement
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['checkBtn'])) {
+if (isset($_POST['checkBtn'])) {
     $achievementController = new AchievementController();
     $validStudent = $achievementController->checkAchievement($checkData);
-    // var_dump($validStudent);
+
+    if ($validStudent == true) {
+        $found = true;
+        $pass = true; // Set pass to true if found is true
+    } else {
+        $found = false;
+        $pass = false;
+    }
+
+    // Make sure these variables are set for JavaScript
+    echo '<script>let found = ' . json_encode($found) . '; let pass = ' . json_encode($pass) . ';</script>';
 }
+
 
 // register
 if (isset($_POST['registerBtn'])) {
@@ -139,9 +157,13 @@ include("../utils/components/student/student.links.php");
                                                             <label for="major">အထူးပြုဘာသာ</label>
                                                             <select id="major" name="major"
                                                                 class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                                                                <option value="CST">CST</option>
-                                                                <option value="CS">CS</option>
-                                                                <option value="CT">CT</option>
+                                                                <?php if ($year == 1): ?>
+                                                                    <option value="CS">CS</option>
+                                                                    <option value="CT">CT</option>
+                                                                <?php else: ?>
+                                                                    <option value="<?= $major ?>"><?= $major ?></option>
+                                                                <?php endif ?>
+
                                                             </select>
                                                         </div>
                                                         <div class="lg:col-span-12">
@@ -198,83 +220,26 @@ include("../utils/components/student/student.links.php");
                                                         </div>
 
                                                         <div class="lg:col-span-12">
-                                                            <div id="accordion-collapse" data-accordion="collapse"
-                                                                class="grid md:grid-cols-2 grid-cols-1 mt-8 md:gap-[30px]">
-                                                                <div>
-                                                                    <div
-                                                                        class="relative shadow dark:shadow-gray-800 rounded-md overflow-hidden">
-                                                                        <h2 class="text-base font-semibold"
-                                                                            id="accordion-collapse-heading-1">
-                                                                            <button type="button"
-                                                                                class="flex justify-between items-center p-5 w-full font-medium text-start"
-                                                                                data-accordion-target="#accordion-collapse-body-1"
-                                                                                aria-expanded="false"
-                                                                                aria-controls="accordion-collapse-body-1">
-                                                                                <span>ပေးသွင်းရန်</span>
-                                                                                <svg data-accordion-icon
-                                                                                    class="size-4 rotate-0 shrink-0"
-                                                                                    fill="currentColor" viewBox="0 0 20 20"
-                                                                                    xmlns="http://www.w3.org/2000/svg">
-                                                                                    <path fill-rule="evenodd"
-                                                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                                                        clip-rule="evenodd"></path>
-                                                                                </svg>
-                                                                            </button>
-                                                                        </h2>
-                                                                        <div id="accordion-collapse-body-1" class="hidden"
-                                                                            aria-labelledby="accordion-collapse-heading-1">
-                                                                            <div class="p-5">
-                                                                                <ul>
-                                                                                    <li>ကျောင်းလခ(၁၀လစာ) - ၂၅၀၀၀ ကျပ်</li>
-                                                                                    <li>က-ပ-မ ကြေး - ၁၀၀၀ ကျပ်</li>
-                                                                                    <li>ဓါတ်ခွဲခန်းကြေး - ၅၀၀ ကျပ်</li>
-                                                                                    <li>စာမေးပွဲကြေး - ၁၀၀၀ ကျပ်</li>
-                                                                                    <li>အထွေထွေ - ၃၀၀ ကျပ်</li>
-                                                                                    <span
-                                                                                        class=" border  border-black-900"></span>
-                                                                                    <li class="pt-2"><b>စုစုပေါင်း - ၂၇၈၀၀
-                                                                                            ကျပ်</b></li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                            <div class="p-5">
+                                                                <ul>
+                                                                    <li>ကျောင်းလခ(၁၀လစာ) - ၂၅၀၀၀ ကျပ်</li>
+                                                                    <li>က-ပ-မ ကြေး - ၁၀၀၀ ကျပ်</li>
+                                                                    <li>ဓါတ်ခွဲခန်းကြေး - ၅၀၀ ကျပ်</li>
+                                                                    <li>စာမေးပွဲကြေး - ၁၀၀၀ ကျပ်</li>
+                                                                    <li>အထွေထွေ - ၃၀၀ ကျပ်</li>
+                                                                    <span
+                                                                        class=" border  border-black-900"></span>
+                                                                    <li class="pt-2"><b>စုစုပေါင်း - ၂၇၈၀၀
+                                                                            ကျပ်</b></li>
+                                                                </ul>
                                                             </div>
                                                         </div>
                                                         <div class="lg:col-span-12">
-                                                            <div id="accordion-collapse" data-accordion="collapse"
-                                                                class="grid md:grid-cols-2 grid-cols-1 mt-8 md:gap-[30px]">
-                                                                <div>
-                                                                    <div
-                                                                        class="relative shadow dark:shadow-gray-800 rounded-md overflow-hidden">
-                                                                        <h2 class="text-base font-semibold"
-                                                                            id="accordion-collapse-heading-1">
-                                                                            <button type="button"
-                                                                                class="flex justify-between items-center p-5 w-full font-medium text-start"
-                                                                                data-accordion-target="#accordion-collapse-body-2"
-                                                                                aria-expanded="false"
-                                                                                aria-controls="accordion-collapse-body-1">
-                                                                                <span>ငွေပေးချေရန် QR</span>
-                                                                                <svg data-accordion-icon
-                                                                                    class="size-4 rotate-0 shrink-0"
-                                                                                    fill="currentColor" viewBox="0 0 20 20"
-                                                                                    xmlns="http://www.w3.org/2000/svg">
-                                                                                    <path fill-rule="evenodd"
-                                                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                                                        clip-rule="evenodd"></path>
-                                                                                </svg>
-                                                                            </button>
-                                                                        </h2>
-                                                                        <div id="accordion-collapse-body-2" class="hidden"
-                                                                            aria-labelledby="accordion-collapse-heading-1">
-                                                                            <div class="p-5">
-                                                                                <img src="http://ucspyay.edu/utils/assets/img/ucspyay/qrcode.jpg"
-                                                                                    alt="QR Code">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                            <div class="p-5 cursor-pointer">
+                                                                <img src="http://ucspyay.edu/utils/assets/img/ucspyay/qrcode.jpg" width="100"
+                                                                    alt="QR Code" onclick="openLightbox(this);">
                                                             </div>
+
                                                         </div>
 
                                                         <div class="lg:col-span-12">
@@ -314,7 +279,7 @@ include("../utils/components/student/student.links.php");
                             <script src="http://ucspyay.edu/utils/assets/js/alertify.js"></script>
 
                             <script>
-                                <?php if (!$validStudent && !empty($data) && !$isRegister): ?>
+                                <?php if ($found === false && $pass === false): ?>
                                     alertify.warning('စာမေးပွဲမအောင်မြင်ပါ။');
                                 <?php elseif ($isRegister): ?>
                                     alertify.success('လျှောက်လွှာတင်ပြီးပါပြီ။');
@@ -322,6 +287,7 @@ include("../utils/components/student/student.links.php");
                                     alertify.success('စာမေးပွဲအောင်မြင်၍ လျှောက်လွှာတင်နိုင်ပါသည်။');
                                 <?php endif ?>
                             </script>
+
                             <!-- JAVASCRIPTS -->
                         <?php elseif ($status == 1): ?>
                             <div
@@ -336,6 +302,11 @@ include("../utils/components/student/student.links.php");
                             </div>
                         <?php endif ?>
 
+                        <!-- Light Box -->
+                        <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+                            <span class="close">&times;</span>
+                            <img class="lightbox-content" id="lightbox-img">
+                        </div>
 
 </body>
 

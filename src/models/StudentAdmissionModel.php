@@ -457,12 +457,12 @@ class StudentAdmissionModel
             // list($major, $scholarship, $passport_photo, $one_inch_photo, $covid_photo, $quarter_approved_letter, $police_approved_letter, $payment_screenshot) = $data;
             $major = $data['major'];
             $scholarship = $data['scholarship'];
-            $passport_photo = $files['passport_photo'];
-            $one_inch_photo = $files['one_inch_photo'];
-            $covid_photo = $files['covid_photo'];
-            $quarter_approved_letter = $files['quarter_approved_letter'];
-            $police_approved_letter = $files['police_approved_letter'];
-            $payment_screenshot = $files['payment_screenshot'];
+            // $passport_photo = $files['passport_photo'];
+            // $one_inch_photo = $files['one_inch_photo'];
+            // $covid_photo = $files['covid_photo'];
+            // $quarter_approved_letter = $files['quarter_approved_letter'];
+            // $police_approved_letter = $files['police_approved_letter'];
+            // $payment_screenshot = $files['payment_screenshot'];
 
             $student_sql = "UPDATE student_tbl SET
             year= year+1,
@@ -521,9 +521,18 @@ class StudentAdmissionModel
 
             ]);
 
+            $semester_sql = "UPDATE student_section_tbl SET
+            semester_id= semester_id + 1
+            WHERE student_id=:id";
+            $stmt = $this->db->prepare($semester_sql);
+            $stmt->execute([
+                ":id" => $id
+            ]);
+
             $this->db->commit();
             return true;
         } catch (PDOException $e) {
+            $this->db->rollBack();
             return $e->getMessage();
         }
     }

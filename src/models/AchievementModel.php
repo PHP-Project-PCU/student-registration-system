@@ -60,7 +60,6 @@ class AchievementModel
             $statement->execute();
 
             $result = $statement->fetchAll();
-            var_dump($result);
             return !empty($result);
         } catch (PDOException $e) {
             return $e->getMessage();
