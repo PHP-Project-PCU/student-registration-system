@@ -521,9 +521,18 @@ class StudentAdmissionModel
 
             ]);
 
+            $semester_sql = "UPDATE student_section_tbl SET
+            semester_id= semester_id + 1
+            WHERE student_id=:id";
+            $stmt = $this->db->prepare($semester_sql);
+            $stmt->execute([
+                ":id" => $id
+            ]);
+
             $this->db->commit();
             return true;
         } catch (PDOException $e) {
+            $this->db->rollBack();
             return $e->getMessage();
         }
     }
