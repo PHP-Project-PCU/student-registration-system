@@ -5,47 +5,50 @@ use core\helpers\HTTP;
 
 session_start();
 
-$isResetPassword = $_GET['reset'] ?? 0;
 
 
-if (!isset($isResetPassword)) {
-    if (isset($_SESSION['studentId'])) {
-        HTTP::redirect('/');
-        exit();
-    }
+if (isset($_SESSION['studentId'])) {
+    HTTP::redirect('/');
+    exit();
 }
 
 
 if (isset($_POST['student_edu_mail']) && isset($_POST['password'])) {
-    var_dump($isResetPassword);
+
+    $studentAuthController = new StudentAuthController();
+    $resetStatus = $studentAuthController->getStudentResetStatus();
+
+
     $studentEduMail = $_POST['student_edu_mail'];
-    $password = $isResetPassword ? md5($_POST['password']) : $_POST['password'];
+    $password = $resetStatus->reset_status == 1 ? md5($_POST['password']) : $_POST['password'];
 
     $studentAuthData = array(
         "eduMail" => $studentEduMail,
         "password" => $password
     );
 
-    $studentAuthController = new StudentAuthController($studentAuthData, null);
 
-    $studentId = $studentAuthController->studentLogin();
+
+    $studentId = $studentAuthController->studentLogin($studentAuthData);
 
 
     if ($studentId) {
-        echo "yes";
-        $_SESSION['studentId'] = $studentId;
-        if ($isResetPassword) {
+        $_SESSION['studentId'] = $studentId->student_id;
+
+
+        if ($resetStatus->reset_status == 1) {
+
             HTTP::redirect("/");
         } else {
             HTTP::redirect("/reset-password", "id=" . intval($studentId->student_id));
-
         }
         exit();
+    } else {
+        echo "Login failed. Please try again.";
     }
 }
-
-
 ?>
+
 
 <!DOCTYPE html>
 <html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">

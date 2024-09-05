@@ -47,4 +47,36 @@ class StudentAuthModel
             return $e->getMessage();
         }
     }
+
+    public function updateStudentResetStatus($table, $studentId)
+    {
+        try {
+            $statement = $this->db->prepare("
+                UPDATE $table SET reset_status = 1 WHERE student_id = :studentId
+            ");
+
+            $statement->execute([
+                "studentId" => intval($studentId)
+            ]);
+
+            return true;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getStudentResetStatus($table)
+    {
+        try {
+            $statement = $this->db->prepare("
+                SELECT reset_status FROM $table ORDER BY id DESC LIMIT 1;
+            ");
+
+            $statement->execute();
+            return $statement->fetch();
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
 }

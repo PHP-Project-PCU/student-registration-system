@@ -69,7 +69,7 @@ if (isset($_POST['submit'])) {
         }
 
 
-        $fresherController = new FresherController($data, null, null);
+        $fresherController = new FresherController($data, null, null, null, null, null);
         $fresherController->setFreshers();
     } else {
         echo "<script>alert('No data found in the Excel file.')</script>";
@@ -95,7 +95,7 @@ if (isset($_POST['addMoreFresher'])) {
         "matriculation_mark" => $matriculation_mark,
         "passing_year" => $passing_year,
     ];
-    $fresherController = new FresherController($data, null, null);
+    $fresherController = new FresherController($data, null, null, null, null, null);
     $addingIndividualFresherFlag = $fresherController->setIndividualFresher();
 }
 //Filter with passed year logic
@@ -368,7 +368,6 @@ include("../../utils/components/admin/admin.links.php");
                                     <input id="file-upload" type="file" name="excel" class="hidden" required
                                         onchange="updateFileDetails()" />
                                 </div>
-                                <div id="file-info" class="mt-3 text-sm text-gray-600 dark:text-gray-300"></div>
                                 <button type="submit" name="submit"
                                     class="m-5  py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                     Import
