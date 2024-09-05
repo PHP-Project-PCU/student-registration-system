@@ -195,7 +195,9 @@ include("../../utils/components/admin/admin.links.php");
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                <?php foreach ($paginationFresherData as $fresher): ?>
+                                <?php
+                                ($page == 1) ? $count = 1 : $count = $page * 10 - 9;
+                                foreach ($paginationFresherData as $fresher): ?>
 
                                     <tr class="text-gray-700 dark:text-gray-400">
                                         <td class="px-4 py-3 text-sm">
