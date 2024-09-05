@@ -22,6 +22,9 @@ $data = [];
 
 $validStudent = false;
 $isRegister = false;
+$found = true;
+$pass = true;
+$isFound = false;
 
 $studentId = $_SESSION['studentId'];
 $studentAdmissionController = new StudentAdmissionController($data);
@@ -40,11 +43,22 @@ $checkData = [$rollNum, $semesterID, $academicYear];
 
 
 // check achievement
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['checkBtn'])) {
+if (isset($_POST['checkBtn'])) {
     $achievementController = new AchievementController();
     $validStudent = $achievementController->checkAchievement($checkData);
-    // var_dump($validStudent);
+
+    if ($validStudent == true) {
+        $found = true;
+        $pass = true; // Set pass to true if found is true
+    } else {
+        $found = false;
+        $pass = false;
+    }
+
+    // Make sure these variables are set for JavaScript
+    echo '<script>let found = ' . json_encode($found) . '; let pass = ' . json_encode($pass) . ';</script>';
 }
+
 
 // register
 if (isset($_POST['registerBtn'])) {
@@ -314,7 +328,7 @@ include("../utils/components/student/student.links.php");
                             <script src="http://ucspyay.edu/utils/assets/js/alertify.js"></script>
 
                             <script>
-                                <?php if (!$validStudent && !empty($data) && !$isRegister): ?>
+                                <?php if ($found === false && $pass === false): ?>
                                     alertify.warning('စာမေးပွဲမအောင်မြင်ပါ။');
                                 <?php elseif ($isRegister): ?>
                                     alertify.success('လျှောက်လွှာတင်ပြီးပါပြီ။');
@@ -322,6 +336,7 @@ include("../utils/components/student/student.links.php");
                                     alertify.success('စာမေးပွဲအောင်မြင်၍ လျှောက်လွှာတင်နိုင်ပါသည်။');
                                 <?php endif ?>
                             </script>
+
                             <!-- JAVASCRIPTS -->
                         <?php elseif ($status == 1): ?>
                             <div
