@@ -4,25 +4,35 @@ use controllers\StudentAuthController;
 use core\helpers\HTTP;
 
 if (isset($_POST['student_new_password']) and isset($_POST['student_confirm_password'])) {
+    $studentNewPassword = md5($_POST['student_new_password']);
     $studentConfirmPassword = md5($_POST['student_confirm_password']);
 
+    if ($studentNewPassword === $studentConfirmPassword) {
+        $studentAuthController = new StudentAuthController();
 
-    $studentUpdatePasswordData = array(
-        "password" => $studentConfirmPassword,
-        "studentId" => $_GET['id']
-    );
-    $studentAuthController = new StudentAuthController(null, $studentUpdatePasswordData);
-    $updateFlag = $studentAuthController->updateStudentPassword();
-    if ($updateFlag) {
-        // $_SESSION['resetPassword'] = true;
+        $studentUpdatePasswordData = array(
+            "password" => $studentConfirmPassword,
+            "studentId" => $_GET['id']
+        );
 
-        HTTP::redirect("/login", "reset=1");
+        $updateFlag = $studentAuthController->updateStudentPassword($studentUpdatePasswordData);
 
-        exit();
+        if ($updateFlag) {
+            // $hashPasswordData
+            $studentAuthController->updateStudentResetStatus(intval($_GET['id']));
+            $resetStatus = $studentAuthController->getStudentResetStatus();
+            // $_SESSION['reset_status'] = $resetStatus->reset_status;
+            HTTP::redirect("/login", "reset=$resetStatus->reset_status");
+            exit();
+        } else {
+            echo "Password reset failed. Please try again.";
+        }
+    } else {
+        echo "Passwords do not match. Please try again.";
     }
 }
-
 ?>
+
 
 <!DOCTYPE html>
 <html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">

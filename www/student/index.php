@@ -23,19 +23,16 @@ $data = [];
 $validStudent = false;
 $isRegister = false;
 
-$studentId = $_SESSION['studentId']->student_id;
+$studentId = $_SESSION['studentId'];
 $studentAdmissionController = new StudentAdmissionController($data);
 $studentData = $studentAdmissionController->getStudentById($studentId);
-// var_dump($studentData);
 $rollNum = $studentData["student"]['roll_num'];
 $status = $studentData["student"]['status'];
 
 
 $sectionController = new SectionController();
 $sectionData = $sectionController->getByStudentId($studentId);
-// var_dump($sectionData);
 $semesterID = $sectionData[0]["semester_id"];
-// echo $semesterID . "semm idddd";
 
 // echo $rollNum;
 $checkData = [$rollNum, $semesterID, $academicYear];
@@ -62,25 +59,28 @@ if (isset($_POST['registerBtn'])) {
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
 <?php
-include("../utils/components/admin/admin.links.php");
+include("../utils/components/student/student.links.php");
 ?>
 
 <body>
     <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
         <!-- Sidebar -->
         <?php
-        include("../utils/components/admin/admin.sidebar.php");
+        include("../utils/components/student/student.navigation.php");
+        ?>
+        <!-- Desktop sidebar -->
+        <?php
+        include("../utils/components/student/student.sidebar.php");
         ?>
         <!-- Main content -->
         <div class=" flex flex-col flex-1 md:ml-64">
             <!-- Navbar -->
             <?php
-            include("../utils/components/admin/admin.navigation.php");
+            include("../utils/components/student/student.navigation.php");
             ?>
             <!-- Scrollable content section -->
             <div class="overflow-y-auto md:pt-16 px-4 pb-4 h-full">
@@ -102,11 +102,13 @@ include("../utils/components/admin/admin.links.php");
                                     <div class="container relative">
                                         <div class="grid lg:grid-cols-12 grid-cols-1" id="reserve-form">
                                             <div class="lg:col-start-2 lg:col-span-10">
-                                                <div class="rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
+                                                <div
+                                                    class="rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
                                                     <form action="" method="POST">
                                                         <div class="grid lg:grid-cols-12 gap-6 pt-4">
                                                             <div class="lg:col-span-12">
-                                                                <p class=" text-xl  ">ပညာဆက်လက်သင်ကြားခွင့်လျှောက်ထားရန် စာမေးပွဲအောင်မြင်ကြောင်းစစ်ဆေးပါ။</p>
+                                                                <p class=" text-xl  ">ပညာဆက်လက်သင်ကြားခွင့်လျှောက်ထားရန်
+                                                                    စာမေးပွဲအောင်မြင်ကြောင်းစစ်ဆေးပါ။</p>
                                                             </div>
                                                             <div class="lg:col-span-12">
                                                                 <button type="submit" id="checkBtn" name="checkBtn"
@@ -130,7 +132,8 @@ include("../utils/components/admin/admin.links.php");
                                     <div class="container relative">
                                         <div class="grid lg:grid-cols-12 grid-cols-1" id="reserve-form">
                                             <div class="lg:col-start-2 lg:col-span-10">
-                                                <div class="rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
+                                                <div
+                                                    class="rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
                                                     <form action="" method="POST" enctype="multipart/form-data">
                                                         <div class="lg:col-span-6">
                                                             <label for="major">အထူးပြုဘာသာ</label>
@@ -147,29 +150,34 @@ include("../utils/components/admin/admin.links.php");
                                                                     for="scholarship">ပညာသင်ထောက်ပံ့ကြေးပေးရန်မေတ္တာရပ်ခံခြင်းပြု/မပြု</label>
                                                                 <div class="mt-3 w-full py-2 px-3 h-10">
                                                                     <input name="scholarship" type="radio" value="1"> ပြု
-                                                                    <input name="scholarship" type="radio" value="0" checked> မပြု
+                                                                    <input name="scholarship" type="radio" value="0" checked>
+                                                                    မပြု
                                                                 </div>
                                                             </div>
                                                         </div>
 
                                                         <div class="bg-indigo-300 p-5 rounded-md lg:col-span-12 ">
-                                                            <label for="subject" class="font-semibold">လိုအပ်သောစာရွက်စာတမ်းများ</label>
+                                                            <label for="subject"
+                                                                class="font-semibold">လိုအပ်သောစာရွက်စာတမ်းများ</label>
                                                         </div>
                                                         <div class="lg:col-span-6">
-                                                            <label for="passport_photo">လိုင်စင်ဓာတ်ပုံ (1" x 1.25") ဆိုဒ် ၁ ပုံ (၆လ အတွင်း
+                                                            <label for="passport_photo">လိုင်စင်ဓာတ်ပုံ (1" x 1.25") ဆိုဒ် ၁ ပုံ
+                                                                (၆လ အတွင်း
                                                                 ရိုက်ထားသောပုံ) </label>
                                                             <input name="passport_photo" id="" type="file"
                                                                 class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
                                                         </div>
                                                         <div class="lg:col-span-6">
-                                                            <label for="one_inch_photo">(1" x 1") ဆိုဒ် ၁ ပုံ (၆လ အတွင်း ရိုက်ထားသောပုံ)
+                                                            <label for="one_inch_photo">(1" x 1") ဆိုဒ် ၁ ပုံ (၆လ အတွင်း
+                                                                ရိုက်ထားသောပုံ)
                                                             </label>
                                                             <input name="one_inch_photo" id="" type="file"
                                                                 class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
                                                         </div>
 
                                                         <div class="lg:col-span-6">
-                                                            <label for="covid_photo">ကိုဗစ်ကာကွယ်ဆေးထိုးပြီးကြောင်းထောက်ခံချက်</label>
+                                                            <label
+                                                                for="covid_photo">ကိုဗစ်ကာကွယ်ဆေးထိုးပြီးကြောင်းထောက်ခံချက်</label>
                                                             <input name="covid_photo" id="" type="file"
                                                                 class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
                                                         </div>
@@ -185,7 +193,8 @@ include("../utils/components/admin/admin.links.php");
                                                         </div>
 
                                                         <div class="bg-indigo-300 p-5 rounded-md lg:col-span-12 ">
-                                                            <label for="subject" class="font-semibold">ကျောင်းလခပေးသွင်းခြင်း</label>
+                                                            <label for="subject"
+                                                                class="font-semibold">ကျောင်းလခပေးသွင်းခြင်း</label>
                                                         </div>
 
                                                         <div class="lg:col-span-12">
@@ -194,13 +203,16 @@ include("../utils/components/admin/admin.links.php");
                                                                 <div>
                                                                     <div
                                                                         class="relative shadow dark:shadow-gray-800 rounded-md overflow-hidden">
-                                                                        <h2 class="text-base font-semibold" id="accordion-collapse-heading-1">
+                                                                        <h2 class="text-base font-semibold"
+                                                                            id="accordion-collapse-heading-1">
                                                                             <button type="button"
                                                                                 class="flex justify-between items-center p-5 w-full font-medium text-start"
                                                                                 data-accordion-target="#accordion-collapse-body-1"
-                                                                                aria-expanded="false" aria-controls="accordion-collapse-body-1">
+                                                                                aria-expanded="false"
+                                                                                aria-controls="accordion-collapse-body-1">
                                                                                 <span>ပေးသွင်းရန်</span>
-                                                                                <svg data-accordion-icon class="size-4 rotate-0 shrink-0"
+                                                                                <svg data-accordion-icon
+                                                                                    class="size-4 rotate-0 shrink-0"
                                                                                     fill="currentColor" viewBox="0 0 20 20"
                                                                                     xmlns="http://www.w3.org/2000/svg">
                                                                                     <path fill-rule="evenodd"
@@ -218,8 +230,10 @@ include("../utils/components/admin/admin.links.php");
                                                                                     <li>ဓါတ်ခွဲခန်းကြေး - ၅၀၀ ကျပ်</li>
                                                                                     <li>စာမေးပွဲကြေး - ၁၀၀၀ ကျပ်</li>
                                                                                     <li>အထွေထွေ - ၃၀၀ ကျပ်</li>
-                                                                                    <span class=" border  border-black-900"></span>
-                                                                                    <li class="pt-2"><b>စုစုပေါင်း - ၂၇၈၀၀ ကျပ်</b></li>
+                                                                                    <span
+                                                                                        class=" border  border-black-900"></span>
+                                                                                    <li class="pt-2"><b>စုစုပေါင်း - ၂၇၈၀၀
+                                                                                            ကျပ်</b></li>
                                                                                 </ul>
                                                                             </div>
                                                                         </div>
@@ -233,13 +247,16 @@ include("../utils/components/admin/admin.links.php");
                                                                 <div>
                                                                     <div
                                                                         class="relative shadow dark:shadow-gray-800 rounded-md overflow-hidden">
-                                                                        <h2 class="text-base font-semibold" id="accordion-collapse-heading-1">
+                                                                        <h2 class="text-base font-semibold"
+                                                                            id="accordion-collapse-heading-1">
                                                                             <button type="button"
                                                                                 class="flex justify-between items-center p-5 w-full font-medium text-start"
                                                                                 data-accordion-target="#accordion-collapse-body-2"
-                                                                                aria-expanded="false" aria-controls="accordion-collapse-body-1">
+                                                                                aria-expanded="false"
+                                                                                aria-controls="accordion-collapse-body-1">
                                                                                 <span>ငွေပေးချေရန် QR</span>
-                                                                                <svg data-accordion-icon class="size-4 rotate-0 shrink-0"
+                                                                                <svg data-accordion-icon
+                                                                                    class="size-4 rotate-0 shrink-0"
                                                                                     fill="currentColor" viewBox="0 0 20 20"
                                                                                     xmlns="http://www.w3.org/2000/svg">
                                                                                     <path fill-rule="evenodd"
@@ -261,7 +278,8 @@ include("../utils/components/admin/admin.links.php");
                                                         </div>
 
                                                         <div class="lg:col-span-12">
-                                                            <label for="payment_screenshot">ငွေသွင်းပြီးကြောင်း Screenshot</label>
+                                                            <label for="payment_screenshot">ငွေသွင်းပြီးကြောင်း
+                                                                Screenshot</label>
                                                             <input name="payment_screenshot"
                                                                 class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer"
                                                                 id="" type="file">
@@ -306,11 +324,13 @@ include("../utils/components/admin/admin.links.php");
                             </script>
                             <!-- JAVASCRIPTS -->
                         <?php elseif ($status == 1): ?>
-                            <div class="mx-auto mt-44 p-24 text-center rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
+                            <div
+                                class="mx-auto mt-44 p-24 text-center rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
                                 <p class="text-green-600">ဆက်လက်ပညာသင်ခွင့် လျှောက်ထားခြင်းအောင်မြင်ပါသည်။</p>
                             </div>
                         <?php elseif ($status == 3): ?>
-                            <div class="mx-auto mt-44 p-24 text-center rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
+                            <div
+                                class="mx-auto mt-44 p-24 text-center rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
                                 <p class="text-amber-200">ဆက်လက်ပညာသင်ခွင့်အား လျှောက်ထားပြီးပါပြီ။</p>
                                 <p class="text-amber-200 pt-2">အတည်ပြု Mail အားစောင့်ပါ။</p>
                             </div>

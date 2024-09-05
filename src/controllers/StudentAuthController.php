@@ -9,30 +9,45 @@ use core\helpers\Constants;
 class StudentAuthController
 {
 
-    private $studentAuthData;
+    private $studentAuthModel;
 
-    private $studentUpdatePasswordData;
-
-    public function __construct($studentAuthData = null, $studentUpdatePasswordData = null)
+    public function __construct()
     {
-        $this->studentAuthData = $studentAuthData;
-        $this->studentUpdatePasswordData = $studentUpdatePasswordData;
+        $this->studentAuthModel = new StudentAuthModel(new MySQL());
     }
 
-    function studentLogin()
+    function studentLogin($studentAuthData)
     {
-        $studentModel = new StudentAuthModel(new MySQL());
-        $studentId = $studentModel->findByStudentEduMailAndPasword(Constants::$STUDENT_AUTH_TBL, $this->studentAuthData['eduMail'], $this->studentAuthData['password']);
+        $studentModel = $this->studentAuthModel;
+        $studentId = $studentModel->findByStudentEduMailAndPasword(Constants::$STUDENT_AUTH_TBL, $studentAuthData['eduMail'], $studentAuthData['password']);
         return $studentId;
     }
 
-    function updateStudentPassword()
+    function updateStudentPassword($studentUpdatePasswordData)
     {
-        $adminModel = new StudentAuthModel(new MySQL());
-        if ($adminModel) {
-            return $adminModel->updateStudentPassword(Constants::$STUDENT_AUTH_TBL, $this->studentUpdatePasswordData['password'], $this->studentUpdatePasswordData['studentId']);
+        $studentModel = $this->studentAuthModel;
+        if ($studentModel) {
+            return $studentModel->updateStudentPassword(Constants::$STUDENT_AUTH_TBL, $studentUpdatePasswordData['password'], $studentUpdatePasswordData['studentId']);
         } else {
             return "Database error occurred";
+        }
+    }
+
+    function updateStudentResetStatus($studentId)
+    {
+        $studentModel = $this->studentAuthModel;
+        if ($studentModel) {
+            return $studentModel->updateStudentResetStatus(Constants::$STUDENT_AUTH_TBL, $studentId);
+        } else {
+            return "Database error occurred";
+        }
+    }
+
+    function getStudentResetStatus()
+    {
+        $studentModel = $this->studentAuthModel;
+        if ($studentModel) {
+            return $studentModel->getStudentResetStatus(Constants::$STUDENT_AUTH_TBL);
         }
     }
 }
