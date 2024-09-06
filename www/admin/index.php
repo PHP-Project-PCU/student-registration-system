@@ -1,6 +1,11 @@
 <?php
-include('../../autoload.php');
+require '../../vendor/autoload.php';
+include '../../autoload.php';
 
+use controllers\DeptController;
+use controllers\SemesterController;
+use controllers\AcademicYearController;
+use controllers\StudentAdmissionController;
 use core\helpers\HTTP;
 
 session_start();
@@ -9,124 +14,152 @@ if (!isset($_SESSION['admin'])) {
     HTTP::redirect("/login");
     exit();
 }
+
+$academicYearController = new AcademicYearController();
+$academicYears = $academicYearController->index();
+$academicYear = $academicYears[0]['academic_year'];
+
+$studentAdmissionController = new StudentAdmissionController();
+$studentsYears = $studentAdmissionController->getStudentsYear();
+
+$totalFirstYearStudentAdmissionCount = $studentAdmissionController->getStudentAdmissionTotalCount(1);
+$totalFristYearStudentAdmissionApprovedCount = $studentAdmissionController->getStudentAdmissionApprovedCount(1);
+
+$totalSecondYearStudentAdmissionCount = $studentAdmissionController->getStudentAdmissionTotalCount(2);
+$totalSecondYearStudentAdmissionApprovedCount = $studentAdmissionController->getStudentAdmissionApprovedCount(2);
+
+$totalThirdYearStudentAdmissionCount = $studentAdmissionController->getStudentAdmissionTotalCount(3);
+$totalThirdYearStudentAdmissionApprovedCount = $studentAdmissionController->getStudentAdmissionApprovedCount(3);
+
+$totalFourthYearStudentAdmissionCount = $studentAdmissionController->getStudentAdmissionTotalCount(4);
+$totalFourthYearStudentAdmissionApprovedCount = $studentAdmissionController->getStudentAdmissionApprovedCount(4);
+
+$totalFifthYearStudentAdmissionCount = $studentAdmissionController->getStudentAdmissionTotalCount(5);
+$totalFifthYearStudentAdmissionApprovedCount = $studentAdmissionController->getStudentAdmissionApprovedCount(5);
+
 ?>
 
 <!DOCTYPE html>
-
-
+<html lang="en">
 <?php
-include("C:/xampp/htdocs/student-registration-system/www/utils/components/admin/admin.links.php");
+include("../utils/components/admin/admin.links.php");
 ?>
 
-<body>
-    <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
-        <!-- Desktop sidebar -->
+<body class="bg-gray-50">
+    <div class="flex h-screen bg-white" :class="{ 'overflow-hidden': isSideMenuOpen }">
+        <!-- Sidebar -->
         <?php
-        include("C:/xampp/htdocs/student-registration-system/www/utils/components/admin/admin.sidebar.php");
-
+        include("../utils/components/admin/admin.sidebar.php");
         ?>
-
-        <div class="flex flex-col flex-1 w-full">
+        <!-- Main content -->
+        <div class=" flex flex-col flex-1 md:ml-64">
+            <!-- Navbar -->
             <?php
-            // include('header.php');
+            include("../utils/components/admin/admin.navigation.php");
             ?>
-            <main class="h-full overflow-y-auto">
-                <div class="container px-6 mx-auto grid">
-                    <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                        Dashboard
-                    </h2>
-                    <!-- CTA -->
-
-                    <!-- Cards -->
-                    <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-                        <!-- Card -->
-                        <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-                            <div
-                                class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path
-                                        d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                    Total clients
-                                </p>
-                                <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                    6389
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Card -->
-                        <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-                            <div
-                                class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                    Account balance
-                                </p>
-                                <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                    $ 46,760.89
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Card -->
-                        <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-                            <div
-                                class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full dark:text-blue-100 dark:bg-blue-500">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path
-                                        d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                    New sales
-                                </p>
-                                <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                    376
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Card -->
-                        <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-                            <div
-                                class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                    Pending contacts
-                                </p>
-                                <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                    35
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- New Table -->
-
-
-                    <!-- Charts -->
-
+            <!-- Scrollable content section -->
+            <div class="overflow-y-auto md:pt-16 px-4 pb-4 h-full">
+                <div class="p-4">
+                    <!--Div that will hold the pie chart-->
+                    <div id="chart_div" class="col-span-6" style="width: 50%;"></div>
+                    <div id="column_div" class="col-span-6" style="width: 50%;"></div>
+                    <div id="columnchart_material" style="width: 800px; height: 500px;"></div>
 
                 </div>
-            </main>
-        </div>
-    </div>
+            </div>
+
+
 </body>
+<!--Load the AJAX API-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<script type="text/javascript">
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', {
+        'packages': ['corechart']
+    });
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawChart);
+
+    // Callback that creates and populates a data table,
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    function drawChart() {
+        // Pie chart data
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+            ['ပထမနှစ်', <?= $totalFirstYearStudentAdmissionCount ?>],
+            ['ဒုတိယနှစ်', <?= $totalSecondYearStudentAdmissionCount ?>],
+            ['တတိယနှစ်', <?= $totalThirdYearStudentAdmissionCount ?>],
+            ['စတုတ္ထနှစ်', <?= $totalFourthYearStudentAdmissionCount ?>],
+            ['ပဥ္စမနှစ်', <?= $totalFifthYearStudentAdmissionCount ?>]
+        ]);
+
+        // Set chart options for Pie Chart
+        var options = {
+            'title': '<?= $academicYear ?> ကျောင်းလျှောက်ထားသူအရေအတွက်',
+            'width': 700,
+            'height': 400
+        };
+
+        // Instantiate and draw the pie chart
+        var pieChart = new google.visualization.PieChart(document.getElementById('chart_div'));
+        pieChart.draw(data, options);
+
+        // Column chart data
+        var data2 = google.visualization.arrayToDataTable([
+            ['Year', 'ကျောင်းသား/သူ', {
+                role: 'style'
+            }],
+            ['2019', 10, 'cyan'],
+            ['2020', 14, 'color: #76A7FA'],
+            ['2021', 16, 'orange'],
+            ['2022', 22, 'blue'],
+            ['2023', 28, 'purple']
+        ]);
+
+        // Set chart options for Column Chart
+        var options2 = {
+            'title': 'နှစ်အလိုက်ပထမနှစ်ကျောင်းလျှောက်ထားသူအရေအတွက်',
+            'width': 700,
+            'height': 400
+        };
+
+        // Instantiate and draw the column chart
+        var columnChart = new google.visualization.ColumnChart(document.getElementById('column_div'));
+        columnChart.draw(data2, options2);
+
+        // chart 3
+        // google.charts.load('current', {
+        //     'packages': ['bar']
+        // });
+        // google.charts.setOnLoadCallback(drawChart);
+
+        // function drawChart() {
+        //     var data = google.visualization.arrayToDataTable([
+        //         ['Year', 'Sales', 'Expenses', 'Profit'],
+        //         ['2014', 1000, 400, 200],
+        //         ['2015', 1170, 460, 250],
+        //         ['2016', 660, 1120, 300],
+        //         ['2017', 1030, 540, 350]
+        //     ]);
+
+        //     var options = {
+        //         chart: {
+        //             title: 'Company Performance',
+        //             subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+        //         }
+        //     };
+
+        //     var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        //     chart.draw(data, google.charts.Bar.convertOptions(options));
+        // }
+    }
+</script>
+
 
 </html>

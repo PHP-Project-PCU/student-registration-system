@@ -9,11 +9,36 @@ session_start();
 use Shuchkin\SimpleXLSX;
 use controllers\AchievementController;
 use controllers\SemesterController;
+use controllers\MailController;
+use controllers\StudentAdmissionController;
+
+
 
 $semesterController = new SemesterController();
 $semesters = $semesterController->index();
 
 $updateFlag = false;
+$resultMailStatus = false;
+$batchSize = 3; // Number of emails to send in one batch
+
+// send mail for exam result && change all student's status to 0
+if (!$resultMailStatus && isset($_POST['sendMail'])) {
+
+    $studentAdmissionController = new StudentAdmissionController();
+    $students = $studentAdmissionController->getAllStudentsEmailByStatus(0);
+    $chunks = array_chunk($students, $batchSize);
+
+    foreach ($students as $student) {
+        $data = [
+            'email' => $student->student_email
+        ];
+        $mailController = new MailController($data);
+        $mailController->sendResultMail($data);
+    }
+    $resultMailStatus = true;
+    // Optional: Add a short delay to avoid overloading the server
+    sleep(1);
+}
 
 // File Upload Logic
 if (isset($_POST['submit'])) {
@@ -349,6 +374,17 @@ include("../../utils/components/admin/admin.links.php");
                                 Import
                             </button>
                         </form>
+                        <form action="" method="POST">
+                            <div class="my-4">
+                                <p class="py-2">
+                                    ကျောင်းသားအားလုံးအား အောင်စာရင်းစစ်ရန် အကြောင်းကြားစာ Mail ပို့ရန် (အောင်စာရင်း data ထည့်ပြီးမှသာ)
+                                </p>
+                                <button type="submit" name="sendMail"
+                                    class=" px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                    ပို့မည်။
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 <?php else: ?>
                     <div class="container px-6 mx-auto grid w-50 h-80">
@@ -473,7 +509,13 @@ include("../../utils/components/admin/admin.links.php");
 
 </html>
 
+<script src="http://ucspyay.edu/utils/assets/js/alertify.js"></script>
 
+<script>
+    <?php if ($resultMailStatus): ?>
+        alertify.success('ကျောင်းသားအားလုံးအား Mail ပို့ပြီးပါပြီ');
+    <?php endif ?>
+</script>
 <script>
     function openEditModal(id, name, rollNum, semester, academicYear) {
         console.log(name, semester, academicYear);

@@ -36,7 +36,6 @@ $status = $studentData["student"]['status'];
 
 
 
-
 $sectionController = new SectionController();
 $sectionData = $sectionController->getByStudentId($studentId);
 $semesterID = $sectionData[0]["semester_id"];

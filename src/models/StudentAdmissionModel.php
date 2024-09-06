@@ -842,4 +842,36 @@ class StudentAdmissionModel
             return $e->getMessage();
         }
     }
+
+    // get all student's personal mail
+    public function getAllStudentsEmailByStatus($table, $status)
+    {
+        try {
+            $this->setStatus($table, 0); // reset status for admission
+            $query = "SELECT student_email from $table WHERE status=:status";
+            $statement = $this->db->prepare($query);
+            $statement->execute([
+                ":status" => $status
+            ]);
+            $result = $statement->fetchAll();
+            return $result;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function setStatus($table, $status)
+    {
+        try {
+            $query = "UPDATE $table SET status=:status";
+            $statement = $this->db->prepare($query);
+            $statement->execute([
+                ":status" => $status
+            ]);
+            $result = $statement->fetchAll();
+            return $result;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
 }
