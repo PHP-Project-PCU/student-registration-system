@@ -28,16 +28,16 @@ $timeTableData = $studentTimetableController->getTimeTableData($semesterIdAndSec
 <html lang="en">
 
 <style>
-th,
-td {
-    border: 1px solid grey;
-    text-align: center;
-}
+    th,
+    td {
+        border: 1px solid grey;
+        text-align: center;
+    }
 
-td {
-    text-align: center;
-    cursor: pointer;
-}
+    td {
+        text-align: center;
+        cursor: pointer;
+    }
 </style>
 
 <?php
@@ -86,19 +86,19 @@ include("../../utils/components/student/student.links.php");
                                     </thead>
                                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                                         <?php foreach ($timeTableData as $data): ?>
-                                        <?php
+                                            <?php
                                             $teacherName = $studentTimetableController->getTeachers($data->teacher_id);
                                             $courseCode = $studentTimetableController->getCourses($data->course_id);
                                             ?>
-                                        <tr class="text-gray-700 dark:text-gray-400">
-                                            <td class="px-4 py-3">
-                                                <?= $data->day ?>
-                                            </td>
-                                            <td class="px-4 py-3 text-sm" colspan="<?php if ($data->time_slot == 2)
-                                                    echo 2; ?>">
-                                                <?= $courseCode->code ?>
-                                            </td>
-                                        </tr>
+                                            <tr class="text-gray-700 dark:text-gray-400">
+                                                <td class="px-4 py-3">
+                                                    <?= $data->day ?>
+                                                </td>
+                                                <td class="px-4 py-3 text-sm" colspan="<?php if ($data->time_slot == 2)
+                                                                                            echo 2; ?>">
+                                                    <?= $courseCode->code ?>
+                                                </td>
+                                            </tr>
                                         <?php endforeach ?>
                                     </tbody>
                                 </table>
@@ -107,13 +107,13 @@ include("../../utils/components/student/student.links.php");
                                     <div></div>
                                     <div>Teacher</div>
                                     <?php foreach ($timeTableData as $data): ?>
-                                    <?php
+                                        <?php
                                         $teachers = $studentTimetableController->getTeachers($data->teacher_id);
                                         $courses = $studentTimetableController->getCourses($data->course_id);
                                         ?>
-                                    <div><?= $courses->title ?></div>
-                                    <div><?= $courses->code ?></div>
-                                    <div><?= $teachers->teacher_name ?></div>
+                                        <div><?= $courses->title ?></div>
+                                        <div><?= $courses->code ?></div>
+                                        <div><?= $teachers->teacher_name ?></div>
                                     <?php endforeach; ?>
                                     <!-- <div>Myanmar</div>
                                     <div>M-1201</div>

@@ -254,35 +254,24 @@ class MailController
       $mail->setFrom(MailConfig::$SEND_FROM, MailConfig::$SEND_FROM_NAME);
 
       $mail->clearAddresses();  // Clear previous email recipients
-
-
       $mail->addAddress($this->data['email']);
       $mail->addReplyTo(MailConfig::$REPLY_TO);
       $mail->IsHTML(true);
-
-
-
-
-
-      // Reuse SMTP connection
-      // foreach ($data as $email) {
-      //    $mail->clearAddresses();  // Clear previous email recipients
-      //    $mail->addAddress($email);
-      //    $mail->Subject = "Exam Results Available";
-      //    $mail->Body = "Your exam results are now available.";
-      // }
-
       $mail->Subject = "UCSPyay Exam Results Available";
       $mail->Body = "
       <div style='color:#000;'>
          <h2>Exam Results Available!</h2>
          <p>
-            စာမေးပွဲရလဒ်များအား ကြေညာပြီးဖြစ်၍ UCSPyay Student Portal တွင် မိမိတို့၏ အောင်စာရင်းအားစစ်ဆေးရန်နှင့် 
-            ပညာဆက်လက်သင်ကြားရန်အတွက် လျှောက်လွှာတင်နိုင်ပြီဖြစ်ကြောင်း အသိပေးကြေညာအပ်ပါသည်။
+            စာမေးပွဲရလဒ်များအား ကြေညာပြီးဖြစ်၍ UCSPyay Student Portal တွင် မိမိတို့၏ အောင်စာရင်းအားစစ်ဆေးနိုင်ပြီဖြစ်ကြောင်း အသိပေးကြေညာအပ်ပါသည်။
          </p>
          <a href='http://student.ucspyay.edu' style='padding: 10px 20px; background-color: #4CAF50; color: #fff; text-decoration: none; border-radius: 4px;'>Student Portal</a>
          <p>Best regards,<br>Admin Team,<br>Student Affairs,<br>University of Computer Studies, Pyay</p>
       </div>";
+      //    <p>
+      //    စာမေးပွဲရလဒ်များအား ကြေညာပြီးဖြစ်၍ UCSPyay Student Portal တွင် မိမိတို့၏ အောင်စာရင်းအားစစ်ဆေးရန်
+      //    နှင့် 
+      //    ပညာဆက်လက်သင်ကြားရန်အတွက် လျှောက်လွှာတင်နိုင်ပြီဖြစ်ကြောင်း အသိပေးကြေညာအပ်ပါသည်။
+      // </p>
 
       if (!$mail->send()) {
          return "Email not sent. Please try again";
