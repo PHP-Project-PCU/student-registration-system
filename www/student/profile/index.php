@@ -5,6 +5,13 @@ session_start();
 
 use controllers\StudentAdmissionController;
 use controllers\SectionController;
+use core\helpers\HTTP;
+
+
+if (!isset($_SESSION['studentId'])) {
+    HTTP::redirect('/login');
+    exit();
+}
 
 
 $studentId = $_SESSION['studentId'];

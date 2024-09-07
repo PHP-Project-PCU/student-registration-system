@@ -1,5 +1,6 @@
 <?php
 include('../../../autoload.php');
+
 use controllers\StudentAuthController;
 use core\helpers\HTTP;
 
@@ -19,10 +20,10 @@ if (isset($_POST['student_new_password']) and isset($_POST['student_confirm_pass
 
         if ($updateFlag) {
             // $hashPasswordData
-            $studentAuthController->updateStudentResetStatus(intval($_GET['id']));
-            $resetStatus = $studentAuthController->getStudentResetStatus();
+            // $studentAuthController->updateStudentResetStatus(intval($_GET['id']))
+            header("location: /");
             // $_SESSION['reset_status'] = $resetStatus->reset_status;
-            HTTP::redirect("/login", "reset=$resetStatus->reset_status");
+            // HTTP::redirect("/login", "reset=$resetStatus->reset_status");
             exit();
         } else {
             echo "Password reset failed. Please try again.";

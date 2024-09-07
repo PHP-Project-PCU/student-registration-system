@@ -9,6 +9,7 @@ session_start();
 use Shuchkin\SimpleXLSX;
 use controllers\AchievementController;
 use controllers\SemesterController;
+use controllers\SectionController;
 use controllers\MailController;
 use controllers\StudentAdmissionController;
 
@@ -19,25 +20,15 @@ $semesters = $semesterController->index();
 
 $updateFlag = false;
 $resultMailStatus = false;
-$batchSize = 3; // Number of emails to send in one batch
-
 // send mail for exam result && change all student's status to 0
 if (!$resultMailStatus && isset($_POST['sendMail'])) {
-
-    $studentAdmissionController = new StudentAdmissionController();
-    $students = $studentAdmissionController->getAllStudentsEmailByStatus(0);
-    $chunks = array_chunk($students, $batchSize);
-
-    foreach ($students as $student) {
-        $data = [
-            'email' => $student->student_email
-        ];
-        $mailController = new MailController($data);
-        $mailController->sendResultMail($data);
-    }
+    $mailController = new MailController();
+    $mailController->sendResultMail();
     $resultMailStatus = true;
-    // Optional: Add a short delay to avoid overloading the server
-    sleep(1);
+
+
+    $sectionController = new SectionController();
+    $sectionController->setStatus(0);
 }
 
 // File Upload Logic

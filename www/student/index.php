@@ -7,6 +7,13 @@ use controllers\StudentAdmissionController;
 use controllers\AcademicYearController;
 use controllers\AchievementController;
 use controllers\SectionController;
+use core\helpers\HTTP;
+
+
+if (!isset($_SESSION['studentId'])) {
+    HTTP::redirect('/login');
+    exit();
+}
 
 $academicYearController = new AcademicYearController();
 $academicYears = $academicYearController->index();
@@ -25,6 +32,7 @@ $isRegister = false;
 $found = true;
 $pass = true;
 $isFound = false;
+$isOddSem = false;
 
 $studentId = $_SESSION['studentId'];
 $studentAdmissionController = new StudentAdmissionController($data);
@@ -39,9 +47,11 @@ $status = $studentData["student"]['status'];
 $sectionController = new SectionController();
 $sectionData = $sectionController->getByStudentId($studentId) ?? null;
 $semesterID = $sectionData[0]["semester_id"] ?? null;
+$checkStatus = $sectionData[0]["status"] ?? null;
+
 
 // echo $rollNum;
-$checkData = [$rollNum, $semesterID, $academicYear];
+$checkData = [$rollNum, $semesterID, $academicYear, $studentId];
 // var_dump($checkData);
 
 
@@ -51,8 +61,15 @@ if (isset($_POST['checkBtn'])) {
     $validStudent = $achievementController->checkAchievement($checkData);
 
     if ($validStudent == true) {
-        $found = true;
-        $pass = true; // Set pass to true if found is true
+
+        if ($semesterID % 2 == 0 && $semesterID < 10) {
+            $found = true;
+            $pass = true; // Set pass to true if found is true
+        } else {
+            $isOddSem = true; // odd
+            $found = true;
+            $pass = true;
+        }
     } else {
         $found = false;
         $pass = false;
@@ -108,13 +125,13 @@ include("../utils/components/student/student.links.php");
                         <div class="p-4">
                             <div>
                                 <h4 class="my-4 text-2xl font-semibold text-gray-800 dark:text-gray-300">
-                                    ကျောင်းအပ်ရန် ( <?= $academicYear; ?> ) ပညာသင်နှစ်
+                                    ( <?= $academicYear; ?> ) ပညာသင်နှစ်
                                 </h4>
                                 <!-- Content container -->
                                 </section>
                                 <!--end section-->
                                 <!-- End Hero -->
-                                <?php if (!$validStudent): ?>
+                                <?php if (!$validStudent  && $checkStatus == 0): ?>
                                     <!-- Check Section-->
                                     <section class="relative md:py-24 py-16">
                                         <div class="container relative">
@@ -125,8 +142,7 @@ include("../utils/components/student/student.links.php");
                                                         <form action="" method="POST">
                                                             <div class="grid lg:grid-cols-12 gap-6 pt-4">
                                                                 <div class="lg:col-span-12">
-                                                                    <p class=" text-xl  ">ပညာဆက်လက်သင်ကြားခွင့်လျှောက်ထားရန်
-                                                                        စာမေးပွဲအောင်မြင်ကြောင်းစစ်ဆေးပါ။</p>
+                                                                    <p class=" text-xl">စာမေးပွဲအောင်မြင်ကြောင်းစစ်ဆေးပါ။</p>
                                                                 </div>
                                                                 <div class="lg:col-span-12">
                                                                     <button type="submit" id="checkBtn" name="checkBtn"
@@ -141,10 +157,19 @@ include("../utils/components/student/student.links.php");
                                     </section>
                                 <?php endif ?>
 
+                                <?php if ($checkStatus == 1): ?>
+                                    <!-- Check Section-->
+                                    <section class="relative md:py-24 py-16">
+                                        <p
+                                            class="rounded-md text-center shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
+                                            စာမေးပွဲအောင်မြင်ပါသည်။</p>
+                                    </section>
+                                <?php endif ?>
 
 
 
-                                <?php if ($validStudent && !$isRegister): ?>
+
+                                <?php if ($validStudent && !$isOddSem  && !$isRegister): ?>
                                     <!-- Fresher Admission Form Section-->
                                     <section class="relative md:py-24 py-16">
                                         <div class="container relative">
@@ -284,7 +309,7 @@ include("../utils/components/student/student.links.php");
                                     <?php elseif ($isRegister): ?>
                                         alertify.success('လျှောက်လွှာတင်ပြီးပါပြီ။');
                                     <?php elseif ($validStudent === true && !$isRegister): ?>
-                                        alertify.success('စာမေးပွဲအောင်မြင်၍ လျှောက်လွှာတင်နိုင်ပါသည်။');
+                                        alertify.success('စာမေးပွဲအောင်မြင်ပါသည်။');
                                     <?php endif ?>
                                 </script>
 
@@ -300,6 +325,7 @@ include("../utils/components/student/student.links.php");
                                     <p class="text-amber-200">ဆက်လက်ပညာသင်ခွင့်အား လျှောက်ထားပြီးပါပြီ။</p>
                                     <p class="text-amber-200 pt-2">အတည်ပြု Mail အားစောင့်ပါ။</p>
                                 </div>
+
                             <?php endif ?>
 
                             <!-- Light Box -->
@@ -307,7 +333,6 @@ include("../utils/components/student/student.links.php");
                                 <span class="close">&times;</span>
                                 <img class="lightbox-content" id="lightbox-img">
                             </div>
-
                         <?php else: ?>
                             <p
                                 class="rounded-md text-center shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">

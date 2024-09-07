@@ -78,11 +78,18 @@ class AchievementController
     {
         $achievementModel = new AchievementModel(new MYSQL());
         if ($achievementModel) {
-            list($rollNum, $semester, $year) = $data;
+            list($rollNum, $semester, $year, $studentId) = $data;
 
-            return $achievementModel->checkAchievement(Constants::$STUDENT_ACHIEVEMENT_TBL, $rollNum, $semester, $year);
+            $result = $achievementModel->checkAchievement(Constants::$STUDENT_ACHIEVEMENT_TBL, $rollNum, $semester, $year);
+            if ($result == true)
+                return $this->setStatus(1, $studentId);
         }
         return false;
+    }
+    public function setStatus($status, $studentId)
+    {
+        $achievementModel = new AchievementModel(new MYSQL());
+        return $achievementModel->setStatus(Constants::$STUDENT_SECTION_TBL, $status, $studentId);
     }
 
     public function updateAchievement()

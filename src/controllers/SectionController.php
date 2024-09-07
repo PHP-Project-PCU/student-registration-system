@@ -22,6 +22,11 @@ class SectionController
     {
         return $this->sectionModel->getByStudentId(Constants::$STUDENT_SECTION_TBL, $id);
     }
+    public function setStatus($status)
+    {
+        $sectionModel = new SectionModel(new MYSQL());
+        return $sectionModel->setStatus(Constants::$STUDENT_SECTION_TBL, $status);
+    }
 
     public function getTotalRows($semester, $section)
     {

@@ -3,6 +3,7 @@
 namespace controllers;
 
 use core\helpers\Constants;
+use controllers\StudentAdmissionController;
 
 // Load Composer's autoloader
 require_once(Constants::$BASE_PATH . '\vendor\autoload.php');
@@ -36,7 +37,7 @@ class MailController
 {
    private $data;
 
-   public function __construct($data)
+   public function __construct($data = null)
    {
       $this->data = $data;
    }
@@ -234,7 +235,7 @@ class MailController
       }
    }
 
-   function sendResultMail($data)
+   function sendResultMail()
    {
       $mail = new PHPMailer(true);
       $mail->isSMTP();
@@ -252,9 +253,14 @@ class MailController
          ],
       ];
       $mail->setFrom(MailConfig::$SEND_FROM, MailConfig::$SEND_FROM_NAME);
+      $studentAdmissionController = new StudentAdmissionController();
+      $data = $studentAdmissionController->getAllStudentsEmailByStatus(0);
+      // var_dump($data);
 
       $mail->clearAddresses();  // Clear previous email recipients
-      $mail->addAddress($this->data['email']);
+      foreach ($data as $email) {
+         $mail->addAddress($email->student_email);
+      }
       $mail->addReplyTo(MailConfig::$REPLY_TO);
       $mail->IsHTML(true);
       $mail->Subject = "UCSPyay Exam Results Available";
