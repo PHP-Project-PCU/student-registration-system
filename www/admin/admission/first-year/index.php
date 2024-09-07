@@ -7,14 +7,21 @@ include '../../../../autoload.php';
 use controllers\AcademicYearController;
 use controllers\StudentAdmissionController;
 
-$status = 0;
+session_start();
+
+
 $academicYearController = new AcademicYearController();
 $academicYears = $academicYearController->index();
-$selectedYear = getYear($academicYears[0]['academic_year']);
+$selectedYear = $_SESSION['selected_year'] ??  getYear($academicYears[0]['academic_year']);
+$status = $_SESSION['status'] ?? 0;
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $status = $_POST['status'];
-    $selectedYear = getYear($_POST['selected_year']);
+    $_SESSION['status'] = $_POST['status'];
+    $_SESSION['selected_year'] = $_POST['selected_year'];
+    // Redirect to the same page to apply the session changes immediately
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit;
 }
 
 function getYear($year)
@@ -22,9 +29,14 @@ function getYear($year)
     $part = explode('-', $year);
     return $part[0];
 }
-$studentAdmissionController = new StudentAdmissionController();
-$freshers = $studentAdmissionController->getAllFreshersByStatus($status, $selectedYear);
+// Pagination Logic
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$limit = 10;
 
+$studentAdmissionController = new StudentAdmissionController();
+$freshers = $studentAdmissionController->getAllStudentsByStatusAndYear($status, 1, $selectedYear, $page, $limit);
+$getStudentsTotalRows = $studentAdmissionController->getTotalRows(1, $status); // for first year
+$totalPages = ceil($getStudentsTotalRows / $limit);
 ?>
 
 <!DOCTYPE html>
@@ -62,17 +74,17 @@ include("../../../utils/components/admin/admin.links.php");
                             <select id="status" name="status" onchange="this.form.submit()"
                                 class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                 <option value="0" <?php if ($status == 0)
-                                    echo 'selected'; ?>>
+                                                        echo 'selected'; ?>>
                                     အတည်မပြုရသေးသောလျှောက်လွှာများ</option>
                                 <option value="1" <?php if ($status == 1)
-                                    echo 'selected'; ?>>
+                                                        echo 'selected'; ?>>
                                     အတည်ပြုပြီးသောလျှောက်လွှာများ</option>
                             </select>
                             <select id="selected_year" name="selected_year" onchange="this.form.submit()"
                                 class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                 <?php foreach ($academicYears as $year): ?>
-                                    <option value="<?= $year["academic_year"] ?>" <?php if ($selectedYear == getYear($year['academic_year']))
-                                          echo 'selected' ?>>
+                                    <option value="<?= getYear($year["academic_year"]) ?>" <?php if ($selectedYear == getYear($year['academic_year']))
+                                                                                                echo 'selected' ?>>
                                         <?= $year['academic_year'] . " (ပညာသင်နှစ်)" ?>
                                     </option>
                                 <?php endforeach ?>
@@ -98,11 +110,11 @@ include("../../../utils/components/admin/admin.links.php");
                                 </thead>
                                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                                     <?php
-                                    $count = 1;
+                                    ($page == 1) ? $count = 1 : $count = $page * 10 - 9;
                                     foreach ($freshers as $fresher) {
                                         $id = $fresher['id'];
 
-                                        ?>
+                                    ?>
                                         <tr class="text-gray-700 dark:text-gray-400">
                                             <td class="px-4 py-3">
                                                 <?= $count ?>
@@ -126,18 +138,60 @@ include("../../../utils/components/admin/admin.links.php");
                                                 <?php endif ?>
                                             </td>
                                         </tr>
-                                        <?php $count++;
+                                    <?php $count++;
                                     } ?>
                                 </tbody>
                             </table>
                         </div>
 
                     </div>
+
+                    <div
+                        class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+                        <span class="flex items-center col-span-3"></span>
+                        <span class="col-span-2"></span>
+                        <!-- Pagination -->
+                        <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+                            <nav aria-label="Table navigation">
+                                <ul class="inline-flex items-center">
+                                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                        <li>
+                                            <a href="?page=<?= $i; ?>"
+                                                class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple transition-colors duration-150 <?= ($i == $page) ? 'bg-purple-600 text-white' : 'text-gray-700'; ?>">
+                                                <?= $i; ?>
+                                            </a>
+                                        </li>
+                                    <?php endfor; ?>
+                                </ul>
+                            </nav>
+                        </span>
+                    </div>
                 </div>
 
 
             </div>
 </body>
+
+<script src=" ../../../../utils/assets/js/alertify.js"></script>
+<script>
+    <?php
+    if ($_SESSION['isApproved'] === false) {
+        echo "alertify.warning('အတည်ပြုခြင်းမအောင်မြင်ပါ။');";
+    } elseif ($_SESSION['isApproved'] == null) {
+        // echo "alertify.success('အတည်ပြုပြီးပါပြီ။');";
+        return;
+    } elseif (isset($_SESSION['isApproved'])) {
+        echo "alertify.success('အတည်ပြုပြီးပါပြီ။');";
+    }
+
+    // Unset all of the session variables
+    $_SESSION = [];
+
+    // Destroy the session
+    session_destroy();
+    ?>
+</script>
+
 
 
 </html>

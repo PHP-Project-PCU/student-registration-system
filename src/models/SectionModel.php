@@ -29,4 +29,79 @@ class SectionModel
             return $e->getMessage();
         }
     }
+    public function getByStudentId($table, $id)
+    {
+        try {
+            $sql = "SELECT * FROM $table where student_id=:id";
+            $statement = $this->db->prepare($sql);
+            $statement->execute([
+                ":id" => $id
+            ]);
+            $data = $statement->fetchAll((PDO::FETCH_ASSOC));
+            return $data;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+    public function setStatus($table, $status)
+    {
+        try {
+            $query = "UPDATE $table set status=:status";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':status', $status);
+            $statement->execute();
+            return true;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getTotalRows($table, $semester = null, $section = null)
+    {
+        try {
+            if ($semester && $section) {
+                $query = "SELECT COUNT(*) as total FROM $table WHERE semester_id = :semester AND section_id = :section";
+                $statement = $this->db->prepare($query);
+                $statement->bindParam(':semester', $semester);
+                $statement->bindParam(':section', $section);
+            } else {
+                $query = "SELECT COUNT(*) as total FROM $table";
+                $statement = $this->db->prepare($query);
+            }
+            $statement->execute();
+            $result = $statement->fetch();
+
+            return $result->total;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function updateStudentSemesterAndSection($table, $semesterId, $sectionId, $studentId)
+    {
+        try {
+            $query = "UPDATE $table set semester_id = :semesterId,section_id = :sectionId WHERE student_id = :studentId";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':semesterId', $semesterId);
+            $statement->bindParam(':sectionId', $sectionId);
+            $statement->bindParam(':studentId', $studentId);
+            $statement->execute();
+            return true;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function deleteStudentSemesterAndSection($table, $studentId)
+    {
+        try {
+            $query = "DELETE FROM $table WHERE student_id = :studentId";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':studentId', $studentId);
+            $statement->execute();
+            return true;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
 }

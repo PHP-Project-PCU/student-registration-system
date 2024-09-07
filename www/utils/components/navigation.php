@@ -85,6 +85,17 @@ function isActive($uri)
                     </ul>
                 </li>
 
+                <li class="has-submenu parent-parent-menu-item">
+                    <a href="javascript:void(0)">Admissions</a><span class="menu-arrow"></span>
+                    <ul class="submenu">
+                        <li class="<?php echo isActive('freshers'); ?>"><a href="<?php echo $homeURL ?>admissions/freshers"
+                                class="sub-menu-item">Freshers</a></li>
+                        <li class="<?php echo isActive('credit-transfer'); ?>"><a href="<?php echo $homeURL ?>admissions/credit-transfer"
+                                class="sub-menu-item">Credit Transfer</a></li>
+
+                    </ul>
+                </li>
+
                 <li class="has-submenu parent-menu-item">
                     <a href="javascript:void(0)">Faculties</a><span class="menu-arrow"></span>
                     <ul class="submenu">
@@ -119,9 +130,6 @@ function isActive($uri)
                         </li>
                     </ul>
                 </li>
-
-                <li class="<?php echo isActive('projects'); ?> "><a href="<?php echo $homeURL ?>projects"
-                        class="sub-menu-item">Projects</a></li>
 
                 <li class="<?php echo isActive('news'); ?> "><a href="<?php echo $homeURL ?>news"
                         class="sub-menu-item">News</a></li>

@@ -1,119 +1,345 @@
-<!DOCTYPE html>
+<?php
+require '../../vendor/autoload.php';
+include '../../autoload.php';
+session_start();
 
+use controllers\StudentAdmissionController;
+use controllers\AcademicYearController;
+use controllers\AchievementController;
+use controllers\SectionController;
+use core\helpers\HTTP;
+
+
+if (!isset($_SESSION['studentId'])) {
+    HTTP::redirect('/login');
+    exit();
+}
+
+$academicYearController = new AcademicYearController();
+$academicYears = $academicYearController->index();
+$academicYear = getYear($academicYears[0]['academic_year']);
+
+function getYear($year)
+{
+    $part = explode('-', $year);
+    return $part[0];
+}
+
+$data = [];
+
+$validStudent = false;
+$isRegister = false;
+$found = true;
+$pass = true;
+$isFound = false;
+$isOddSem = false;
+
+$studentId = $_SESSION['studentId'];
+$studentAdmissionController = new StudentAdmissionController($data);
+$studentData = $studentAdmissionController->getStudentById($studentId);
+$rollNum = $studentData["student"]['roll_num'];
+$year = $studentData["student"]['year'];
+$major = $studentData["student"]['major'];
+$status = $studentData["student"]['status'];
+
+
+
+$sectionController = new SectionController();
+$sectionData = $sectionController->getByStudentId($studentId) ?? null;
+$semesterID = $sectionData[0]["semester_id"] ?? null;
+$checkStatus = $sectionData[0]["status"] ?? null;
+
+
+// echo $rollNum;
+$checkData = [$rollNum, $semesterID, $academicYear, $studentId];
+// var_dump($checkData);
+
+
+// check achievement
+if (isset($_POST['checkBtn'])) {
+    $achievementController = new AchievementController();
+    $validStudent = $achievementController->checkAchievement($checkData);
+
+    if ($validStudent == true) {
+
+        if ($semesterID % 2 == 0 && $semesterID < 10) {
+            $found = true;
+            $pass = true; // Set pass to true if found is true
+        } else {
+            $isOddSem = true; // odd
+            $found = true;
+            $pass = true;
+        }
+    } else {
+        $found = false;
+        $pass = false;
+    }
+
+    // Make sure these variables are set for JavaScript
+    echo '<script>let found = ' . json_encode($found) . '; let pass = ' . json_encode($pass) . ';</script>';
+}
+
+
+// register
+if (isset($_POST['registerBtn'])) {
+    $data = $_POST;
+    $files = $_FILES;
+    $studentAdmissionController = new StudentAdmissionController();
+    $isRegister = $studentAdmissionController->setOldStudentAdmissions($studentId, $data, $files);
+    header('location:/');
+} else {
+    $isRegister = false;
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
 
 <?php
-include("C:/xampp/htdocs/student-registration-system/www/utils/components/admin/admin.links.php");
+include("../utils/components/student/student.links.php");
 ?>
 
 <body>
     <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
+        <!-- Sidebar -->
+        <?php
+        include("../utils/components/student/student.navigation.php");
+        ?>
         <!-- Desktop sidebar -->
         <?php
-        include("C:/xampp/htdocs/student-registration-system/www/utils/components/student/student.sidebar.php");
-
+        include("../utils/components/student/student.sidebar.php");
         ?>
-
-        <div class="flex flex-col flex-1 w-full">
+        <!-- Main content -->
+        <div class=" flex flex-col flex-1 md:ml-64">
+            <!-- Navbar -->
             <?php
-            // include('header.php');
+            include("../utils/components/student/student.navigation.php");
             ?>
-            <main class="h-full overflow-y-auto">
-                <div class="container px-6 mx-auto grid">
-                    <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                        Dashboard
-                    </h2>
-                    <!-- CTA -->
+            <!-- Scrollable content section -->
+            <div class="overflow-y-auto md:pt-16 px-4 pb-4 h-full">
 
-                    <!-- Cards -->
-                    <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-                        <!-- Card -->
-                        <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-                            <div
-                                class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path
-                                        d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z">
-                                    </path>
-                                </svg>
-                            </div>
+                <?php if (!empty($sectionData)): ?>
+
+                    <?php if ($status == 0): ?>
+                        <div class="p-4">
                             <div>
-                                <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                    Total clients
-                                </p>
-                                <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                    6389
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Card -->
-                        <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-                            <div
-                                class="p-3 mr-4 text-green-500 bg-green-100 rounded-full dark:text-green-100 dark:bg-green-500">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                    Account balance
-                                </p>
-                                <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                    $ 46,760.89
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Card -->
-                        <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-                            <div
-                                class="p-3 mr-4 text-blue-500 bg-blue-100 rounded-full dark:text-blue-100 dark:bg-blue-500">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path
-                                        d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                    New sales
-                                </p>
-                                <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                    376
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Card -->
-                        <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-                            <div
-                                class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
-                                    Pending contacts
-                                </p>
-                                <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
-                                    35
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                                <h4 class="my-4 text-2xl font-semibold text-gray-800 dark:text-gray-300">
+                                    ( <?= $academicYear; ?> ) ပညာသင်နှစ်
+                                </h4>
+                                <!-- Content container -->
+                                </section>
+                                <!--end section-->
+                                <!-- End Hero -->
+                                <?php if (!$validStudent  && $checkStatus == 0): ?>
+                                    <!-- Check Section-->
+                                    <section class="relative md:py-24 py-16">
+                                        <div class="container relative">
+                                            <div class="grid lg:grid-cols-12 grid-cols-1" id="reserve-form">
+                                                <div class="lg:col-start-2 lg:col-span-10">
+                                                    <div
+                                                        class="rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
+                                                        <form action="" method="POST">
+                                                            <div class="grid lg:grid-cols-12 gap-6 pt-4">
+                                                                <div class="lg:col-span-12">
+                                                                    <p class=" text-xl">စာမေးပွဲအောင်မြင်ကြောင်းစစ်ဆေးပါ။</p>
+                                                                </div>
+                                                                <div class="lg:col-span-12">
+                                                                    <button type="submit" id="checkBtn" name="checkBtn"
+                                                                        class="py-2 px-5 inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mt-4">စစ်ဆေးမည်</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                <?php endif ?>
 
-                    <!-- New Table -->
+                                <?php if ($checkStatus == 1): ?>
+                                    <!-- Check Section-->
+                                    <section class="relative md:py-24 py-16">
+                                        <p
+                                            class="rounded-md text-center shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
+                                            စာမေးပွဲအောင်မြင်ပါသည်။</p>
+                                    </section>
+                                <?php endif ?>
 
 
-                    <!-- Charts -->
 
 
-                </div>
-            </main>
-        </div>
-    </div>
+                                <?php if ($validStudent && !$isOddSem  && !$isRegister): ?>
+                                    <!-- Fresher Admission Form Section-->
+                                    <section class="relative md:py-24 py-16">
+                                        <div class="container relative">
+                                            <div class="grid lg:grid-cols-12 grid-cols-1" id="reserve-form">
+                                                <div class="lg:col-start-2 lg:col-span-10">
+                                                    <div
+                                                        class="rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
+                                                        <form action="" method="POST" enctype="multipart/form-data">
+                                                            <div class="lg:col-span-6">
+                                                                <label for="major">အထူးပြုဘာသာ</label>
+                                                                <select id="major" name="major"
+                                                                    class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                                                    <?php if ($year == 1): ?>
+                                                                        <option value="CS">CS</option>
+                                                                        <option value="CT">CT</option>
+                                                                    <?php else: ?>
+                                                                        <option value="<?= $major ?>"><?= $major ?></option>
+                                                                    <?php endif ?>
+
+                                                                </select>
+                                                            </div>
+                                                            <div class="lg:col-span-12">
+                                                                <div class="text-start">
+                                                                    <label
+                                                                        for="scholarship">ပညာသင်ထောက်ပံ့ကြေးပေးရန်မေတ္တာရပ်ခံခြင်းပြု/မပြု</label>
+                                                                    <div class="mt-3 w-full py-2 px-3 h-10">
+                                                                        <input name="scholarship" type="radio" value="1"> ပြု
+                                                                        <input name="scholarship" type="radio" value="0" checked>
+                                                                        မပြု
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="bg-indigo-300 p-5 rounded-md lg:col-span-12 ">
+                                                                <label for="subject"
+                                                                    class="font-semibold">လိုအပ်သောစာရွက်စာတမ်းများ</label>
+                                                            </div>
+                                                            <div class="lg:col-span-6">
+                                                                <label for="passport_photo">လိုင်စင်ဓာတ်ပုံ (1" x 1.25") ဆိုဒ် ၁ ပုံ
+                                                                    (၆လ အတွင်း
+                                                                    ရိုက်ထားသောပုံ) </label>
+                                                                <input name="passport_photo" id="" type="file"
+                                                                    class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
+                                                            </div>
+                                                            <div class="lg:col-span-6">
+                                                                <label for="one_inch_photo">(1" x 1") ဆိုဒ် ၁ ပုံ (၆လ အတွင်း
+                                                                    ရိုက်ထားသောပုံ)
+                                                                </label>
+                                                                <input name="one_inch_photo" id="" type="file"
+                                                                    class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
+                                                            </div>
+
+                                                            <div class="lg:col-span-6">
+                                                                <label
+                                                                    for="covid_photo">ကိုဗစ်ကာကွယ်ဆေးထိုးပြီးကြောင်းထောက်ခံချက်</label>
+                                                                <input name="covid_photo" id="" type="file"
+                                                                    class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
+                                                            </div>
+                                                            <div class="lg:col-span-6">
+                                                                <label for="quarter_approved_letter">ရပ်ကွက်ထောက်ခံစာ</label>
+                                                                <input name="quarter_approved_letter" id="" type="file"
+                                                                    class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
+                                                            </div>
+                                                            <div class="lg:col-span-6">
+                                                                <label for="police_approved_letter">ရဲစခန်းထောက်ခံစာ</label>
+                                                                <input name="police_approved_letter" id="" type="file"
+                                                                    class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer">
+                                                            </div>
+
+                                                            <div class="bg-indigo-300 p-5 rounded-md lg:col-span-12 ">
+                                                                <label for="subject"
+                                                                    class="font-semibold">ကျောင်းလခပေးသွင်းခြင်း</label>
+                                                            </div>
+
+                                                            <div class="lg:col-span-12">
+                                                                <div class="p-5">
+                                                                    <ul>
+                                                                        <li>ကျောင်းလခ(၁၀လစာ) - ၂၅၀၀၀ ကျပ်</li>
+                                                                        <li>က-ပ-မ ကြေး - ၁၀၀၀ ကျပ်</li>
+                                                                        <li>ဓါတ်ခွဲခန်းကြေး - ၅၀၀ ကျပ်</li>
+                                                                        <li>စာမေးပွဲကြေး - ၁၀၀၀ ကျပ်</li>
+                                                                        <li>အထွေထွေ - ၃၀၀ ကျပ်</li>
+                                                                        <span
+                                                                            class=" border  border-black-900"></span>
+                                                                        <li class="pt-2"><b>စုစုပေါင်း - ၂၇၈၀၀
+                                                                                ကျပ်</b></li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                            <div class="lg:col-span-12">
+                                                                <div class="p-5 cursor-pointer">
+                                                                    <img src="http://ucspyay.edu/utils/assets/img/ucspyay/qrcode.jpg" width="100"
+                                                                        alt="QR Code" onclick="openLightbox(this);">
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="lg:col-span-12">
+                                                                <label for="payment_screenshot">ငွေသွင်းပြီးကြောင်း
+                                                                    Screenshot</label>
+                                                                <input name="payment_screenshot"
+                                                                    class=" w-full mt-3 cursor-pointer bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded-lg outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0 file:bg-indigo-600 file:text-white file:border-none file:rounded-l-lg file:py-2 file:px-4 file:mr-3 file:cursor-pointer"
+                                                                    id="" type="file">
+                                                            </div>
+                                                            <div class="lg:col-span-4">
+
+                                                                <button type="submit" id="registerBtn" name="registerBtn"
+                                                                    class="py-2  px-5 w-full inline-block font-semibold tracking-wide border align-middle duration-500 text-base text-center bg-indigo-600 hover:bg-indigo-700 border-indigo-600 hover:border-indigo-700 text-white rounded-md mt-4">Register</button>
+                                                            </div>
+                                                        </form>
+                                                        <!--end form-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--end grid-->
+                                        </div>
+                                        <!--end container-->
+
+                                    </section>
+                                    <!--end section-->
+                                    <!-- End Section-->
+                                    </section>
+                                    <!--end section-->
+                                    <!-- End Section-->
+                                <?php endif ?>
+
+                                <!-- JAVASCRIPTS -->
+                                <script src="http://ucspyay.edu/utils/assets/libs/feather-icons/feather.min.js"></script>
+                                <script src="http://ucspyay.edu/utils/assets/libs/jquery/jquery.min.js"></script>
+                                <script src="http://ucspyay.edu/utils/assets/js/plugins.init.js"></script>
+                                <script src="http://ucspyay.edu/utils/assets/js/app.js"></script>
+                                <script src="http://ucspyay.edu/utils/assets/js/alertify.js"></script>
+
+                                <script>
+                                    <?php if ($found === false && $pass === false): ?>
+                                        alertify.warning('စာမေးပွဲမအောင်မြင်ပါ။');
+                                    <?php elseif ($isRegister): ?>
+                                        alertify.success('လျှောက်လွှာတင်ပြီးပါပြီ။');
+                                    <?php elseif ($validStudent === true && !$isRegister): ?>
+                                        alertify.success('စာမေးပွဲအောင်မြင်ပါသည်။');
+                                    <?php endif ?>
+                                </script>
+
+                                <!-- JAVASCRIPTS -->
+                            <?php elseif ($status == 1): ?>
+                                <div
+                                    class="mx-auto mt-44 p-24 text-center rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
+                                    <p class="text-green-600">ဆက်လက်ပညာသင်ခွင့် လျှောက်ထားခြင်းအောင်မြင်ပါသည်။</p>
+                                </div>
+                            <?php elseif ($status == 3): ?>
+                                <div
+                                    class="mx-auto mt-44 p-24 text-center rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
+                                    <p class="text-amber-200">ဆက်လက်ပညာသင်ခွင့်အား လျှောက်ထားပြီးပါပြီ။</p>
+                                    <p class="text-amber-200 pt-2">အတည်ပြု Mail အားစောင့်ပါ။</p>
+                                </div>
+
+                            <?php endif ?>
+
+                            <!-- Light Box -->
+                            <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+                                <span class="close">&times;</span>
+                                <img class="lightbox-content" id="lightbox-img">
+                            </div>
+                        <?php else: ?>
+                            <p
+                                class="rounded-md text-center shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
+                                Admin မှ Section သတ်မှတ်ခြင်းလုပ်ငန်းစဥ်အား စောင့်ဆိုင်းပါ။</p>
+                        <?php endif ?>
+
+
 </body>
 
 </html>
