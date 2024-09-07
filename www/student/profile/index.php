@@ -5,6 +5,13 @@ session_start();
 
 use controllers\StudentAdmissionController;
 use controllers\SectionController;
+use core\helpers\HTTP;
+
+
+if (!isset($_SESSION['studentId'])) {
+    HTTP::redirect('/login');
+    exit();
+}
 
 
 $studentId = $_SESSION['studentId'];
@@ -15,9 +22,9 @@ $name = $studentData["student"]['student_name_my'];
 $year = $studentData["student"]['year'];
 
 $sectionController = new SectionController();
-$sectionData = $sectionController->getByStudentId($studentId);
-$semesterID = $sectionData[0]["semester_id"];
-$sectionID = $sectionData[0]["section_id"];
+$sectionData = $sectionController->getByStudentId($studentId) ?? null;
+$semesterID = $sectionData[0]["semester_id"] ?? null;
+$sectionID = $sectionData[0]["section_id"] ?? null;
 
 
 
@@ -57,58 +64,66 @@ include("../../utils/components/student/student.links.php");
             ?>
             <!-- Scrollable content section -->
             <div class="overflow-y-auto md:pt-16 px-4 pb-4 h-full">
-                <div
-                    class="rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
-                    <h3 class="font-bold mx-auto  text-center text-xl py-4">Student Profile</h3>
-                    <table align="center" class="table">
-                        <tr>
-                            <td>Name: </td>
-                            <td><?= $name ?></td>
-                        </tr>
-                        <tr>
-                            <td>Roll Number: </td>
-                            <td><?= 'PaKaPaTa - 00' . $rollNum ?></td>
-                        </tr>
-                        <tr>
-                            <td>Year: </td>
-                            <td><?php switch ($year) {
-                                    case 1:
-                                        echo "ပထမနှစ်";
-                                        break;
-                                    case 2:
-                                        echo "ဒုတိယနှစ်";
-                                        break;
-                                    case 3:
-                                        echo "တတိယနှစ်";
-                                        break;
-                                    case 4:
-                                        echo "စတုတ္ထနှစ်";
-                                        break;
-                                    case 5:
-                                        echo "ပဥ္စမနှစ်";
-                                        break;
-                                } ?></td>
-                        </tr>
-                        <tr>
-                            <td>Semester: </td>
-                            <td><?= 'Semester - ' .  $semesterID ?></td>
-                        </tr>
-                        <tr>
-                            <td>Section: </td>
-                            <td><?php switch ($sectionID) {
-                                    case 1:
-                                        echo "Section(A)";
-                                        break;
-                                    case 2:
-                                        echo "Section(B)";
-                                        break;
-                                    case 3:
-                                        echo "Section(C)";
-                                        break;
-                                } ?></td>
-                        </tr>
-                    </table>
-                </div>
+                <?php if (!empty($sectionData)): ?>
+
+                    <div
+                        class="rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
+                        <h3 class="font-bold mx-auto  text-center text-xl py-4">Student Profile</h3>
+                        <table align="center" class="table">
+                            <tr>
+                                <td>Name: </td>
+                                <td><?= $name ?></td>
+                            </tr>
+                            <tr>
+                                <td>Roll Number: </td>
+                                <td><?= 'PaKaPaTa - 00' . $rollNum ?></td>
+                            </tr>
+                            <tr>
+                                <td>Year: </td>
+                                <td><?php switch ($year) {
+                                        case 1:
+                                            echo "ပထမနှစ်";
+                                            break;
+                                        case 2:
+                                            echo "ဒုတိယနှစ်";
+                                            break;
+                                        case 3:
+                                            echo "တတိယနှစ်";
+                                            break;
+                                        case 4:
+                                            echo "စတုတ္ထနှစ်";
+                                            break;
+                                        case 5:
+                                            echo "ပဥ္စမနှစ်";
+                                            break;
+                                    } ?></td>
+                            </tr>
+                            <tr>
+                                <td>Semester: </td>
+                                <td><?= 'Semester - ' .  $semesterID ?></td>
+                            </tr>
+                            <tr>
+                                <td>Section: </td>
+                                <td><?php switch ($sectionID) {
+                                        case 1:
+                                            echo "Section(A)";
+                                            break;
+                                        case 2:
+                                            echo "Section(B)";
+                                            break;
+                                        case 3:
+                                            echo "Section(C)";
+                                            break;
+                                    } ?></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                <?php else: ?>
+                    <p
+                        class="rounded-md text-center shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
+                        Admin မှ Section သတ်မှတ်ခြင်းလုပ်ငန်းစဥ်အား စောင့်ဆိုင်းပါ။</p>
+                <?php endif ?>
                 <!-- JAVASCRIPTS -->
                 <script src="http://ucspyay.edu/utils/assets/libs/feather-icons/feather.min.js"></script>
                 <script src="http://ucspyay.edu/utils/assets/libs/jquery/jquery.min.js"></script>

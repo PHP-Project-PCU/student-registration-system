@@ -10,6 +10,7 @@ if (isset($_POST['logout'])) {
     $resetStatus = $studentAuthController->getStudentResetStatus();
     unset($_SESSION['studentId']);
     HTTP::redirect("/login", "reset=$resetStatus->reset_status");
+    exit();
 }
 
 ?>

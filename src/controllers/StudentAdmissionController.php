@@ -34,6 +34,10 @@ class StudentAdmissionController
     {
         return $this->studentAdmissionModel->getAllStudentsByStatusAndYear(Constants::$STUDENT_TBL, $status, $year, $academicYear, $page, $limit);
     }
+    public function getAllStudentsEmailByStatus($status)
+    {
+        return $this->studentAdmissionModel->getAllStudentsEmailByStatus(Constants::$STUDENT_TBL, $status);
+    }
     public function getStudentById($status)
     {
         return $this->studentAdmissionModel->getStudentById($status);

@@ -13,14 +13,12 @@ session_start();
 
 $academicYearController = new AcademicYearController();
 $academicYears = $academicYearController->index();
-$selectedYear = getYear($academicYears[0]['academic_year']);
+$selectedYear = $_SESSION['selected_year'] ??  getYear($academicYears[0]['academic_year']);
 $status = $_SESSION['status'] ?? 0;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['status'] = $_POST['status'];
-    // $status = $_POST['status'];
-    $selectedYear = getYear($_POST['selected_year']);
-
+    $_SESSION['selected_year'] = $_POST['selected_year'];
     // Redirect to the same page to apply the session changes immediately
     header('Location: ' . $_SERVER['PHP_SELF']);
     exit;
@@ -85,8 +83,8 @@ include("../../../utils/components/admin/admin.links.php");
                             <select id="selected_year" name="selected_year" onchange="this.form.submit()"
                                 class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                 <?php foreach ($academicYears as $year): ?>
-                                    <option value="<?= $year["academic_year"] ?>" <?php if ($selectedYear == getYear($year['academic_year']))
-                                                                                        echo 'selected' ?>>
+                                    <option value="<?= getYear($year["academic_year"]) ?>" <?php if ($selectedYear == getYear($year['academic_year']))
+                                                                                                echo 'selected' ?>>
                                         <?= $year['academic_year'] . " (ပညာသင်နှစ်)" ?>
                                     </option>
                                 <?php endforeach ?>
@@ -112,7 +110,7 @@ include("../../../utils/components/admin/admin.links.php");
                                 </thead>
                                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                                     <?php
-                                    $count = 1;
+                                    ($page == 1) ? $count = 1 : $count = $page * 10 - 9;
                                     foreach ($freshers as $fresher) {
                                         $id = $fresher['id'];
 

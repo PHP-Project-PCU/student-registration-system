@@ -540,14 +540,31 @@ class StudentAdmissionModel
     {
         try {
             $offset = ($page - 1) * $limit;
-            $sql = "SELECT id, matriculation_reg_num, student_name_my, student_nrc
+            if ($status == 1) {
+                // get approved students
+                $sql = "SELECT id, matriculation_reg_num, student_name_my, student_nrc
                 FROM $studentTbl 
-                WHERE year = :year AND status = :status AND year(created_at) = :academicYear
+                WHERE status = 1 AND year = :year AND year(created_at) = :academicYear
                 ORDER BY matriculation_reg_num ASC 
                 LIMIT :limit OFFSET :offset";
+            } elseif ($status == 2) {
+                // get unapprove credit transfer students
+                $sql = "SELECT id, matriculation_reg_num, student_name_my, student_nrc
+                FROM $studentTbl 
+                WHERE status=2 AND year = :year AND year(created_at) = :academicYear
+                ORDER BY matriculation_reg_num ASC 
+                LIMIT :limit OFFSET :offset";
+            } else {
+                // get unapprove students
+                $sql = "SELECT id, matriculation_reg_num, student_name_my, student_nrc
+                FROM $studentTbl 
+                WHERE (status = 0 or status=3) AND year = :year AND year(created_at) = :academicYear
+                ORDER BY matriculation_reg_num ASC 
+                LIMIT :limit OFFSET :offset";
+            }
 
             $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(":status", $status, PDO::PARAM_STR);
+            // $stmt->bindParam(":status", $status, PDO::PARAM_STR);
             $stmt->bindParam(":year", $year, PDO::PARAM_INT);
             $stmt->bindParam(":academicYear", $academicYear, PDO::PARAM_INT);
             $stmt->bindParam(":limit", $limit, PDO::PARAM_INT);
@@ -610,15 +627,19 @@ class StudentAdmissionModel
     public function getTotalRows($table, $year, $status)
     {
         try {
-            if ($year) {
-                $query = "SELECT COUNT(*) as total FROM $table WHERE year = :year AND status=:status";
-                $statement = $this->db->prepare($query);
-                $statement->bindParam(':year', $year);
-                $statement->bindParam(':status', $status);
+            if ($year && $status == 1) {
+                $query = "SELECT COUNT(*) as total FROM $table WHERE year = :year AND status=1";
+            } elseif ($year && $status == 0) {
+                $query = "SELECT COUNT(*) as total FROM $table WHERE year = :year AND (status=0 OR status=3)";
+            } elseif ($year && $status == 2) {
+                $query = "SELECT COUNT(*) as total FROM $table WHERE year = :year AND status=2";
             } else {
                 $query = "SELECT COUNT(*) as total FROM $table";
                 $statement = $this->db->prepare($query);
             }
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':year', $year);
+            // $statement->bindParam(':status', $status);
             $statement->execute();
             $result = $statement->fetch();
             return $result->total;
@@ -683,7 +704,7 @@ class StudentAdmissionModel
     public function getStudentsYear($table)
     {
         try {
-            $query = "SELECT DISTINCT year FROM $table WHERE status = 0 OR status = 1";
+            $query = "SELECT DISTINCT year FROM $table WHERE status = 0 OR status = 1 OR status=3";
             $statement = $this->db->prepare($query);
             $statement->execute();
             $result = $statement->fetchAll();
@@ -817,6 +838,38 @@ class StudentAdmissionModel
             $statement = $this->db->prepare($query);
             $statement->execute($studentData);
             return $this->db->lastInsertId();
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    // get all student's personal mail
+    public function getAllStudentsEmailByStatus($table, $status)
+    {
+        try {
+            $this->setStatus($table, 0); // reset status for admission
+            $query = "SELECT student_email from $table WHERE status=:status";
+            $statement = $this->db->prepare($query);
+            $statement->execute([
+                ":status" => $status
+            ]);
+            $result = $statement->fetchAll();
+            return $result;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function setStatus($table, $status)
+    {
+        try {
+            $query = "UPDATE $table SET status=:status";
+            $statement = $this->db->prepare($query);
+            $statement->execute([
+                ":status" => $status
+            ]);
+            $result = $statement->fetchAll();
+            return $result;
         } catch (PDOException $e) {
             return $e->getMessage();
         }

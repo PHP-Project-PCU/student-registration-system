@@ -65,6 +65,35 @@ class AchievementModel
             return $e->getMessage();
         }
     }
+    public function setStatus($table, $status, $studentId)
+    {
+        try {
+            $query = "UPDATE $table SET status=:status WHERE student_id=:student_id";
+            $statement = $this->db->prepare($query);
+            $statement->execute([
+                ":status" => $status,
+                ":student_id" => $studentId,
+            ]);
+            $this->incrementSemester($table, $studentId);
+            return true;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+    public function incrementSemester($table, $studentId)
+    {
+        try {
+            $query = "UPDATE $table SET semester_id=semester_id +1  WHERE student_id=:student_id";
+            $statement = $this->db->prepare($query);
+            $statement->execute([
+                ":student_id" => $studentId,
+            ]);
+            return true;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
 
     public function setIndividualAchievement($table, $data)
     {

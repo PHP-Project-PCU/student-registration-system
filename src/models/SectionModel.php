@@ -43,6 +43,18 @@ class SectionModel
             return $e->getMessage();
         }
     }
+    public function setStatus($table, $status)
+    {
+        try {
+            $query = "UPDATE $table set status=:status";
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':status', $status);
+            $statement->execute();
+            return true;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
 
     public function getTotalRows($table, $semester = null, $section = null)
     {
