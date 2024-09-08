@@ -116,14 +116,6 @@ if (isset($_POST['passed_year'])) {
 $selectedYear = $_SESSION['selected_year'] ?? 'all';
 
 
-// Pagination Logic
-$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-$limit = 10;
-
-$fresherController = new FresherController(null, $page, $limit, null, $selectedYear, null);
-$paginationFresherData = $fresherController->getFresherPaginationData();
-$getFreshersTotalRows = $fresherController->getTotalRows();
-$totalPages = ceil($getFreshersTotalRows / $limit);
 
 
 // Get Freshers Passing Years for passing year filtering 
@@ -154,6 +146,16 @@ if (isset($_POST['delete_fresher_id'])) {
     $deleteFlage = $fresherController->deleteFresher();
     header('Location: index.php');
 }
+
+// Pagination Logic
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+$limit = 10;
+
+$fresherController = new FresherController(null, $page, $limit, null, $selectedYear, null);
+$paginationFresherData = $fresherController->getFresherPaginationData();
+$getFreshersTotalRows = $fresherController->getTotalRows();
+$totalPages = ceil($getFreshersTotalRows / $limit);
+
 
 ?>
 
