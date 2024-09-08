@@ -163,7 +163,49 @@ class MailController
           </div>
            <p>
             ပထမဆုံးအကြိမ် Login ဝင်ရောက်ပြီး Password အသစ်အား ပြောင်းလဲအသုံးပြုရန်အကြံပြုအပ်ပါသည်။
-        </p>
+        </p>";
+
+         // Loop through fees and append to $mail->Body
+         foreach ($fees as $fee) {
+            if (!empty($fee['id'])) {
+               $mail->Body .= "<li>ပြေစာအမှတ် - " . $fee['id'] . "</li>";
+            }
+            if (!empty($fee['entrance_fee'])) {
+               $mail->Body .= "<li>ကျောင်းဝင်ကြေး - " . $fee['entrance_fee'] . " ကျပ်</li>";
+            }
+            if (!empty($fee['registration_fee'])) {
+               $mail->Body .= "<li>မှတ်ပုံတင်ကြေး - " . $fee['registration_fee'] . " ကျပ်</li>";
+            }
+            if (!empty($fee['extra_registration_fee'])) {
+               $mail->Body .= "<li>အလွတ်မှတ်ပုံတင်ကြေး - " . $fee['extra_registration_fee'] . " ကျပ်</li>";
+            }
+            if (!empty($fee['tuition_fee'])) {
+               $mail->Body .= "<li>ကျောင်းလခ (၁၀လစာ) - " . $fee['tuition_fee'] . " ကျပ်</li>";
+            }
+            if (!empty($fee['late_fee'])) {
+               $mail->Body .= "<li>နောက်ကျကြေး - " . $fee['late_fee'] . " ကျပ်</li>";
+            }
+            if (!empty($fee['id_card_fee'])) {
+               $mail->Body .= "<li>မှတ်ပုံတင်ကတ်ပြား - " . $fee['id_card_fee'] . " ကျပ်</li>";
+            }
+            if (!empty($fee['ka_pa_ma_fee'])) {
+               $mail->Body .= "<li>က-ပ-မ ကြေး - " . $fee['ka_pa_ma_fee'] . " ကျပ်</li>";
+            }
+            if (!empty($fee['lab_fee'])) {
+               $mail->Body .= "<li>ဓါတ်ခွဲခန်းကြေး - " . $fee['lab_fee'] . " ကျပ်</li>";
+            }
+            if (!empty($fee['exam_fee'])) {
+               $mail->Body .= "<li>စာမေးပွဲကြေး - " . $fee['exam_fee'] . " ကျပ်</li>";
+            }
+            if (!empty($fee['general_fee'])) {
+               $mail->Body .= "<li>အထွေထွေ - " . $fee['general_fee'] . " ကျပ်</li>";
+            }
+            if (!empty($fee['total'])) {
+               $mail->Body .= "<li>စုစုပေါင်း - " . $fee['total'] . " ကျပ်</li>";
+            }
+         }
+         $mail->Body .= "
+        
         <p>
             မေးခွန်းများ ရှိပါက သို့မဟုတ် အကူအညီလိုအပ်ပါက admin@ucspyay.edu.mm သို့မဟုတ် 053-28639 သို့ဆက်သွယ်နိုင်ပါသည်။
         </p>
@@ -206,6 +248,47 @@ class MailController
                Login Here
             </a>
          </div>
+         ";
+         // Loop through fees and append to $mail->Body
+         foreach ($fees as $fee) {
+            if (!empty($fee['id'])) {
+               $mail->Body .= "<li>ပြေစာအမှတ် - " . $fee['id'] . "</li>";
+            }
+            if (!empty($fee['entrance_fee'])) {
+               $mail->Body .= "<li>ကျောင်းဝင်ကြေး - " . $fee['entrance_fee'] . " ကျပ်</li>";
+            }
+            if (!empty($fee['registration_fee'])) {
+               $mail->Body .= "<li>မှတ်ပုံတင်ကြေး - " . $fee['registration_fee'] . " ကျပ်</li>";
+            }
+            if (!empty($fee['extra_registration_fee'])) {
+               $mail->Body .= "<li>အလွတ်မှတ်ပုံတင်ကြေး - " . $fee['extra_registration_fee'] . " ကျပ်</li>";
+            }
+            if (!empty($fee['tuition_fee'])) {
+               $mail->Body .= "<li>ကျောင်းလခ (၁၀လစာ) - " . $fee['tuition_fee'] . " ကျပ်</li>";
+            }
+            if (!empty($fee['late_fee'])) {
+               $mail->Body .= "<li>နောက်ကျကြေး - " . $fee['late_fee'] . " ကျပ်</li>";
+            }
+            if (!empty($fee['id_card_fee'])) {
+               $mail->Body .= "<li>မှတ်ပုံတင်ကတ်ပြား - " . $fee['id_card_fee'] . " ကျပ်</li>";
+            }
+            if (!empty($fee['ka_pa_ma_fee'])) {
+               $mail->Body .= "<li>က-ပ-မ ကြေး - " . $fee['ka_pa_ma_fee'] . " ကျပ်</li>";
+            }
+            if (!empty($fee['lab_fee'])) {
+               $mail->Body .= "<li>ဓါတ်ခွဲခန်းကြေး - " . $fee['lab_fee'] . " ကျပ်</li>";
+            }
+            if (!empty($fee['exam_fee'])) {
+               $mail->Body .= "<li>စာမေးပွဲကြေး - " . $fee['exam_fee'] . " ကျပ်</li>";
+            }
+            if (!empty($fee['general_fee'])) {
+               $mail->Body .= "<li>အထွေထွေ - " . $fee['general_fee'] . " ကျပ်</li>";
+            }
+            if (!empty($fee['total'])) {
+               $mail->Body .= "<li>စုစုပေါင်း - " . $fee['total'] . " ကျပ်</li>";
+            }
+         }
+         $mail->Body .= "
       <p>
          မေးခွန်းများ ရှိပါက သို့မဟုတ် အကူအညီလိုအပ်ပါက admin@ucspyay.edu.mm သို့မဟုတ် 053-28639 သို့ဆက်သွယ်နိုင်ပါသည်။
       </p>
