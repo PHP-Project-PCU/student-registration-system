@@ -20,7 +20,7 @@ if (isset($_POST['student_new_password']) and isset($_POST['student_confirm_pass
 
         if ($updateFlag) {
             // $hashPasswordData
-            // $studentAuthController->updateStudentResetStatus(intval($_GET['id']))
+            $studentAuthController->updateStudentResetStatus(intval($_GET['id']));
             header("location: /");
             // $_SESSION['reset_status'] = $resetStatus->reset_status;
             // HTTP::redirect("/login", "reset=$resetStatus->reset_status");
