@@ -26,4 +26,6 @@ class Constants
     static $TIMETABLE_TBL = "timetable_tbl";
     static $TEACHER_TBL = "teacher_tbl";
     static $STUDENT_ACHIEVEMENT_TBL = "student_achievement_tbl";
+
+    static $STUDENT_RECEIPT_TBL = "student_receipt_tbl";
 }
