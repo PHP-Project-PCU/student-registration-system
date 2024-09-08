@@ -2,23 +2,21 @@
 <html lang="en" class="light scroll-smooth" dir="ltr">
 
 <?php
-
 include("./../utils/components/links.php");
 include("./../utils/components/navigation.php");
-$heroImageFile = "../utils/assets/img/ucspyay/ucsp-front-build.jpg";
-
-
+$heroImageFile = "./../utils/assets/img/ucspyay/uc-build-1.jpg";
 
 ?>
+
 <style>
 
-.disc{
-    list-style: disc;
-}
+    .disc{
+        list-style: disc;
+    
+    }
 </style>
-
-
 <body class="font-nunito text-base text-black dark:text-white dark:bg-slate-900 scroll-smooth">
+
 <section class="relative table w-full py-36 lg:py-44 bg-no-repeat bg-cover">
         <!-- Background image with fixed position and blur effect -->
         <div class="absolute w-full inset-0 bg-[url('<?= $heroImageFile ?>')] bg-no-repeat bg-center bg-cover bg-fixed backdrop-blur-lg"></div>
@@ -30,14 +28,13 @@ $heroImageFile = "../utils/assets/img/ucspyay/ucsp-front-build.jpg";
         <div class="relative container">
             <div class="grid grid-cols-1 p-8 text-center mt-12 rounded-md border border-white transparent">
                 <h3 class="mb-4 md:text-4xl text-3xl md:leading-normal leading-normal font-bold text-white">
-                    "Department of Myanmar"
+                    "Department of English"
                 </h3>
             </div>
             <!--end grid-->
         </div>
         <!--end container-->
     </section>
-    
     <section class="relative overflow-hidden py-16">
     
 
@@ -68,41 +65,31 @@ $heroImageFile = "../utils/assets/img/ucspyay/ucsp-front-build.jpg";
                             <img src="assets/images/cowork/7.jpg" class="shadow rounded-md" alt="">
                             <div class="mt-6">
                                 <h5 class="text-lg font-semibold mb-4">Vision</h5>
-                                <p class="text-slate-400 mb-2">
-                                <ul class="disc">
-                                <li>To conserve Myanmar Culture of Literature and Language.</li>
+                                <p class="text-slate-400 mb-2 ">
+                                    <ul class="disc">
+                                        <li>
+                                        The vision of our department is to achieve excellence in the fields of Translation and   Four skills.
 
-                                <li>မြန်မာ့ယဉ်ကျေးမှုစာပေနှင့် ဘာသာစကားကို မပျောက်ပျက်အောင် ထိန်းသိမ်းစောင့်ရှောက်ရန်။</li>
-
-                                <li> To improve Myanmar Literature and Language skills.</li>
-
-                                <li>မြန်မာစာပေနှင့် ဘာသာစကားစွမ်းရည်များ ဖွံ့ဖြိုး တိုးတက် စေရန်။</li></ul>
+                                        </li>
+                                    </ul>
                                 </p>
-                                <br>
                                 <h5 class="text-lg font-semibold mb-4">Mission</h5>
                                 <p class="text-slate-400 mb-2">
-                                    <ul class="disc">
-                                    
-                                <li>Application Department of ITSM, Computer University (Pyay) is a faculty of university education in the fields of Web Development 
-                                and Design Foundations with HTML5, Business Management, Human-Computer Interaction, Business Application Area, Professional 
-                                Javascript for Web Developers, C# 5.0, Digital Business and E-commerce Management. 
-                                This department creates conditions favoring the increase in the level of education 
-                                and knowledge via web page, window application, web application teaching and quality 
-                                technical background that provide the possibilities for both professional and personal development of all students.</li>
-                                    </ul>
-                                 </p>
-                                <br>
+                                <ul class="disc">
+                                        <li>
+                                        The vision of our department is to achieve excellence in the fields of Translation and   Four skills.
+
+                                        </li>
+                                    </ul>                                </p>
                                 <h5 class="text-lg font-semibold mb-4">Objectives</h5>
                                 <p class="text-slate-400 mb-2">
                                    <ul class="disc">
-                                    <li> Supporting Skill (Computer Application Technique + Microsoft Office).</li>
-                                    <li> Web Platform-base Development</li>
-                                    <li> Web Platform-base Development (HTML+ CSS, Javascript)</li>
-                                    <li> Computer Application Techniques III- C#</li>
-                                    <li> Business Application Area</li>
-                                    <li>Enterprise Resource Planning</li>
-                                    <li>Digital Business and E-commerce Management</li>
-                                   </ul></p>
+                                    <li>To nurture students with four skills in English language enabling them to adapt to new challenges and changes in their future.</li>
+                                    <li>To know effectively gaps between native languages and foreign languages.</li>
+                                    <li>To provide graduates to pursue higher education and further research.</li>
+                                    <li>To update the teaching approaches in English language skill.</li>
+                                   </ul>
+                                </p>
                                   
                             </div>
                         </div>
@@ -169,7 +156,7 @@ $heroImageFile = "../utils/assets/img/ucspyay/ucsp-front-build.jpg";
                     <div class="hidden " id="settings" role="tabpanel" aria-labelledby="settings-tab">
                         <img src="assets/images/cowork/9.jpg" class="shadow rounded-md" alt="">
                         <div class="mt-6">
-                            <h5 class="text-lg font-semibold mb-4">Department of Myanmar</h5>
+                            <h5 class="text-lg font-semibold mb-4">Department of English</h5>
                            
                             
                         </div>

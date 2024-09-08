@@ -7,18 +7,39 @@ include("./../utils/components/navigation.php");
 $heroImageFile = "./../utils/assets/img/ucspyay/uc-build-1.jpg";
 
 ?>
+<style>
 
+.disc{
+    list-style: disc;
+}
+</style>
 
 <body class="font-nunito text-base text-black dark:text-white dark:bg-slate-900 scroll-smooth">
 
+<section class="relative table w-full py-36 lg:py-44 bg-no-repeat bg-cover">
+        <!-- Background image with fixed position and blur effect -->
+        <div class="absolute w-full inset-0 bg-[url('<?= $heroImageFile ?>')] bg-no-repeat bg-center bg-cover bg-fixed backdrop-blur-lg"></div>
 
+        <!-- Dark overlay for better text contrast -->
+        <div class="absolute inset-0 bg-black opacity-80"></div>
+
+        <!-- Content container -->
+        <div class="relative container">
+            <div class="grid grid-cols-1 p-8 text-center mt-12 rounded-md border border-white transparent">
+                <h3 class="mb-4 md:text-4xl text-3xl md:leading-normal leading-normal font-bold text-white">
+                    "Faculty of Computer Science"
+                </h3>
+            </div>
+            <!--end grid-->
+        </div>
+        <!--end container-->
+    </section>
     <section class="relative overflow-hidden py-16">
     
 
 
         
         <div class="container relative md:mt-24 mt-16">
-            <h1 class="text-2xl ...">Faulty Of Computer Science</h1>
             <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
                 <div class="lg:col-span-4 md:col-span-5">
                     <div class="sticky top-20">
@@ -43,21 +64,70 @@ $heroImageFile = "./../utils/assets/img/ucspyay/uc-build-1.jpg";
                             <img src="assets/images/cowork/7.jpg" class="shadow rounded-md" alt="">
                             <div class="mt-6">
                                 <h5 class="text-lg font-semibold mb-4">Vision</h5>
-                                <p class="text-slate-400 mb-2">
-                                    Provide quality undergraduate education in both the theoretical and applied foundations of computer science and train students to effectively apply this education to solve real-world problems thus amplifying their potential for lifelong high-quality careers and give them a competitive advantage in the ever-changing challenging global world environment.</p>
+                                <!-- <p class="text-slate-400 mb-2"> -->
+                                   <ul class='disc'>
+                                    <li> Provide quality undergraduate education in both the theoretical and applied foundations of computer science and train students to effectively apply this education to solve real-world problems thus amplifying their potential for lifelong high-quality careers and give them a competitive advantage in the ever-changing challenging global world environment.</li>
+                                    </ul>
+
                                 <h5 class="text-lg font-semibold mb-4">Mission</h5>
                                 <p class="text-slate-400 mb-2">
-                                    To create, share and apply knowledge in Computer Science, including in interdisciplinary areas that extends the scope of Computer Science and benefit humanity; to educate students to be successful, ethical, and effective problem-solvers and life-long learners who will contribute positively to the economic well-being of our region and nation.</p>
+                                   <ul class="disc">
+                                    <li> To create, share and apply knowledge in Computer Science, including in interdisciplinary areas that extends the scope of Computer Science and benefit humanity; to educate students to be successful, ethical, and effective problem-solvers and life-long learners who will contribute positively to the economic well-being of our region and nation.</li>
+</ul>
+                                    </p>
                                 <h5 class="text-lg font-semibold mb-4">Objectives</h5>
                                 <p class="text-slate-400 mb-2">
-                                    The goals are to prepare students for graduate training in some specialized area of Computer Science, to prepare students for jobs in the real-world and to provide support courses such as Programming, Operating System (Linux OS), Artificial Intelligence and so on.</p>
-
+                                    <ul class='disc'>
+                                        <li>The goals are to prepare students for graduate training in some specialized area of Computer Science, to prepare students for jobs in the real-world and to provide support courses such as Programming, Operating System (Linux OS), Artificial Intelligence and so on.</li>
+</ul>
+</p>
                             </div>
                         </div>
                         <div class="hidden" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
                             <div class="relative md:py-24 py-16">
                                 <div class="container relative">
                                     <div id="grid" class=" w-full grid grid-cols-2 mx-auto mt-4">
+                                        <div class=" p-4 picture-item" data-groups='["development"]'>
+                                            <div class="group relative block overflow-hidden rounded-md duration-500">
+                                                <a href="portfolio-detail-one.html"><img src="./../utils/assets/img/ucspyay/ucsp-logo-light.jpg" class="rounded-md" alt="" width="200" height="300"></a>
+                                                <div class="content pt-3">
+                                                    <h5 class="mb-1"><a href="portfolio-detail-one.html" class="hover:text-indigo-600 duration-500 font-semibold">Pen and article</a></h5>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class=" p-4 picture-item" data-groups='["photography"]'>
+                                            <div class="group relative block overflow-hidden rounded-md duration-500">
+                                                <a href="portfolio-detail-one.html"><img src="./../utils/assets/img/ucspyay/ucsp-logo-light.jpg" class="rounded-md" alt="" width="200" height="300"></a>
+                                                <div class="content pt-3">
+                                                    <h5 class="mb-1"><a href="portfolio-detail-one.html" class="hover:text-indigo-600 duration-500 font-semibold">White mockup box</a></h5>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class=" p-4 picture-item" data-groups='["photography"]'>
+                                            <div class="group relative block overflow-hidden rounded-md duration-500">
+                                                <a href="portfolio-detail-one.html"><img src="./../utils/assets/img/ucspyay/ucsp-logo-light.jpg" class="rounded-md" alt="" width="200" height="300"></a>
+                                                <div class="content pt-3">
+                                                    <h5 class="mb-1"><a href="portfolio-detail-one.html" class="hover:text-indigo-600 duration-500 font-semibold">White mockup box</a></h5>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class=" p-4 picture-item" data-groups='["photography"]'>
+                                            <div class="group relative block overflow-hidden rounded-md duration-500">
+                                                <a href="portfolio-detail-one.html"><img src="./../utils/assets/img/ucspyay/ucsp-logo-light.jpg" class="rounded-md" alt="" width="200" height="300"></a>
+                                                <div class="content pt-3">
+                                                    <h5 class="mb-1"><a href="portfolio-detail-one.html" class="hover:text-indigo-600 duration-500 font-semibold">White mockup box</a></h5>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
                                         <div class=" p-4 picture-item" data-groups='["development"]'>
                                             <div class="group relative block overflow-hidden rounded-md duration-500">
                                                 <a href="portfolio-detail-one.html"><img src="./../utils/assets/img/ucspyay/ucsp-logo-light.jpg" class="rounded-md" alt="" width="200" height="300"></a>
@@ -117,8 +187,9 @@ $heroImageFile = "./../utils/assets/img/ucspyay/uc-build-1.jpg";
                     <div class="hidden " id="settings" role="tabpanel" aria-labelledby="settings-tab">
                         <img src="assets/images/cowork/9.jpg" class="shadow rounded-md" alt="">
                         <div class="mt-6">
-                            <h5 class="text-lg font-semibold mb-4">Course</h5>
-                            <p class="text-red-900">➢ Principle of IT<br>
+                            <h5 class="text-lg font-semibold mb-4">Courses</h5>
+                            <p class="text-red-900">
+                                ➢ Principle of IT<br>
                                 ➢ Java Programming<br>
                                 ➢ Advanced Programming Language<br>
                                 ➢ Analysis of Algorithm<br>

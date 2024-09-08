@@ -1,165 +1,45 @@
 <!DOCTYPE html>
 <html lang="en" class="light scroll-smooth" dir="ltr">
 
-<head>
-    <meta charset="UTF-8">
-    <title>UCSPyay - University of Computer Studies, Pyay</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="UCSPyay - University of Computer Studies, Pyay">
-    <meta name="keywords" content="agency, application, business, clean, creative, cryptocurrency, it solutions, modern, multipurpose, nft marketplace, portfolio, saas, software, tailwind css">
-    <meta name="author" content="UCSPyay">
-    <meta name="website" content="https://ucspyay.edu.mm/">
-    <meta name="email" content="admin@ucspyay.edu.mm">
-    <meta name="version" content="2.2.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<?php
+include("./../utils/components/links.php");
+include("./../utils/components/navigation.php");
+$heroImageFile = "./../utils/assets/img/ucspyay/uc-build-1.jpg";
 
-    <!-- favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
+?>
+<style>
 
-    <!-- Css -->
-    <link href="../utils/assets/libs/animate.css/animate.min.css" rel="stylesheet">
-    <link href="../utils/assets/libs/tobii/css/tobii.min.css" rel="stylesheet">
-    <link href="../utils/assets/libs/tiny-slider/tiny-slider.css" rel="stylesheet">
-    <!-- Main Css -->
-    <link href="../utils/assets/libs/%40iconscout/unicons/css/line.css" type="text/css" rel="stylesheet">
-    <link href="../utils/assets/libs/%40mdi/font/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="../utils/assets/css/tailwind.min.css">
-
-</head>
+.disc{
+    list-style: disc;
+}
+</style>
 
 <body class="font-nunito text-base text-black dark:text-white dark:bg-slate-900 scroll-smooth">
-    <!-- Loader Start -->
-    <!-- <div id="preloader">
-            <div id="status">
-                <div class="spinner">
-                    <div class="double-bounce1"></div>
-                    <div class="double-bounce2"></div>
-                </div>
-            </div>
-        </div> -->
-    <!-- Loader End -->
 
+<section class="relative table w-full py-36 lg:py-44 bg-no-repeat bg-cover">
+        <!-- Background image with fixed position and blur effect -->
+        <div class="absolute w-full inset-0 bg-[url('<?= $heroImageFile ?>')] bg-no-repeat bg-center bg-cover bg-fixed backdrop-blur-lg"></div>
 
-    <!-- Start Navbar -->
-    <nav id="topnav" class="defaultscroll is-sticky nav-sticky">
-        <div class="container relative">
-            <!-- Logo container-->
-            <a class="logo flex items-center gap-2 justify-center " href="index.html">
-                <div class="">
-                    <img src="../utils/assets/img/ucspyay/ucsp.png" width="60" class="inline-block dark:hidden" alt="">
-                    <img src="../utils/assets/img/ucspyay/UCSPyay-logo.jpg" width="60" class="hidden dark:inline-block rounded-lg" alt="">
-
-                </div>
-                <div class="">
-                    <p class="text-sm font-bold">UCSPyay</p>
-                    <p class="text-xs">ကွန်ပျူတာတက္ကသိုလ်(ပြည်)</p>
-                </div>
-
-            </a>
-
-            <!-- End Logo container-->
-            <div class="menu-extras">
-                <div class="menu-item">
-                    <!-- Mobile menu toggle-->
-                    <a class="navbar-toggle" id="isToggle" onclick="toggleMenu()">
-                        <div class="lines">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </a>
-                    <!-- End mobile menu toggle-->
-                </div>
-            </div>
-
-            <!--Login button Start-->
-            <!-- <ul class="buy-button list-none mb-0  ">
-                    <li class="inline mb-0">
-                        <a href="#" class="size-9 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-full bg-indigo-600/5 hover:bg-indigo-600 border border-indigo-600/10 hover:border-indigo-600 text-indigo-600 hover:text-white"><i data-feather="settings" class="size-4"></i></a>
-                    </li>
-                </ul> -->
-            <!--Login button End-->
-
-            <div id="navigation">
-                <!-- Navigation Menu-->
-                <ul class="navigation-menu">
-                    <li><a href="index.html" class="sub-menu-item">Home</a></li>
-
-                    <li class="has-submenu parent-parent-menu-item">
-                        <a href="javascript:void(0)">Academic</a><span class="menu-arrow"></span>
-                        <ul class="submenu">
-                            <li class="has-submenu parent-menu-item"><a href="javascript:void(0)"> Academic Programs </a><span class="submenu-arrow"></span>
-                                <ul class="submenu">
-                                    <li><a href="page-aboutus.html" class="sub-menu-item">B.C.Sc</a></li>
-                                    <li><a href="page-services.html" class="sub-menu-item">B.C.Tech</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="food-recipe.html" class="sub-menu-item">Academic Calender</a></li>
-
-                            <li><a href="https://lms.ucspyay.edu.mm" target="_blank" class="sub-menu-item">LMS Moodle</a></li>
-
-
-                        </ul>
-                    </li>
-
-                    <li class="has-submenu parent-menu-item">
-                        <a href="javascript:void(0)">Faculties</a><span class="menu-arrow"></span>
-                        <ul class="submenu">
-                            <li><a href="ui-components.html" class="sub-menu-item"> Faculty of Computer System and Technologies </a></li>
-                            <li><a href="documentation.html" class="sub-menu-item">Faculty of Computer Science</a></li>
-                            <li><a href="changelog.html" class="sub-menu-item">Faculty of Computing</a></li>
-                            <li><a href="widget.html" class="sub-menu-item">Faculty of Information Science</a></li>
-                            <li><a href="widget.html" class="sub-menu-item">Faculty of IT Supporting and Maintenance</a></li>
-                            <li><a href="widget.html" class="sub-menu-item">Myanmar</a></li>
-                            <li><a href="widget.html" class="sub-menu-item">English</a></li>
-                            <li><a href="widget.html" class="sub-menu-item">Physics</a></li>
-                            <li><a href="widget.html" class="sub-menu-item">Adminstration</a></li>
-                            <li><a href="widget.html" class="sub-menu-item">Finance</a></li>
-                            <li><a href="widget.html" class="sub-menu-item">Student affiair</a></li>
-                        </ul>
-                    </li>
-
-                    <li><a href="contact-one.html" class="sub-menu-item">Projects</a></li>
-
-                    <li><a href="contact-one.html" class="sub-menu-item">News</a></li>
-
-                    <li><a href="contact-one.html" class="sub-menu-item">Library</a></li>
-
-                    <li><a href="contact-one.html" class="sub-menu-item">About us</a></li>
-                </ul><!--end navigation menu-->
-            </div><!--end navigation-->
-        </div><!--end container-->
-    </nav><!--end header-->
-    <!-- End Navbar -->
-    <!-- Start Hero -->
-    <section class="relative overflow-hidden py-16">
-        <!-- Video Background -->
-        <video autoplay muted loop class="absolute inset-0 w-full h-full object-cover z-0">
-            <source src="/utils/assets/img/ucspyay/cu-short.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-         <!-- Start Hero -->
-    <section
-        class="relative table w-full py-36 lg:py-44 bg-[url('../../assets/images/job/job.html')] bg-no-repeat bg-center bg-cover">
+        <!-- Dark overlay for better text contrast -->
         <div class="absolute inset-0 bg-black opacity-80"></div>
-        <div class="container relative">
-            <div class="grid grid-cols-1 pb-8 text-center mt-12">
-                <h3 class="mb-4 md:text-2xl text-xl md:leading-normal leading-normal font-medium text-white">
-                    </h3>
-                <h3 class="mb-4 md:text-4xl text-3xl md:leading-normal leading-normal font-medium text-white">
-                    Faulty of Computer Science</h3>
 
+        <!-- Content container -->
+        <div class="relative container">
+            <div class="grid grid-cols-1 p-8 text-center mt-12 rounded-md border border-white transparent">
+                <h3 class="mb-4 md:text-4xl text-3xl md:leading-normal leading-normal font-bold text-white">
+                    "Faculty of Information Science"
+                </h3>
             </div>
             <!--end grid-->
         </div>
         <!--end container-->
     </section>
-    <!--end section-->
+    <section class="relative overflow-hidden py-16">
+    
 
 
-        //////////////////
+        
         <div class="container relative md:mt-24 mt-16">
-            <h1 class="text-2xl ...">Faulty Of Computer Science</h1>
             <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
                 <div class="lg:col-span-4 md:col-span-5">
                     <div class="sticky top-20">
@@ -184,16 +64,33 @@
                             <img src="assets/images/cowork/7.jpg" class="shadow rounded-md" alt="">
                             <div class="mt-6">
                                 <h5 class="text-lg font-semibold mb-4">Vision</h5>
-                                <p class="text-slate-400 mb-2">
-                                    Provide quality undergraduate education in both the theoretical and applied foundations of computer science and train students to effectively apply this education to solve real-world problems thus amplifying their potential for lifelong high-quality careers and give them a competitive advantage in the ever-changing challenging global world environment.</p>
-                                <h5 class="text-lg font-semibold mb-4">Mission</h5>
-                                <p class="text-slate-400 mb-2">
-                                    To create, share and apply knowledge in Computer Science, including in interdisciplinary areas that extends the scope of Computer Science and benefit humanity; to educate students to be successful, ethical, and effective problem-solvers and life-long learners who will contribute positively to the economic well-being of our region and nation.</p>
-                                <h5 class="text-lg font-semibold mb-4">Objectives</h5>
-                                <p class="text-slate-400 mb-2">
-                                    The goals are to prepare students for graduate training in some specialized area of Computer Science, to prepare students for jobs in the real-world and to provide support courses such as Programming, Operating System (Linux OS), Artificial Intelligence and so on.</p>
+                                <p class="text-slate-400">
+                                    <ul class="disc">
+                                <li>An essential role of our faculty is to systematically educate and train the students of high calibre to become software engineers, 
+                                designers and developers with the ability to solve complex problems. The faculty offers a wide range of academic disciplines of Bachelor’s degree 
+                                with the established professional academic staff and well-equipped modern facilities.  </li>
+                                    </ul>
+                                </p>
+                                <h5 class="text-lg font-semibold mt-5 mb-4">Mission</h5>
+                                <p class="text-slate-400">
+                                    <ul class="disc">
 
-                            </div>
+                                <li>Faculty of Information Science, University of Computer Studies, Pyay is a bearer of university education in the fields of Software Engineering.</li>
+                                <li>Database Management System, Management Information System, Data Mining, System Analysis and Design, Object-Oriented Analysis and Design and Programming Logic.</li> 
+                                <li>The faculty creates conditions favoring the increase in the level of education and knowledge via teaching and quality technical background that provide 
+                                the possibilities for both professional and personal development of all students.</li> 
+                                    </ul>
+                                </p>
+                                <h5 class="text-lg font-semibold mt-5 mb-4">Objectives</h5>
+                                <p class="text-slate-400">
+                                   <ul class="disc">
+                                    <li>To provide a curriculum that prepares professionals responsive to the field</li>
+                                    <li>To enrich the curriculum through partnerships with other departments and university entities.</li>
+                                    <li>To provide internships and other connections with the local community and beyond.</li>
+                                    <li>To conduct an ongoing systematic review and evaluation of the program.</li>
+                                   </ul></p>
+                                  
+                           </div>
                         </div>
                         <div class="hidden" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
                             <div class="relative md:py-24 py-16">
@@ -201,7 +98,7 @@
                                     <div id="grid" class=" w-full grid grid-cols-2 mx-auto mt-4">
                                         <div class=" p-4 picture-item" data-groups='["development"]'>
                                             <div class="group relative block overflow-hidden rounded-md duration-500">
-                                                <a href="portfolio-detail-one.html"><img src="../utils/assets/img/ucspyay/UCSPyay-logo.jpg" class="rounded-md" alt="" width="200" height="300"></a>
+                                                <a href="portfolio-detail-one.html"><img src="./../utils/assets/img/ucspyay/ucsp-logo-light.jpg" class="rounded-md" alt="" width="200" height="300"></a>
                                                 <div class="content pt-3">
                                                     <h5 class="mb-1"><a href="portfolio-detail-one.html" class="hover:text-indigo-600 duration-500 font-semibold">Pen and article</a></h5>
 
@@ -211,7 +108,7 @@
 
                                         <div class=" p-4 picture-item" data-groups='["photography"]'>
                                             <div class="group relative block overflow-hidden rounded-md duration-500">
-                                                <a href="portfolio-detail-one.html"><img src="../utils/assets/img/ucspyay/UCSPyay-logo.jpg" class="rounded-md" alt="" width="200" height="300"></a>
+                                                <a href="portfolio-detail-one.html"><img src="./../utils/assets/img/ucspyay/ucsp-logo-light.jpg" class="rounded-md" alt="" width="200" height="300"></a>
                                                 <div class="content pt-3">
                                                     <h5 class="mb-1"><a href="portfolio-detail-one.html" class="hover:text-indigo-600 duration-500 font-semibold">White mockup box</a></h5>
 
@@ -221,7 +118,7 @@
 
                                         <div class=" p-4 picture-item" data-groups='["photography"]'>
                                             <div class="group relative block overflow-hidden rounded-md duration-500">
-                                                <a href="portfolio-detail-one.html"><img src="../utils/assets/img/ucspyay/UCSPyay-logo.jpg" class="rounded-md" alt="" width="200" height="300"></a>
+                                                <a href="portfolio-detail-one.html"><img src="./../utils/assets/img/ucspyay/ucsp-logo-light.jpg" class="rounded-md" alt="" width="200" height="300"></a>
                                                 <div class="content pt-3">
                                                     <h5 class="mb-1"><a href="portfolio-detail-one.html" class="hover:text-indigo-600 duration-500 font-semibold">White mockup box</a></h5>
 
@@ -231,7 +128,7 @@
 
                                         <div class=" p-4 picture-item" data-groups='["photography"]'>
                                             <div class="group relative block overflow-hidden rounded-md duration-500">
-                                                <a href="portfolio-detail-one.html"><img src="../utils/assets/img/ucspyay/UCSPyay-logo.jpg" class="rounded-md" alt="" width="200" height="300"></a>
+                                                <a href="portfolio-detail-one.html"><img src="./../utils/assets/img/ucspyay/ucsp-logo-light.jpg" class="rounded-md" alt="" width="200" height="300"></a>
                                                 <div class="content pt-3">
                                                     <h5 class="mb-1"><a href="portfolio-detail-one.html" class="hover:text-indigo-600 duration-500 font-semibold">White mockup box</a></h5>
 
@@ -258,21 +155,20 @@
                     <div class="hidden " id="settings" role="tabpanel" aria-labelledby="settings-tab">
                         <img src="assets/images/cowork/9.jpg" class="shadow rounded-md" alt="">
                         <div class="mt-6">
-                            <h5 class="text-lg font-semibold mb-4">Course</h5>
-                            <p class="text-red-900">➢ Principle of IT<br>
-                                ➢ Java Programming<br>
-                                ➢ Advanced Programming Language<br>
-                                ➢ Analysis of Algorithm<br>
-                                ➢ Artificial Intelligence + Prolog<br>
-                                ➢ Distributed computing Systems<br>
-                                ➢ Advanced Artificial Intelligence<br>
-                                ➢ Computer Programming Technique<br>
-                                ➢ Advanced Data Structure<br>
-                                ➢ Advanced Java Programming</p>
-
+                            <h5 class="text-lg font-semibold mb-4">Courses</h5>
+                            <p class="text-red-900">
+                            
+                           ➢ Database Management System<br>
+                           ➢ Software Engineering<br>
+                           ➢ Information Security and IT Risk Management<br>
+                           ➢ Unified Modeling Language<br>
+                           ➢ Management Information System<br>
+                           ➢ Data Mining<br>
+                           ➢ Web Engineering<br>
+                            </p>
                         </div>
                     </div>
-
+                   
 
                 </div>
             </div>
@@ -406,6 +302,44 @@
     <script src="../utils/assets/js/plugins.init.js"></script>
     <script src="../utils/assets/js/app.js"></script>
     <!-- JAVASCRIPTS -->
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
 </body>
 
 <!-- Mirrored from shreethemes.in/techwind/landing/index-saas.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 25 Mar 2024 01:35:43 GMT -->
