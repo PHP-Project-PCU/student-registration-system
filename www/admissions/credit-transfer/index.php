@@ -648,13 +648,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
                                                     aria-labelledby="accordion-collapse-heading-1">
                                                     <div class="p-5">
                                                         <ul>
-                                                            <li>ကျောင်းလခ(၁၀လစာ) - ၂၅၀၀၀ ကျပ်</li>
-                                                            <li>က-ပ-မ ကြေး - ၁၀၀၀ ကျပ်</li>
-                                                            <li>ဓါတ်ခွဲခန်းကြေး - ၅၀၀ ကျပ်</li>
-                                                            <li>စာမေးပွဲကြေး - ၁၀၀၀ ကျပ်</li>
-                                                            <li>အထွေထွေ - ၃၀၀ ကျပ်</li>
-                                                            <span class=" border  border-black-900"></span>
-                                                            <li class="pt-2"><b>စုစုပေါင်း - ၂၇၈၀၀ ကျပ်</b></li>
+                                                            <?php foreach ($fees as $fee): ?>
+                                                                <?php if (!empty($fee['entrance_fee'])): ?>
+                                                                    <li>
+                                                                        <?= "ကျောင်းဝင်ကြေး - " . $fee['entrance_fee'] . " ကျပ်" ?>
+                                                                    </li>
+                                                                <?php endif; ?>
+
+                                                                <?php if (!empty($fee['registration_fee'])): ?>
+                                                                    <li>
+                                                                        <?= "မှတ်ပုံတင်ကြေး - " . $fee['registration_fee'] . " ကျပ်" ?>
+                                                                    </li>
+                                                                <?php endif; ?>
+                                                                <?php if (!empty($fee['extra_registration_fee'])): ?>
+                                                                    <li>
+                                                                        <?= "အလွတ်မှတ်ပုံတင်ကြေး - " . $fee['extra_registration_fee'] . " ကျပ်" ?>
+                                                                    </li>
+                                                                <?php endif; ?>
+                                                                <?php if (!empty($fee['tuition_fee'])): ?>
+                                                                    <li>
+                                                                        <?= "ကျောင်းလခ (၁၀လစာ) - " . $fee['tuition_fee'] . " ကျပ်" ?>
+                                                                    </li>
+                                                                <?php endif; ?>
+                                                                <?php if (!empty($fee['late_fee'])): ?>
+                                                                    <li>
+                                                                        <?= "နောက်ကျကြေး - " . $fee['late_fee'] . " ကျပ်" ?>
+                                                                    </li>
+                                                                <?php endif; ?>
+                                                                <?php if (!empty($fee['id_card_fee'])): ?>
+                                                                    <li>
+                                                                        <?= "မှတ်ပုံတင်ကတ်ပြား - " . $fee['id_card_fee'] . " ကျပ်" ?>
+                                                                    </li>
+                                                                <?php endif; ?>
+                                                                <?php if (!empty($fee['ka_pa_ma_fee'])): ?>
+                                                                    <li>
+                                                                        <?= "က-ပ-မ ကြေး - " . $fee['ka_pa_ma_fee'] . " ကျပ်" ?>
+                                                                    </li>
+                                                                <?php endif; ?>
+                                                                <?php if (!empty($fee['lab_fee'])): ?>
+                                                                    <li>
+                                                                        <?= "ဓါတ်ခွဲခန်းကြေး - " . $fee['lab_fee'] . " ကျပ်" ?>
+                                                                    </li>
+                                                                <?php endif; ?>
+                                                                <?php if (!empty($fee['exam_fee'])): ?>
+                                                                    <li>
+                                                                        <?= "စာမေးပွဲကြေး - " . $fee['exam_fee'] . " ကျပ်" ?>
+                                                                    </li>
+                                                                <?php endif; ?>
+                                                                <?php if (!empty($fee['general_fee'])): ?>
+                                                                    <li>
+                                                                        <?= "အထွေထွေ - " . $fee['general_fee'] . " ကျပ်" ?>
+                                                                    </li>
+                                                                <?php endif; ?>
+                                                                <?php if (!empty($fee['total'])): ?>
+                                                                    <li>
+                                                                        <?= "စုစုပေါင်း - " . $fee['total'] . " ကျပ်" ?>
+                                                                    </li>
+                                                                <?php endif; ?>
+                                                            <?php endforeach ?>
+
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -740,31 +792,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
 
 
     <script>
-    <?php if ($isRegister != null && !$isRegister): ?>
-    alertify.warning('လျှောက်လွှာတင်ခြင်းမအောင်မြင်ပါ။');
-    <?php elseif ($isRegister): ?>
-    alertify.success('လျှောက်လွှာတင်ပြီးပါပြီ။');
-    <?php endif ?>
-    // Fetch NRC
-    fetch('../../utils/assets/json/nrc.json')
-        .then(response => response.json())
-        .then(data => {
-            setupNrcDropdowns('student_nrc_code', 'student_nrc_name', data);
-            setupNrcDropdowns('student_fath_nrc_code', 'student_fath_nrc_name', data);
-            setupNrcDropdowns('student_moth_nrc_code', 'student_moth_nrc_name', data);
-        })
-        .catch(error => console.error('Error fetching the JSON data:', error));
+        <?php if ($isRegister != null && !$isRegister): ?>
+            alertify.warning('လျှောက်လွှာတင်ခြင်းမအောင်မြင်ပါ။');
+        <?php elseif ($isRegister): ?>
+            alertify.success('လျှောက်လွှာတင်ပြီးပါပြီ။');
+        <?php endif ?>
+        // Fetch NRC
+        fetch('../../utils/assets/json/nrc.json')
+            .then(response => response.json())
+            .then(data => {
+                setupNrcDropdowns('student_nrc_code', 'student_nrc_name', data);
+                setupNrcDropdowns('student_fath_nrc_code', 'student_fath_nrc_name', data);
+                setupNrcDropdowns('student_moth_nrc_code', 'student_moth_nrc_name', data);
+            })
+            .catch(error => console.error('Error fetching the JSON data:', error));
 
 
-    // Fetch states
-    fetch('../../utils/assets/json/states.json')
-        .then(response => response.json())
-        .then(data => {
-            setupRegionTownshipSelect('student_region', 'student_township', data);
-            setupRegionTownshipSelect('student_fath_region', 'student_fath_township', data);
-            setupRegionTownshipSelect('student_moth_region', 'student_moth_township', data);
-        })
-        .catch(error => console.error('Error fetching the JSON data:', error));
+        // Fetch states
+        fetch('../../utils/assets/json/states.json')
+            .then(response => response.json())
+            .then(data => {
+                setupRegionTownshipSelect('student_region', 'student_township', data);
+                setupRegionTownshipSelect('student_fath_region', 'student_fath_township', data);
+                setupRegionTownshipSelect('student_moth_region', 'student_moth_township', data);
+            })
+            .catch(error => console.error('Error fetching the JSON data:', error));
     </script>
     <!-- JAVASCRIPTS -->
 </body>
