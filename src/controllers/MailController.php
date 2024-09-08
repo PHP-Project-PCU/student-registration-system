@@ -3,6 +3,7 @@
 namespace controllers;
 
 use core\helpers\Constants;
+use controllers\StudentAdmissionController;
 
 // Load Composer's autoloader
 require_once(Constants::$BASE_PATH . '\vendor\autoload.php');
@@ -34,11 +35,11 @@ use core\mail\MailConfig;
 
 class MailController
 {
-   private $email;
+   private $data;
 
-   public function __construct($email)
+   public function __construct($data = null)
    {
-      $this->email = $email;
+      $this->data = $data;
    }
 
    function sendMail($data)
@@ -100,7 +101,7 @@ class MailController
          parameter that holds the email address that we type 
          in the email input field. 
        */
-      $mail->addAddress($this->email);
+      $mail->addAddress($this->data['email']);
 
       /*
          The 'addReplyTo' property specifies where the 
@@ -129,11 +130,13 @@ class MailController
       /*
          Assigning the incoming message to the $mail->body property.
        */
-      $mail->Body = "
+
+      if ($data['year'] == 1) {
+         $mail->Body = "
       <div style='color:#000;'>
           <h2 style='color: #4CAF50;'>Congratulations!</h2>
           <p>
-              <strong>{$data['name']}</strong>၏ ကျောင်းဝင်ခ္ငင့်လျှောက်လွှာအား ကွန်ပျူတာတက္ကသိုလ်(ပြည်) ၊ ကျောင်းသားရေးရာမှ လက်ခံရရှိ၍ အတည်ပြုပြီးဖြစ်ပါသည်။<br>
+              <strong>{$data['name']}</strong> ၏ ပထမနှစ်ကျောင်းဝင်ခ္ငင့်လျှောက်လွှာအား ကွန်ပျူတာတက္ကသိုလ်(ပြည်) ၊ ကျောင်းသားရေးရာမှ လက်ခံရရှိ၍ အတည်ပြုပြီးဖြစ်ပါသည်။<br>
               အောက်ဖော်ပြပါ <strong>Edu mail</strong> နှင့် <strong>Password</strong> အားအသုံးပြု၍ UCSPyay Student Portal သို့ဝင်ရောက်အသုံးပြုနိုင်ပါသည်။
           </p>
           <ul style='list-style-type: none; padding: 0;'>
@@ -162,8 +165,51 @@ class MailController
             Student Affairs,<br>
             University of Computer Studies, Pyay<br>
             http://ucspyay.edu
-        </p>
+      </p>
       </div>";
+      } else {
+         $yearName = "";
+         switch ($data['year']) {
+            case 2:
+               $yearName = "ဒုတိယနှစ်";
+               break;
+            case 3:
+               $yearName = "တတိယနှစ်";
+               break;
+            case 4:
+               $yearName = "စတုတ္ထနှစ်";
+               break;
+            case 5:
+               $yearName = "ပဥ္စမနှစ်";
+               break;
+            default:
+               $yearName = "";
+               break;
+         }
+
+         $mail->Body = "
+      <div style='color:#000;'>
+         <p>
+            <strong>{$data['name']}</strong>၏ {$yearName} ကျောင်းဝင်ခ္ငင့်လျှောက်လွှာအား ကွန်ပျူတာတက္ကသိုလ်(ပြည်) ၊ ကျောင်းသားရေးရာမှ လက်ခံရရှိ၍ အတည်ပြုပြီးဖြစ်ပါသည်။<br>
+         </p>
+         <div style='margin-top: 20px;'>
+            <a href='http://student.ucspyay.edu' 
+               style='display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: #fff; text-decoration: none; border-radius: 4px;'>
+               Login Here
+            </a>
+         </div>
+      <p>
+         မေးခွန်းများ ရှိပါက သို့မဟုတ် အကူအညီလိုအပ်ပါက admin@ucspyay.edu.mm သို့မဟုတ် 053-28639 သို့ဆက်သွယ်နိုင်ပါသည်။
+      </p>
+      <p>
+            Best regards,<br>
+            Admin Team,<br>
+            Student Affairs,<br>
+            University of Computer Studies, Pyay<br>
+            http://ucspyay.edu
+      </p>
+      </div>";
+      }
 
       /*
          When we set $mail->AltBody, we are providing 
@@ -173,7 +219,7 @@ class MailController
          In such cases, the email client will display 
          the plain text content instead of the HTML content.
        */
-      $mail->AltBody = "<button><a href='admin.ucsp.edu'>Go to dashboard</a></button>";
+      // $mail->AltBody = "<button><a href='admin.ucsp.edu'>Go to dashboard</a></button>";
 
       /*
          And last we send the email.
@@ -182,6 +228,57 @@ class MailController
          We are going to catch the returned value in the index file,
          and display it in the HTML form.
        */
+      if (!$mail->send()) {
+         return "Email not sent. Please try again";
+      } else {
+         return "success";
+      }
+   }
+
+   function sendResultMail()
+   {
+      $mail = new PHPMailer(true);
+      $mail->isSMTP();
+      $mail->SMTPAuth = true;
+      $mail->Host = MailConfig::$MAILHOST;
+      $mail->Username = MailConfig::$USERNAME;
+      $mail->Password = MailConfig::$PASSWORD;
+      $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+      $mail->Port = 587;
+      $mail->SMTPOptions = [
+         'ssl' => [
+            'verify_peer' => false,
+            'verify_peer_name' => false,
+            'allow_self_signed' => true
+         ],
+      ];
+      $mail->setFrom(MailConfig::$SEND_FROM, MailConfig::$SEND_FROM_NAME);
+      $studentAdmissionController = new StudentAdmissionController();
+      $data = $studentAdmissionController->getAllStudentsEmailByStatus(0);
+      // var_dump($data);
+
+      $mail->clearAddresses();  // Clear previous email recipients
+      foreach ($data as $email) {
+         $mail->addAddress($email->student_email);
+      }
+      $mail->addReplyTo(MailConfig::$REPLY_TO);
+      $mail->IsHTML(true);
+      $mail->Subject = "UCSPyay Exam Results Available";
+      $mail->Body = "
+      <div style='color:#000;'>
+         <h2>Exam Results Available!</h2>
+         <p>
+            စာမေးပွဲရလဒ်များအား ကြေညာပြီးဖြစ်၍ UCSPyay Student Portal တွင် မိမိတို့၏ အောင်စာရင်းအားစစ်ဆေးနိုင်ပြီဖြစ်ကြောင်း အသိပေးကြေညာအပ်ပါသည်။
+         </p>
+         <a href='http://student.ucspyay.edu' style='padding: 10px 20px; background-color: #4CAF50; color: #fff; text-decoration: none; border-radius: 4px;'>Student Portal</a>
+         <p>Best regards,<br>Admin Team,<br>Student Affairs,<br>University of Computer Studies, Pyay</p>
+      </div>";
+      //    <p>
+      //    စာမေးပွဲရလဒ်များအား ကြေညာပြီးဖြစ်၍ UCSPyay Student Portal တွင် မိမိတို့၏ အောင်စာရင်းအားစစ်ဆေးရန်
+      //    နှင့် 
+      //    ပညာဆက်လက်သင်ကြားရန်အတွက် လျှောက်လွှာတင်နိုင်ပြီဖြစ်ကြောင်း အသိပေးကြေညာအပ်ပါသည်။
+      // </p>
+
       if (!$mail->send()) {
          return "Email not sent. Please try again";
       } else {

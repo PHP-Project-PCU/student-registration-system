@@ -7,14 +7,14 @@ include '../../../../autoload.php';
 use controllers\AcademicYearController;
 use controllers\StudentAdmissionController;
 
-session_start();
+$status = 0;
 
+session_start();
 
 $academicYearController = new AcademicYearController();
 $academicYears = $academicYearController->index();
 $selectedYear = $_SESSION['selected_year'] ??  getYear($academicYears[0]['academic_year']);
 $status = $_SESSION['status'] ?? 0;
-
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['status'] = $_POST['status'];
@@ -23,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header('Location: ' . $_SERVER['PHP_SELF']);
     exit;
 }
-
 function getYear($year)
 {
     $part = explode('-', $year);
@@ -34,8 +33,8 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $limit = 10;
 
 $studentAdmissionController = new StudentAdmissionController();
-$freshers = $studentAdmissionController->getAllStudentsByStatusAndYear($status, 1, $selectedYear, $page, $limit);
-$getStudentsTotalRows = $studentAdmissionController->getTotalRows(1, $status); // for first year
+$freshers = $studentAdmissionController->getAllStudentsByStatusAndYear($status, 5, $selectedYear, $page, $limit);
+$getStudentsTotalRows = $studentAdmissionController->getTotalRows(5, $status);
 $totalPages = ceil($getStudentsTotalRows / $limit);
 ?>
 
@@ -68,7 +67,7 @@ include("../../../utils/components/admin/admin.links.php");
                             &larr;
                         </button>
                         <h4 class="m-4 text-2xl font-semibold text-gray-800 dark:text-gray-300">
-                            ပထမနှစ်ဝင်ခွင့်လျှောက်ထားသူများ
+                            ပဥ္စမနှစ်ဝင်ခွင့်လျှောက်ထားသူများ
                         </h4>
                         <form action="" method="POST">
                             <select id="status" name="status" onchange="this.form.submit()"
@@ -146,8 +145,7 @@ include("../../../utils/components/admin/admin.links.php");
 
                     </div>
 
-                    <div
-                        class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+                    <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
                         <span class="flex items-center col-span-3"></span>
                         <span class="col-span-2"></span>
                         <!-- Pagination -->
@@ -178,7 +176,6 @@ include("../../../utils/components/admin/admin.links.php");
     if ($_SESSION['isApproved'] === false) {
         echo "alertify.warning('အတည်ပြုခြင်းမအောင်မြင်ပါ။');";
     } elseif ($_SESSION['isApproved'] == null) {
-        // echo "alertify.success('အတည်ပြုပြီးပါပြီ။');";
         return;
     } elseif (isset($_SESSION['isApproved'])) {
         echo "alertify.success('အတည်ပြုပြီးပါပြီ။');";
@@ -191,7 +188,5 @@ include("../../../utils/components/admin/admin.links.php");
     session_destroy();
     ?>
 </script>
-
-
 
 </html>

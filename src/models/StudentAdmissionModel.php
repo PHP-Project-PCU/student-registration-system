@@ -449,19 +449,124 @@ class StudentAdmissionModel
             return $e->getMessage();
         }
     }
-    public function getAllStudentsByStatusAndYear($studentTbl, $status, $year, $page, $limit)
+
+    public function setOldStudentAdmissions($id, $data, $files)
+    {
+        try {
+            $this->db->beginTransaction();
+            // list($major, $scholarship, $passport_photo, $one_inch_photo, $covid_photo, $quarter_approved_letter, $police_approved_letter, $payment_screenshot) = $data;
+            $major = $data['major'];
+            $scholarship = $data['scholarship'];
+            // $passport_photo = $files['passport_photo'];
+            // $one_inch_photo = $files['one_inch_photo'];
+            // $covid_photo = $files['covid_photo'];
+            // $quarter_approved_letter = $files['quarter_approved_letter'];
+            // $police_approved_letter = $files['police_approved_letter'];
+            // $payment_screenshot = $files['payment_screenshot'];
+
+            $student_sql = "UPDATE student_tbl SET
+            year= year+1,
+            status=3,
+            major=:major,scholarship=:scholarship WHERE id=:id";
+            $stmt = $this->db->prepare($student_sql);
+            $stmt->execute([
+                ":major" => $major,
+                ":scholarship" => $scholarship,
+                ":id" => $id
+            ]);
+
+            // Create a directory for the student if it doesn't exist
+            $uploadDir = 'C:\xampp\htdocs\student-registration-system\www\utils\uploads\admission/' . $id . '/';
+            if (!file_exists($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+
+            // Function to upload a file
+            function uploadFiless($fileInput, $uploadDir)
+            {
+                if (isset($_FILES[$fileInput]) && $_FILES[$fileInput]['error'] == 0) {
+                    $fileName = basename($_FILES[$fileInput]['name']);
+                    $targetFile = $uploadDir . $fileName;
+
+                    if (move_uploaded_file($_FILES[$fileInput]['tmp_name'], $targetFile)) {
+                        return $fileName;  // Return the file name only
+                    } else {
+                        echo "Error from upload file fn: $fileName";
+                        return null;
+                    }
+                }
+                return null;
+            } // Upload files
+            $passportPhoto = uploadFiless('passport_photo', $uploadDir);
+            $oneInchPhoto = uploadFiless('one_inch_photo', $uploadDir);
+            $covidPhoto = uploadFiless('covid_photo', $uploadDir);
+            $quarterApprovedLetter = uploadFiless('quarter_approved_letter', $uploadDir);
+            $policeApprovedLetter = uploadFiless('police_approved_letter', $uploadDir);
+            $paymentScreenshot = uploadFiless('payment_screenshot', $uploadDir);
+
+            $file_sql = "UPDATE student_admission_required_file_tbl
+            SET passport_photo=:passport_photo, one_inch_photo=:one_inch_photo,
+                covid_photo=:covid_photo,quarter_approved_letter=:quarter_approved_letter,
+                police_approved_letter=:police_approved_letter,payment_screenshot=:payment_screenshot
+            WHERE student_id=:id";
+            $stmt = $this->db->prepare($file_sql);
+            $stmt->execute([
+                ":passport_photo" => $passportPhoto,
+                ":one_inch_photo" => $oneInchPhoto,
+                ":covid_photo" => $covidPhoto,
+                ":quarter_approved_letter" => $quarterApprovedLetter,
+                ":police_approved_letter" => $policeApprovedLetter,
+                ":payment_screenshot" => $paymentScreenshot,
+                ":id" => $id
+
+            ]);
+
+            $semester_sql = "UPDATE student_section_tbl SET
+            semester_id= semester_id + 1
+            WHERE student_id=:id";
+            $stmt = $this->db->prepare($semester_sql);
+            $stmt->execute([
+                ":id" => $id
+            ]);
+
+            $this->db->commit();
+            return true;
+        } catch (PDOException $e) {
+            $this->db->rollBack();
+            return $e->getMessage();
+        }
+    }
+    public function getAllStudentsByStatusAndYear($studentTbl, $status, $year, $academicYear, $page, $limit)
     {
         try {
             $offset = ($page - 1) * $limit;
-            $sql = "SELECT id, matriculation_reg_num, student_name_my, student_nrc
+            if ($status == 1) {
+                // get approved students
+                $sql = "SELECT id, matriculation_reg_num, student_name_my, student_nrc
                 FROM $studentTbl 
-                WHERE year = 1 AND status = :status AND year(created_at) = :year
+                WHERE status = 1 AND year = :year AND year(created_at) = :academicYear
                 ORDER BY matriculation_reg_num ASC 
                 LIMIT :limit OFFSET :offset";
+            } elseif ($status == 2) {
+                // get unapprove credit transfer students
+                $sql = "SELECT id, matriculation_reg_num, student_name_my, student_nrc
+                FROM $studentTbl 
+                WHERE status=2 AND year = :year AND year(created_at) = :academicYear
+                ORDER BY matriculation_reg_num ASC 
+                LIMIT :limit OFFSET :offset";
+            } else {
+                // get unapprove students
+                $sql = "SELECT id, matriculation_reg_num, student_name_my, student_nrc
+                FROM $studentTbl 
+                WHERE (status = 0 or status=3) AND year = :year AND year(created_at) = :academicYear
+                ORDER BY matriculation_reg_num ASC 
+                LIMIT :limit OFFSET :offset";
+            }
 
             $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(":status", $status, PDO::PARAM_STR);
+            // $stmt->bindParam(":status", $status, PDO::PARAM_STR);
             $stmt->bindParam(":year", $year, PDO::PARAM_INT);
+            $stmt->bindParam(":academicYear", $academicYear, PDO::PARAM_INT);
             $stmt->bindParam(":limit", $limit, PDO::PARAM_INT);
             $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
             $stmt->execute();
@@ -522,15 +627,19 @@ class StudentAdmissionModel
     public function getTotalRows($table, $year, $status)
     {
         try {
-            if ($year) {
-                $query = "SELECT COUNT(*) as total FROM $table WHERE year = :year AND status=:status";
-                $statement = $this->db->prepare($query);
-                $statement->bindParam(':year', $year);
-                $statement->bindParam(':status', $status);
+            if ($year && $status == 1) {
+                $query = "SELECT COUNT(*) as total FROM $table WHERE year = :year AND status=1";
+            } elseif ($year && $status == 0) {
+                $query = "SELECT COUNT(*) as total FROM $table WHERE year = :year AND (status=0 OR status=3)";
+            } elseif ($year && $status == 2) {
+                $query = "SELECT COUNT(*) as total FROM $table WHERE year = :year AND status=2";
             } else {
                 $query = "SELECT COUNT(*) as total FROM $table";
                 $statement = $this->db->prepare($query);
             }
+            $statement = $this->db->prepare($query);
+            $statement->bindParam(':year', $year);
+            // $statement->bindParam(':status', $status);
             $statement->execute();
             $result = $statement->fetch();
             return $result->total;
@@ -572,10 +681,30 @@ class StudentAdmissionModel
         }
     }
 
+    // approve old student admissions
+    public function approveOldStudent($studentTbl, $data)
+    {
+        try {
+            $this->db->beginTransaction();
+            $sql = "UPDATE $studentTbl SET year=:year, status=:status WHERE id=:id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                ":year" => $data['year'],
+                ":status" => 1,
+                ":id" => $data['id'],
+            ]);
+            $this->db->commit();
+            return true;
+        } catch (PDOException $e) {
+            $this->db->rollBack();
+            return $e->getMessage();
+        }
+    }
+
     public function getStudentsYear($table)
     {
         try {
-            $query = "SELECT DISTINCT year FROM $table WHERE status = 0 OR status = 1";
+            $query = "SELECT DISTINCT year FROM $table WHERE status = 0 OR status = 1 OR status=3";
             $statement = $this->db->prepare($query);
             $statement->execute();
             $result = $statement->fetchAll();
@@ -658,6 +787,32 @@ class StudentAdmissionModel
         }
     }
 
+    public function getStudentNameAndRollNumAndSemesterAndSectionPaginationData($page, $limit, $semester = null, $section = null)
+    {
+        $offset = ($page - 1) * $limit;
+        try {
+            if ($semester && $section) {
+                $query = "SELECT s.id AS student_id, s.roll_num,s.student_name_en,sem.semester,sem.id AS semester_id,sec.section,sec.id AS section_id FROM student_tbl s JOIN  student_section_tbl ss ON s.id = ss.student_id JOIN  semester_tbl sem ON ss.semester_id = sem.id JOIN   section_tbl sec ON ss.section_id = sec.id WHERE  ss.semester_id = :semester AND ss.section_id = :section  ORDER BY   s.id LIMIT :limit OFFSET :offset";
+
+
+                $statement = $this->db->prepare($query);
+                $statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
+                $statement->bindValue(':offset', $offset, \PDO::PARAM_INT);
+                $statement->bindValue(':semester', $semester, \PDO::PARAM_INT);
+                $statement->bindValue(':section', $section, \PDO::PARAM_INT);
+            } else {
+                $query = "SELECT s.id AS student_id, s.roll_num,s.student_name_en,sem.semester,sem.id AS semester_id,sec.section,sec.id AS section_id FROM student_tbl s JOIN  student_section_tbl ss ON s.id = ss.student_id JOIN  semester_tbl sem ON ss.semester_id = sem.id JOIN   section_tbl sec ON ss.section_id = sec.id ORDER BY   s.id LIMIT :limit OFFSET :offset";
+                $statement = $this->db->prepare($query);
+                $statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
+                $statement->bindValue(':offset', $offset, \PDO::PARAM_INT);
+            }
+            $statement->execute();
+            return $statement->fetchAll();
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
     public function getStudentIdBetweenRollNum($table, $startRollNum, $endRollNum)
     {
         try {
@@ -683,6 +838,38 @@ class StudentAdmissionModel
             $statement = $this->db->prepare($query);
             $statement->execute($studentData);
             return $this->db->lastInsertId();
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    // get all student's personal mail
+    public function getAllStudentsEmailByStatus($table, $status)
+    {
+        try {
+            $this->setStatus($table, 0); // reset status for admission
+            $query = "SELECT student_email from $table WHERE status=:status";
+            $statement = $this->db->prepare($query);
+            $statement->execute([
+                ":status" => $status
+            ]);
+            $result = $statement->fetchAll();
+            return $result;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function setStatus($table, $status)
+    {
+        try {
+            $query = "UPDATE $table SET status=:status";
+            $statement = $this->db->prepare($query);
+            $statement->execute([
+                ":status" => $status
+            ]);
+            $result = $statement->fetchAll();
+            return $result;
         } catch (PDOException $e) {
             return $e->getMessage();
         }

@@ -7,9 +7,29 @@ $json = file_get_contents('http://ucspyay.edu/utils/assets/json/nrc.json');
 session_start();
 
 use Shuchkin\SimpleXLSX;
-use controllers\FresherController;
+use controllers\AchievementController;
+use controllers\SemesterController;
+use controllers\SectionController;
+use controllers\MailController;
+use controllers\StudentAdmissionController;
+
+
+
+$semesterController = new SemesterController();
+$semesters = $semesterController->index();
 
 $updateFlag = false;
+$resultMailStatus = false;
+// send mail for exam result && change all student's status to 0
+if (!$resultMailStatus && isset($_POST['sendMail'])) {
+    $mailController = new MailController();
+    $mailController->sendResultMail();
+    $resultMailStatus = true;
+
+
+    $sectionController = new SectionController();
+    $sectionController->setStatus(0);
+}
 
 // File Upload Logic
 if (isset($_POST['submit'])) {
@@ -43,24 +63,20 @@ if (isset($_POST['submit'])) {
                         case 'student_name':
                             $rowData['student_name'] = $row[$index];
                             break;
-                        case 'matriculation_roll_num':
-                            $rowData['matriculation_roll_num'] = $row[$index];
+                        case 'roll_num':
+                            $rowData['roll_num'] = $row[$index];
                             break;
-                        case 'nrc_num':
-                            $rowData['nrc_num'] = $row[$index];
+                        case 'semester':
+                            $rowData['semester'] = $row[$index];
                             break;
-                        case 'matriculation_mark':
-                            $rowData['matriculation_mark'] = $row[$index];
-                            break;
-                        case 'passing_year':
-                            $rowData['passing_year'] = $row[$index];
+                        case 'academic_year':
+                            $rowData['academic_year'] = $row[$index];
                             break;
                     }
                 }
                 if (
-                    !empty($rowData['student_name']) && !empty($rowData['matriculation_roll_num']) &&
-                    !empty($rowData['nrc_num']) && !empty($rowData['matriculation_mark']) &&
-                    !empty($rowData['passing_year'])
+                    !empty($rowData['student_name']) && !empty($rowData['roll_num']) &&
+                    !empty($rowData['semester']) && !empty($rowData['academic_year'])
                 ) {
 
                     $data[] = $rowData;
@@ -69,79 +85,81 @@ if (isset($_POST['submit'])) {
         }
 
 
-        $fresherController = new FresherController($data, null, null, null, null, null);
-        $fresherController->setFreshers();
+        $achievementController = new AchievementController($data);
+        $achievementController->setAchievements();
     } else {
         echo "<script>alert('No data found in the Excel file.')</script>";
     }
 }
 
-if (isset($_POST['addMoreFresher'])) {
+if (isset($_POST['addAchievement'])) {
     $student_name = $_POST['student_name'];
-    $matriculation_roll_num = $_POST['matriculation_roll_num'];
-    $student_nrc_code = $_POST['student_nrc_code'];
-    $student_nrc_name = $_POST['student_nrc_name'];
-    $student_nrc_type = $_POST['student_nrc_type'];
-    $student_nrc_num = $_POST['student_nrc_num'];
-    $nrc_num = $student_nrc_code . $student_nrc_name . $student_nrc_type . $student_nrc_num;
-
-
-    $matriculation_mark = $_POST['matriculation_mark'];
-    $passing_year = $_POST['passing_year'];
+    $roll_num = $_POST['roll_num'];
+    $semester = $_POST['semester'];
+    $academic_year = $_POST['academic_year'];
     $data = [
         "student_name" => $student_name,
-        "matriculation_roll_num" => $matriculation_roll_num,
-        "nrc_num" => $nrc_num,
-        "matriculation_mark" => $matriculation_mark,
-        "passing_year" => $passing_year,
+        "roll_num" => $roll_num,
+        "semester" => $semester,
+        "academic_year" => $academic_year,
     ];
-    $fresherController = new FresherController($data, null, null, null, null, null);
-    $addingIndividualFresherFlag = $fresherController->setIndividualFresher();
+    var_dump($data);
+    $achievementController = new AchievementController($data, null, null, null, $semester, $year);
+    $addingIndividualAchievementFlag = $achievementController->setIndividualAchievement();
 }
 //Filter with passed year logic
-if (isset($_POST['passed_year'])) {
-    $_SESSION['selected_year'] = $_POST['passed_year'];
+if (isset($_POST['academic_year'])) {
+    $_SESSION['selected_year'] = $_POST['academic_year'];
     header('Location: ?page=1');
 }
 $selectedYear = $_SESSION['selected_year'] ?? 'all';
+
+//Filter with passed semester logic
+if (isset($_POST['semester'])) {
+    $_SESSION['selected_semester'] = $_POST['semester'];
+    header('Location: ?page=1');
+}
+$selectedSemester = $_SESSION['selected_semester'] ?? 'all';
 
 
 // Pagination Logic
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $limit = 10;
 
-$fresherController = new FresherController(null, $page, $limit, null, $selectedYear, null);
-$paginationFresherData = $fresherController->getFresherPaginationData();
-$getFreshersTotalRows = $fresherController->getTotalRows();
-$totalPages = ceil($getFreshersTotalRows / $limit);
+$achievementController = new AchievementController(null, $page, $limit, null, $selectedSemester, $selectedYear, null);
+$paginationAchievementData = $achievementController->getAchievementPaginationData();
+$getAchievementTotalRows = $achievementController->getTotalRows();
+$totalPages = ceil($getAchievementTotalRows / $limit);
 
 
 // Get Freshers Passing Years for passing year filtering 
-$fresherController = new FresherController(null, null, null);
-$fresherPassingYears = $fresherController->getFresherPassingYear();
+$achievementController = new AchievementController(null, null, null);
+$academicYears = $achievementController->getAchievementAcademicYear();
+
+$achievementController = new AchievementController(null, null, null);
+$achievementSemesters = $achievementController->getAchievementSemester();
 
 //Update fresher data
-if (isset($_POST['fresher_id'])) {
+if (isset($_POST['id'])) {
 
     $updateData = array(
-        "id" => $_POST['fresher_id'],
+        "id" => $_POST['id'],
         "student_name" => $_POST['student_name'],
-        "matriculation_roll_num" => $_POST['matriculation_roll_num'],
-        "nrc_num" => $_POST['nrc_num'],
-        "matriculation_mark" => $_POST['matriculation_mark'],
-        "passing_year" => $_POST['passing_year']
+        "roll_num" => $_POST['roll_num'],
+        "semester" => $_POST['semester'],
+        "academic_year" => $_POST['academic_year']
     );
-    $fresherController = new FresherController(null, null, null, $updateData);
-    $updateFlag = $fresherController->updateFresher();
+    $achievementController = new AchievementController(null, null, null, $updateData);
+    $updateFlag = $achievementController->updateAchievement();
     header('Location: index.php');
 }
 
-if (isset($_POST['delete_fresher_id'])) {
+if (isset($_POST['delete_achievement_id'])) {
     $deleteData = array(
-        "id" => $_POST['delete_fresher_id']
+        "id" => $_POST['delete_achievement_id']
     );
-    $fresherController = new FresherController(null, null, null, null, null, $deleteData);
-    $deleteFlage = $fresherController->deleteFresher();
+    $achievementController = new AchievementController(null, null, null, null, null, null, $deleteData);
+    $deleteFlage = $achievementController->deleteAchievement();
     header('Location: index.php');
 }
 
@@ -167,18 +185,29 @@ include("../../utils/components/admin/admin.links.php");
             <?php ?>
 
             <div class="w-full  rounded-lg shadow-xs">
-
-                <?php if ($paginationFresherData): ?>
+                <?php if ($paginationAchievementData || isset($selectedYear)): ?>
                     <div class="overflow-y-auto md:pt-16 px-4 pb-4">
                         <form action="" method="post">
-                            <select id="file-type" name="passed_year" onchange="this.form.submit()"
+                            <select id="" name="academic_year" onchange="this.form.submit()"
                                 class="block w-50 mb-4 px-3 py-2 mt-1 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:border-purple-400 focus:ring-purple-400 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:focus:ring-offset-gray-800">
                                 <option value="all" <?= $selectedYear == 'all' ? 'selected' : '' ?>>See All</option>
-                                <?php foreach ($fresherPassingYears as $year): ?>
-                                    <option value="<?= htmlspecialchars($year->passing_year) ?>"
-                                        <?= $selectedYear == $year->passing_year ? 'selected' : '' ?>>
-                                        <?= htmlspecialchars($year->passing_year) ?>
+                                <?php foreach ($academicYears as $year): ?>
+                                    <option value="<?= htmlspecialchars($year->academic_year) ?>"
+                                        <?= $selectedYear == $year->academic_year ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($year->academic_year) ?>
                                     </option>
+                                <?php endforeach; ?>
+                            </select>
+
+                            <select id="" name="semester" onchange="this.form.submit()"
+                                class="block w-50 mb-4 px-3 py-2 mt-1 text-sm text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:border-purple-400 focus:ring-purple-400 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:focus:ring-offset-gray-800">
+                                <option value="all" <?= $selectedSemester == 'all' ? 'selected' : '' ?>>See All</option>
+                                <?php foreach ($achievementSemesters as $semester): ?>
+                                    <option value="<?= htmlspecialchars($semester->semester) ?>"
+                                        <?= $selectedSemester == $semester->semester ? 'selected' : '' ?>>
+                                        Semester - <?= htmlspecialchars($semester->semester) ?>
+                                    </option>
+
                                 <?php endforeach; ?>
                             </select>
                         </form>
@@ -186,39 +215,42 @@ include("../../utils/components/admin/admin.links.php");
                             <thead>
                                 <tr
                                     class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                                    <th class="px-4 py-3">No</th>
                                     <th class="px-4 py-3">Name</th>
                                     <th class="px-4 py-3">Roll Number</th>
-                                    <th class="px-4 py-3">NRC</th>
-                                    <th class="px-4 py-3">Mark</th>
-                                    <th class="px-4 py-3">Year Of Passing</th>
+                                    <th class="px-4 py-3">Semester</th>
+                                    <th class="px-4 py-3">Academic Year</th>
                                     <th class="px-4 py-3">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                                 <?php
                                 ($page == 1) ? $count = 1 : $count = $page * 10 - 9;
-                                foreach ($paginationFresherData as $fresher): ?>
+                                if (empty($paginationAchievementData)) {
+                                    echo "<tr><td colspan=6 class='pt-2 text-center'>Empty data.</td></tr>";
+                                }
+                                foreach ($paginationAchievementData as $data): ?>
 
                                     <tr class="text-gray-700 dark:text-gray-400">
                                         <td class="px-4 py-3 text-sm">
-                                            <?= htmlspecialchars($fresher->student_name); ?>
+                                            <?= $count ?>
                                         </td>
                                         <td class="px-4 py-3 text-sm">
-                                            <?= htmlspecialchars($fresher->matriculation_roll_num); ?>
+                                            <?= htmlspecialchars($data->student_name); ?>
                                         </td>
                                         <td class="px-4 py-3 text-sm">
-                                            <?= htmlspecialchars($fresher->nrc_num); ?>
+                                            <?= htmlspecialchars($data->roll_num); ?>
                                         </td>
                                         <td class="px-4 py-3 text-sm">
-                                            <?= htmlspecialchars($fresher->matriculation_mark); ?>
+                                            Semester - <?= htmlspecialchars($data->semester); ?>
                                         </td>
                                         <td class="px-4 py-3 text-sm">
-                                            <?= htmlspecialchars($fresher->passing_year); ?>
+                                            <?= htmlspecialchars($data->academic_year); ?>
                                         </td>
                                         <td class="px-4 py-3">
                                             <div class="flex items-center space-x-4 text-sm">
                                                 <button @click="openModal"
-                                                    onclick="openEditModal('<?= $fresher->id ?>','<?= $fresher->student_name ?>','<?= $fresher->matriculation_roll_num ?>','<?= $fresher->nrc_num ?>','<?= $fresher->matriculation_mark ?>','<?= $fresher->passing_year ?>')"
+                                                    onclick="openEditModal('<?= $data->id ?>','<?= $data->student_name ?>','<?= $data->roll_num ?>','<?= $data->semester ?>','<?= $data->academic_year ?>')"
                                                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                                     aria-label="Edit">
                                                     <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
@@ -230,7 +262,7 @@ include("../../utils/components/admin/admin.links.php");
                                                 </button>
                                                 <button
                                                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
-                                                    onclick="openDeleteModal('<?= $fresher->id ?>')" aria-label="Delete">
+                                                    onclick="openDeleteModal('<?= $data->id ?>')" aria-label="Delete">
                                                     <svg class="w-5 h-5" aria-hidden="true" fill="currentColor"
                                                         viewBox="0 0 20 20">
                                                         <path fill-rule="evenodd"
@@ -241,7 +273,9 @@ include("../../utils/components/admin/admin.links.php");
                                             </div>
                                         </td>
                                     </tr>
-                                <?php endforeach; ?>
+
+                                <?php $count++;
+                                endforeach; ?>
 
                             </tbody>
                         </table>
@@ -274,59 +308,38 @@ include("../../utils/components/admin/admin.links.php");
                                 <span class="text-gray-800 font-semibold dark:text-gray-500">Name</span>
                                 <input
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    name="student_name" required placeholder="မောင်ကောင်းမြတ်သူ" />
+                                    name="student_name" required placeholder="မောင်/မ" />
+                            </label>
+
+                            <label class="block text-sm mr-4">
+                                <span class="text-gray-800 font-semibold dark:text-gray-500">Roll Number</span>
+                                <input
+                                    type="number"
+                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                                    name="roll_num" required placeholder="XXXXXX" />
                             </label>
                             <label class="block text-sm mr-4">
-                                <span class="text-gray-800 font-semibold dark:text-gray-500">Matriculation Roll
-                                    Number</span>
+                                <span class="text-gray-800 font-semibold dark:text-gray-500">Academic Year</span>
                                 <input
+                                    type="number"
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    name="matriculation_roll_num" required placeholder="" />
+                                    name="academic_year" required placeholder="2023" />
                             </label>
-                            <label class="block text-sm mr-4">
-                                <span class="text-gray-800 font-semibold dark:text-gray-500">Mark</span>
-                                <input
-                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    name="matriculation_mark" required placeholder="410" />
+
+                            <label class=" block text-sm ">
+                                <span class="text-gray-700 font-semibold dark:text-gray-500">Semester</span>
+                                <select id="semester" name="semester"
+                                    class="form-input  w-full  bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                                    <?php
+                                    foreach ($semesters as $semester): ?>
+                                        <option value="<?= $semester['id'] ?>"><?= $semester['semester'] ?>
+                                        </option>
+                                    <?php endforeach ?>
+                                </select>
                             </label>
-                            <label class="block text-sm mr-4">
-                                <span class="text-gray-800 font-semibold dark:text-gray-500">Year Of
-                                    Passing</span>
-                                <input
-                                    class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    name="passing_year" required placeholder="2023" />
-                            </label>
-                            <div class="block text-sm mr-4 mt-4">
-                                <label for="student_nrc_code">နိုင်ငံသား စိစစ်ရေးအမှတ်</label>
-                                <select id="student_nrc_code" name="student_nrc_code"
-                                    class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                                </select>
-                            </div>
-                            <div class="block text-sm mr-4 mt-4">
-                                <label for="student_nrc_name">&nbsp;</label>
-                                <select id="student_nrc_name" name="student_nrc_name"
-                                    class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                                </select>
-                            </div>
-                            <div class="block text-sm mr-4 mt-4">
-                                <label for="studen_nrc_type">&nbsp;</label>
-                                <select id="studen_nrc_type" name="student_nrc_type"
-                                    class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
-                                    <option value="(သ)">(သ)</option>
-                                    <option value="(သီ)">(သီ)</option>
-                                    <option value="(နိုင်)">(နိုင်)</option>
-                                    <option value="(ပြု)">(ပြု)</option>
-                                    <option value="(ဧည့်)">(ဧည့်)</option>
-                                </select>
-                            </div>
-                            <div class="block text-sm mr-4 mt-4">
-                                <label for="student_nrc_num">&nbsp;</label>
-                                <input name="student_nrc_num" id="student_nrc_num" type="number"
-                                    class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0"
-                                    required placeholder="xxxxxx">
-                            </div>
+
                         </div>
-                        <button name="addMoreFresher"
+                        <button name="addAchievement"
                             class="px-4 py-2 m-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                             Add
                         </button>
@@ -336,7 +349,7 @@ include("../../utils/components/admin/admin.links.php");
                     <div class="container  grid w-50 h-80 m-4 ">
                         <form action="" method="post" enctype="multipart/form-data">
                             <div class="relative">
-                                <span class="">Select an excel file to import fresher student data.</span>
+                                <span class="">Select an excel file to import student achievement data.</span>
                                 <div class="mt-4 m w-40">
                                     <label for="file-upload"
                                         class="flex items-center justify-center px-4 py-2 bg-gray-200 text-gray-700 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-600">
@@ -352,11 +365,22 @@ include("../../utils/components/admin/admin.links.php");
                                 Import
                             </button>
                         </form>
+                        <form action="" method="POST">
+                            <div class="my-4">
+                                <p class="py-2">
+                                    ကျောင်းသားအားလုံးအား အောင်စာရင်းစစ်ရန် အကြောင်းကြားစာ Mail ပို့ရန် (အောင်စာရင်း data ထည့်ပြီးမှသာ)
+                                </p>
+                                <button type="submit" name="sendMail"
+                                    class=" px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                                    ပို့မည်။
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 <?php else: ?>
                     <div class="container px-6 mx-auto grid w-50 h-80">
                         <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                            Add Fresher
+                            Students' Achievement
                         </h2>
                         <form action="" method="post" enctype="multipart/form-data">
                             <div class="relative">
@@ -370,6 +394,7 @@ include("../../utils/components/admin/admin.links.php");
                                     <input id="file-upload" type="file" name="excel" class="hidden" required
                                         onchange="updateFileDetails()" />
                                 </div>
+                                <div id="file-info" class="mt-3 text-sm text-gray-600 dark:text-gray-300"></div>
                                 <button type="submit" name="submit"
                                     class="m-5  py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
                                     Import
@@ -401,40 +426,41 @@ include("../../utils/components/admin/admin.links.php");
             <div class="mt-4 mb-6">
                 <!-- Modal title -->
                 <p class="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300">
-                    Edit Fresher
+                    Edit details
                 </p>
                 <!-- Modal description -->
                 <form action="" method="POST">
-                    <input type="hidden" name="fresher_id" id="editFresherId">
+                    <input type="hidden" name="id" id="editId">
                     <label class="block text-sm">
                         <span class="text-gray-800 font-semibold dark:text-gray-500">Name</span>
                         <input
                             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                            name="student_name" id="editFresherName" required />
+                            name="student_name" id="editName" required />
                     </label>
                     <label class="block text-sm">
                         <span class="text-gray-800 font-semibold dark:text-gray-500">Roll Number</span>
                         <input
                             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                            name="matriculation_roll_num" id="editFresherRollNum" required />
+                            name="roll_num" id="editRollNum" required />
                     </label>
                     <label class="block text-sm">
-                        <span class="text-gray-800 font-semibold dark:text-gray-500">NRC</span>
-                        <input
-                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                            name="nrc_num" id="editFresherNRC" required />
+                        <span class="text-gray-800 font-semibold dark:text-gray-500">Semester</span>
+                        <select id="editSemester" name="semester"
+                            class="form-input  w-full  bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
+                            <?php foreach ($semesters as $semester): ?>
+                                <option value="<?= $semester['id'] ?>"
+                                    <?= $selectedSemester == $semester['id'] ? 'selected' : '' ?>>
+                                    <?= $semester['semester'] ?>
+                                </option>
+                            <?php endforeach ?>
+                        </select>
+                    </label>
                     </label>
                     <label class="block text-sm">
-                        <span class="text-gray-800 font-semibold dark:text-gray-500">Mark</span>
+                        <span class="text-gray-800 font-semibold dark:text-gray-500">Academic Year</span>
                         <input
                             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                            name="matriculation_mark" id="editFresherMark" required />
-                    </label>
-                    <label class="block text-sm">
-                        <span class="text-gray-800 font-semibold dark:text-gray-500">Year Of Passing</span>
-                        <input
-                            class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                            name="passing_year" id="editFresherPassingYear" required />
+                            name="academic_year" id="editAcademicYear" required />
                     </label>
             </div>
             <footer
@@ -458,7 +484,7 @@ include("../../utils/components/admin/admin.links.php");
         class="fixed inset-0 z-50 items-center justify-center hidden overflow-y-auto bg-gray-900 bg-opacity-50">
         <form action="" method="post">
             <div class="max-w-xl p-6 bg-white rounded-lg shadow-md">
-                <input type="hidden" id="deleteFresherId" name="delete_fresher_id">
+                <input type="hidden" id="deleteFresherId" name="delete_achievement_id">
                 <h2 class="text-xl font-bold mb-4">Confirm Deletion</h2>
                 <p class="mb-6">Are you sure you want to delete data?</p>
                 <div class="flex justify-end">
@@ -474,15 +500,22 @@ include("../../utils/components/admin/admin.links.php");
 
 </html>
 
+<script src="http://ucspyay.edu/utils/assets/js/alertify.js"></script>
 
 <script>
-    function openEditModal(id, name, rollNum, nrc, mark, passedYear) {
-        document.getElementById('editFresherId').value = id;
-        document.getElementById('editFresherName').value = name;
-        document.getElementById('editFresherRollNum').value = rollNum;
-        document.getElementById('editFresherNRC').value = nrc;
-        document.getElementById('editFresherMark').value = mark;
-        document.getElementById('editFresherPassingYear').value = passedYear;
+    <?php if ($resultMailStatus): ?>
+        alertify.success('ကျောင်းသားအားလုံးအား Mail ပို့ပြီးပါပြီ');
+    <?php endif ?>
+</script>
+<script>
+    function openEditModal(id, name, rollNum, semester, academicYear) {
+        console.log(name, semester, academicYear);
+        $semester = semester;
+        document.getElementById('editId').value = id;
+        document.getElementById('editName').value = name;
+        document.getElementById('editRollNum').value = rollNum;
+        document.getElementById('editAcademicYear').value = academicYear;
+        document.getElementById('editSemester').value = semester;
     }
 
     function openDeleteModal(id) {
