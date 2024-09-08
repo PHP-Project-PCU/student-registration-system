@@ -265,15 +265,65 @@ include("../utils/components/student/student.links.php");
                                                             <div class="lg:col-span-12">
                                                                 <div class="p-5">
                                                                     <ul>
-                                                                        <li>ကျောင်းလခ(၁၀လစာ) - ၂၅၀၀၀ ကျပ်</li>
-                                                                        <li>က-ပ-မ ကြေး - ၁၀၀၀ ကျပ်</li>
-                                                                        <li>ဓါတ်ခွဲခန်းကြေး - ၅၀၀ ကျပ်</li>
-                                                                        <li>စာမေးပွဲကြေး - ၁၀၀၀ ကျပ်</li>
-                                                                        <li>အထွေထွေ - ၃၀၀ ကျပ်</li>
-                                                                        <span
-                                                                            class=" border  border-black-900"></span>
-                                                                        <li class="pt-2"><b>စုစုပေါင်း - ၂၇၈၀၀
-                                                                                ကျပ်</b></li>
+                                                                        <?php foreach ($fees as $fee): ?>
+                                                                            <?php if (!empty($fee['entrance_fee'])): ?>
+                                                                                <li>
+                                                                                    <?= "ကျောင်းဝင်ကြေး - " . $fee['entrance_fee'] . " ကျပ်" ?>
+                                                                                </li>
+                                                                            <?php endif; ?>
+
+                                                                            <?php if (!empty($fee['registration_fee'])): ?>
+                                                                                <li>
+                                                                                    <?= "မှတ်ပုံတင်ကြေး - " . $fee['registration_fee'] . " ကျပ်" ?>
+                                                                                </li>
+                                                                            <?php endif; ?>
+                                                                            <?php if (!empty($fee['extra_registration_fee'])): ?>
+                                                                                <li>
+                                                                                    <?= "အလွတ်မှတ်ပုံတင်ကြေး - " . $fee['extra_registration_fee'] . " ကျပ်" ?>
+                                                                                </li>
+                                                                            <?php endif; ?>
+                                                                            <?php if (!empty($fee['tuition_fee'])): ?>
+                                                                                <li>
+                                                                                    <?= "ကျောင်းလခ (၁၀လစာ) - " . $fee['tuition_fee'] . " ကျပ်" ?>
+                                                                                </li>
+                                                                            <?php endif; ?>
+                                                                            <?php if (!empty($fee['late_fee'])): ?>
+                                                                                <li>
+                                                                                    <?= "နောက်ကျကြေး - " . $fee['late_fee'] . " ကျပ်" ?>
+                                                                                </li>
+                                                                            <?php endif; ?>
+                                                                            <?php if (!empty($fee['id_card_fee'])): ?>
+                                                                                <li>
+                                                                                    <?= "မှတ်ပုံတင်ကတ်ပြား - " . $fee['id_card_fee'] . " ကျပ်" ?>
+                                                                                </li>
+                                                                            <?php endif; ?>
+                                                                            <?php if (!empty($fee['ka_pa_ma_fee'])): ?>
+                                                                                <li>
+                                                                                    <?= "က-ပ-မ ကြေး - " . $fee['ka_pa_ma_fee'] . " ကျပ်" ?>
+                                                                                </li>
+                                                                            <?php endif; ?>
+                                                                            <?php if (!empty($fee['lab_fee'])): ?>
+                                                                                <li>
+                                                                                    <?= "ဓါတ်ခွဲခန်းကြေး - " . $fee['lab_fee'] . " ကျပ်" ?>
+                                                                                </li>
+                                                                            <?php endif; ?>
+                                                                            <?php if (!empty($fee['exam_fee'])): ?>
+                                                                                <li>
+                                                                                    <?= "စာမေးပွဲကြေး - " . $fee['exam_fee'] . " ကျပ်" ?>
+                                                                                </li>
+                                                                            <?php endif; ?>
+                                                                            <?php if (!empty($fee['general_fee'])): ?>
+                                                                                <li>
+                                                                                    <?= "အထွေထွေ - " . $fee['general_fee'] . " ကျပ်" ?>
+                                                                                </li>
+                                                                            <?php endif; ?>
+                                                                            <?php if (!empty($fee['total'])): ?>
+                                                                                <li>
+                                                                                    <?= "စုစုပေါင်း - " . $fee['total'] . " ကျပ်" ?>
+                                                                                </li>
+                                                                            <?php endif; ?>
+                                                                        <?php endforeach ?>
+
                                                                     </ul>
                                                                 </div>
                                                             </div>
