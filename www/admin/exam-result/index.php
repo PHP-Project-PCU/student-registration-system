@@ -2,6 +2,14 @@
 require '../../../vendor/autoload.php';
 include '../../../autoload.php';
 
+use core\helpers\HTTP;
+
+if (!isset($_SESSION['admin'])) {
+    HTTP::redirect("/login");
+    exit();
+}
+
+
 $json = file_get_contents('http://ucspyay.edu/utils/assets/json/nrc.json');
 
 session_start();

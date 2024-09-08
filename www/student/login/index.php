@@ -1,5 +1,6 @@
 <?php
 include('../../../autoload.php');
+
 use controllers\StudentAuthController;
 use core\helpers\HTTP;
 
@@ -83,14 +84,16 @@ if (isset($_POST['student_edu_mail']) && isset($_POST['password'])) {
                             <label class="block text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">Edu Mail</span>
                                 <input
+                                    required
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    placeholder="adminmyo" type='email' name='student_edu_mail' />
+                                    placeholder="student@ucspyay.edu.mm" type='email' name='student_edu_mail' />
                             </label>
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">Password</span>
                                 <input
+                                    required
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    placeholder="***************" type="password" name='password' />
+                                    placeholder="" type="password" name='password' />
                             </label>
 
                             <!-- You should use a button here, as the anchor is only used for the example  -->

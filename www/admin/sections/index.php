@@ -7,6 +7,13 @@ session_start();
 use controllers\SectionController;
 use controllers\SemesterController;
 use controllers\StudentAdmissionController;
+use core\helpers\HTTP;
+
+if (!isset($_SESSION['admin'])) {
+    HTTP::redirect("/login");
+    exit();
+}
+
 
 if (isset($_POST['logout'])) {
 
@@ -52,7 +59,6 @@ if (isset($_POST['add_section'])) {
         $studentDataInsertFlag = $studentAdmissionController->setStudentSection($studentData);
     }
     header('Location: http://admin.ucspyay.edu/sections/');
-
 }
 
 

@@ -12,6 +12,13 @@ use controllers\MajorController;
 use controllers\CourseController;
 use controllers\TimetableController;
 use controllers\TeacherController;
+use core\helpers\HTTP;
+
+if (!isset($_SESSION['admin'])) {
+    HTTP::redirect("/login");
+    exit();
+}
+
 
 session_start();
 
@@ -87,21 +94,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && (isset($_POST['save_btn'])  || isset
 <!DOCTYPE html>
 <html lang="en">
 <style>
-th,
-td {
-    border: 1px solid grey;
-    text-align: center;
-}
+    th,
+    td {
+        border: 1px solid grey;
+        text-align: center;
+    }
 
-td {
-    text-align: center;
-    cursor: pointer;
-}
+    td {
+        text-align: center;
+        cursor: pointer;
+    }
 
-td:hover {
-    background-color: lightblue;
-    transition: all ease-in 0.2s;
-}
+    td:hover {
+        background-color: lightblue;
+        transition: all ease-in 0.2s;
+    }
 </style>
 
 <?php
@@ -144,29 +151,29 @@ include("../../utils/components/admin/admin.links.php");
                             <select id="semester_id" name="semester_id" onchange="this.form.submit()"
                                 class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                 <?php foreach ($semesters as $semester): ?>
-                                <option value="<?= $semester['id'] ?>"
-                                    <?php if ($currentSemesterId == $semester['id']) echo 'selected' ?>>
-                                    <?= $semester['semester'] ?>
-                                </option>
+                                    <option value="<?= $semester['id'] ?>"
+                                        <?php if ($currentSemesterId == $semester['id']) echo 'selected' ?>>
+                                        <?= $semester['semester'] ?>
+                                    </option>
                                 <?php endforeach ?>
                             </select>
                             <select id="major_id" name="major_id" onchange="this.form.submit()"
                                 class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                 <?php foreach ($majors as $major): ?>
-                                <option value="<?= $major['id'] ?>"
-                                    <?php if ($currentMajorId == $major['id']) echo 'selected' ?>>
-                                    <?= $major['major'] ?>
-                                </option>
+                                    <option value="<?= $major['id'] ?>"
+                                        <?php if ($currentMajorId == $major['id']) echo 'selected' ?>>
+                                        <?= $major['major'] ?>
+                                    </option>
                                 <?php endforeach ?>
 
                             </select>
                             <select id="section_id" name="section_id" onchange="this.form.submit()"
                                 class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                 <?php foreach ($sections as $section): ?>
-                                <option value="<?= $section['id'] ?>"
-                                    <?php if ($currentSectionId == $section['id']) echo 'selected' ?>>
-                                    <?= $section['section'] ?>
-                                </option>
+                                    <option value="<?= $section['id'] ?>"
+                                        <?php if ($currentSectionId == $section['id']) echo 'selected' ?>>
+                                        <?= $section['section'] ?>
+                                    </option>
                                 <?php endforeach ?>
                             </select>
                         </form>
@@ -198,12 +205,12 @@ include("../../utils/components/admin/admin.links.php");
                                         $mondayTimetables = $timetableController->getTimetableByDSSM('Monday', $currentSectionId, $currentSemesterId, $currentMajorId);
 
                                         foreach ($mondayTimetables as $timetable) : ?>
-                                        <td @click="openModal"
-                                            onclick="openEditModal('<?= $timetable['id'] ?>','<?= $timetable['day'] ?>','<?= $timetable['course_id'] ?>','<?= $timetable['teacher_id'] ?>','<?= $timetable['time_slot'] ?>','<?= $timetable['start_time'] ?>','<?= $timetable['end_time'] ?>','<?= $timetable['start_date'] ?>','<?= $timetable['end_date'] ?>')"
-                                            class="px-4 py-3 text-sm"
-                                            colspan="<?php if ($timetable['time_slot'] == 2) echo 2; ?>">
+                                            <td @click="openModal"
+                                                onclick="openEditModal('<?= $timetable['id'] ?>','<?= $timetable['day'] ?>','<?= $timetable['course_id'] ?>','<?= $timetable['teacher_id'] ?>','<?= $timetable['time_slot'] ?>','<?= $timetable['start_time'] ?>','<?= $timetable['end_time'] ?>','<?= $timetable['start_date'] ?>','<?= $timetable['end_date'] ?>')"
+                                                class="px-4 py-3 text-sm"
+                                                colspan="<?php if ($timetable['time_slot'] == 2) echo 2; ?>">
 
-                                            <?php
+                                                <?php
                                                 // Flag to check if course and teacher are found
                                                 $courseFound = false;
                                                 $teacherFound = false;
@@ -231,7 +238,7 @@ include("../../utils/components/admin/admin.links.php");
                                                 }
                                                 ?>
 
-                                        </td>
+                                            </td>
                                         <?php endforeach ?>
                                     </tr>
 
@@ -243,12 +250,12 @@ include("../../utils/components/admin/admin.links.php");
                                         $tuesdayTimetables = $timetableController->getTimetableByDSSM('Tuesday', $currentSectionId, $currentSemesterId, $currentMajorId);
 
                                         foreach ($tuesdayTimetables as $timetable) : ?>
-                                        <td @click="openModal"
-                                            onclick="openEditModal('<?= $timetable['id'] ?>','<?= $timetable['day'] ?>','<?= $timetable['course_id'] ?>','<?= $timetable['teacher_id'] ?>','<?= $timetable['time_slot'] ?>','<?= $timetable['start_time'] ?>','<?= $timetable['end_time'] ?>','<?= $timetable['start_date'] ?>','<?= $timetable['end_date'] ?>')"
-                                            class="px-4 py-3 text-sm"
-                                            colspan="<?php if ($timetable['time_slot'] == 2) echo 2; ?>">
+                                            <td @click="openModal"
+                                                onclick="openEditModal('<?= $timetable['id'] ?>','<?= $timetable['day'] ?>','<?= $timetable['course_id'] ?>','<?= $timetable['teacher_id'] ?>','<?= $timetable['time_slot'] ?>','<?= $timetable['start_time'] ?>','<?= $timetable['end_time'] ?>','<?= $timetable['start_date'] ?>','<?= $timetable['end_date'] ?>')"
+                                                class="px-4 py-3 text-sm"
+                                                colspan="<?php if ($timetable['time_slot'] == 2) echo 2; ?>">
 
-                                            <?php
+                                                <?php
                                                 // Flag to check if course and teacher are found
                                                 $courseFound = false;
                                                 $teacherFound = false;
@@ -276,7 +283,7 @@ include("../../utils/components/admin/admin.links.php");
                                                 }
                                                 ?>
 
-                                        </td>
+                                            </td>
                                         <?php endforeach ?>
                                     </tr>
 
@@ -288,12 +295,12 @@ include("../../utils/components/admin/admin.links.php");
                                         $wednesdayTimetables = $timetableController->getTimetableByDSSM('Wednesday', $currentSectionId, $currentSemesterId, $currentMajorId);
 
                                         foreach ($wednesdayTimetables as $timetable) : ?>
-                                        <td @click="openModal"
-                                            onclick="openEditModal('<?= $timetable['id'] ?>','<?= $timetable['day'] ?>','<?= $timetable['course_id'] ?>','<?= $timetable['teacher_id'] ?>','<?= $timetable['time_slot'] ?>','<?= $timetable['start_time'] ?>','<?= $timetable['end_time'] ?>','<?= $timetable['start_date'] ?>','<?= $timetable['end_date'] ?>')"
-                                            class="px-4 py-3 text-sm"
-                                            colspan="<?php if ($timetable['time_slot'] == 2) echo 2; ?>">
+                                            <td @click="openModal"
+                                                onclick="openEditModal('<?= $timetable['id'] ?>','<?= $timetable['day'] ?>','<?= $timetable['course_id'] ?>','<?= $timetable['teacher_id'] ?>','<?= $timetable['time_slot'] ?>','<?= $timetable['start_time'] ?>','<?= $timetable['end_time'] ?>','<?= $timetable['start_date'] ?>','<?= $timetable['end_date'] ?>')"
+                                                class="px-4 py-3 text-sm"
+                                                colspan="<?php if ($timetable['time_slot'] == 2) echo 2; ?>">
 
-                                            <?php
+                                                <?php
                                                 // Flag to check if course and teacher are found
                                                 $courseFound = false;
                                                 $teacherFound = false;
@@ -321,7 +328,7 @@ include("../../utils/components/admin/admin.links.php");
                                                 }
                                                 ?>
 
-                                        </td>
+                                            </td>
                                         <?php endforeach ?>
                                     </tr>
 
@@ -333,12 +340,12 @@ include("../../utils/components/admin/admin.links.php");
                                         $thursdayTimetables = $timetableController->getTimetableByDSSM('Thursday', $currentSectionId, $currentSemesterId, $currentMajorId);
 
                                         foreach ($thursdayTimetables as $timetable) : ?>
-                                        <td @click="openModal"
-                                            onclick="openEditModal('<?= $timetable['id'] ?>','<?= $timetable['day'] ?>','<?= $timetable['course_id'] ?>','<?= $timetable['teacher_id'] ?>','<?= $timetable['time_slot'] ?>','<?= $timetable['start_time'] ?>','<?= $timetable['end_time'] ?>','<?= $timetable['start_date'] ?>','<?= $timetable['end_date'] ?>')"
-                                            class="px-4 py-3 text-sm"
-                                            colspan="<?php if ($timetable['time_slot'] == 2) echo 2; ?>">
+                                            <td @click="openModal"
+                                                onclick="openEditModal('<?= $timetable['id'] ?>','<?= $timetable['day'] ?>','<?= $timetable['course_id'] ?>','<?= $timetable['teacher_id'] ?>','<?= $timetable['time_slot'] ?>','<?= $timetable['start_time'] ?>','<?= $timetable['end_time'] ?>','<?= $timetable['start_date'] ?>','<?= $timetable['end_date'] ?>')"
+                                                class="px-4 py-3 text-sm"
+                                                colspan="<?php if ($timetable['time_slot'] == 2) echo 2; ?>">
 
-                                            <?php
+                                                <?php
                                                 // Flag to check if course and teacher are found
                                                 $courseFound = false;
                                                 $teacherFound = false;
@@ -366,7 +373,7 @@ include("../../utils/components/admin/admin.links.php");
                                                 }
                                                 ?>
 
-                                        </td>
+                                            </td>
                                         <?php endforeach ?>
                                     </tr>
 
@@ -378,12 +385,12 @@ include("../../utils/components/admin/admin.links.php");
                                         $fridayTimetables = $timetableController->getTimetableByDSSM('Friday', $currentSectionId, $currentSemesterId, $currentMajorId);
 
                                         foreach ($fridayTimetables as $timetable) : ?>
-                                        <td @click="openModal"
-                                            onclick="openEditModal('<?= $timetable['id'] ?>','<?= $timetable['day'] ?>','<?= $timetable['course_id'] ?>','<?= $timetable['teacher_id'] ?>','<?= $timetable['time_slot'] ?>','<?= $timetable['start_time'] ?>','<?= $timetable['end_time'] ?>','<?= $timetable['start_date'] ?>','<?= $timetable['end_date'] ?>')"
-                                            class="px-4 py-3 text-sm"
-                                            colspan="<?php if ($timetable['time_slot'] == 2) echo 2; ?>">
+                                            <td @click="openModal"
+                                                onclick="openEditModal('<?= $timetable['id'] ?>','<?= $timetable['day'] ?>','<?= $timetable['course_id'] ?>','<?= $timetable['teacher_id'] ?>','<?= $timetable['time_slot'] ?>','<?= $timetable['start_time'] ?>','<?= $timetable['end_time'] ?>','<?= $timetable['start_date'] ?>','<?= $timetable['end_date'] ?>')"
+                                                class="px-4 py-3 text-sm"
+                                                colspan="<?php if ($timetable['time_slot'] == 2) echo 2; ?>">
 
-                                            <?php
+                                                <?php
                                                 // Flag to check if course and teacher are found
                                                 $courseFound = false;
                                                 $teacherFound = false;
@@ -411,7 +418,7 @@ include("../../utils/components/admin/admin.links.php");
                                                 }
                                                 ?>
 
-                                        </td>
+                                            </td>
                                         <?php endforeach ?>
                                     </tr>
 
@@ -481,10 +488,10 @@ include("../../utils/components/admin/admin.links.php");
                                         class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                         <option value="" disabled selected>Choose a course</option>
                                         <?php foreach ($courses as $course): ?>
-                                        <option value="<?= $course['id'] ?>" <?php #if ($currentcourse == $course['course']) echo 'selected' 
+                                            <option value="<?= $course['id'] ?>" <?php #if ($currentcourse == $course['course']) echo 'selected' 
                                                                                     ?>>
-                                            <?= $course['title'] ?>
-                                        </option>
+                                                <?= $course['title'] ?>
+                                            </option>
                                         <?php endforeach ?>
                                     </select>
                                 </label>
@@ -494,7 +501,7 @@ include("../../utils/components/admin/admin.links.php");
                                         class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                         <option value="" disabled selected>Choose a teacher</option>
                                         <?php foreach ($teachers as $teacher): ?>
-                                        <option value="<?= $teacher['id'] ?>"><?= $teacher['teacher_name'] ?></option>
+                                            <option value="<?= $teacher['id'] ?>"><?= $teacher['teacher_name'] ?></option>
                                         <?php endforeach ?>
                                     </select>
                                 </label>
@@ -509,10 +516,10 @@ include("../../utils/components/admin/admin.links.php");
                                     <select id="semester_id" name="semester_id" onchange="this.form.submit()"
                                         class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                         <?php foreach ($semesters as $semester): ?>
-                                        <option value="<?= $semester['id'] ?>"
-                                            <?php if ($currentSemesterId == $semester['id']) echo 'selected' ?>>
-                                            <?= $semester['semester'] ?>
-                                        </option>
+                                            <option value="<?= $semester['id'] ?>"
+                                                <?php if ($currentSemesterId == $semester['id']) echo 'selected' ?>>
+                                                <?= $semester['semester'] ?>
+                                            </option>
                                         <?php endforeach ?>
                                     </select>
                                 </label>
@@ -521,10 +528,10 @@ include("../../utils/components/admin/admin.links.php");
                                     <select id="major_id" name="major_id" onchange="this.form.submit()"
                                         class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                         <?php foreach ($majors as $major): ?>
-                                        <option value="<?= $major['id'] ?>"
-                                            <?php if ($currentMajorId == $major['id']) echo 'selected' ?>>
-                                            <?= $major['major'] ?>
-                                        </option>
+                                            <option value="<?= $major['id'] ?>"
+                                                <?php if ($currentMajorId == $major['id']) echo 'selected' ?>>
+                                                <?= $major['major'] ?>
+                                            </option>
                                         <?php endforeach ?>
                                     </select>
                                 </label>
@@ -533,10 +540,10 @@ include("../../utils/components/admin/admin.links.php");
                                     <select id="section_id" name="section_id" onchange="this.form.submit()"
                                         class="form-input mt-3 w-full py-2 px-3 h-10 bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                                         <?php foreach ($sections as $section): ?>
-                                        <option value="<?= $section['id'] ?>"
-                                            <?php if ($currentSectionId == $section['id']) echo 'selected' ?>>
-                                            <?= $section['section'] ?>
-                                        </option>
+                                            <option value="<?= $section['id'] ?>"
+                                                <?php if ($currentSectionId == $section['id']) echo 'selected' ?>>
+                                                <?= $section['section'] ?>
+                                            </option>
                                         <?php endforeach ?>
                                     </select>
                                 </label>
@@ -601,76 +608,76 @@ include("../../utils/components/admin/admin.links.php");
                 <!-- End of modal backdrop -->
 
                 <script>
-                document.getElementById("discussion").addEventListener('change', function() {
-                    var courseSelect = document.getElementById("course_id");
-                    var teacherSelect = document.getElementById("teacher_id");
+                    document.getElementById("discussion").addEventListener('change', function() {
+                        var courseSelect = document.getElementById("course_id");
+                        var teacherSelect = document.getElementById("teacher_id");
 
-                    if (this.checked) {
-                        courseSelect.disabled = true;
-                        teacherSelect.disabled = true;
+                        if (this.checked) {
+                            courseSelect.disabled = true;
+                            teacherSelect.disabled = true;
+                            courseSelect.value = null;
+                            teacherSelect.value = null;
+
+                        } else {
+                            courseSelect.disabled = false;
+                            teacherSelect.disabled = false;
+                        }
+                    });
+
+                    function openCreateModal() {
+                        document.getElementById('id').value = null;
+                        document.getElementById('day').value = null;
+                        var courseSelect = document.getElementById('course_id');
                         courseSelect.value = null;
+                        var teacherSelect = document.getElementById('teacher_id');
                         teacherSelect.value = null;
 
-                    } else {
-                        courseSelect.disabled = false;
-                        teacherSelect.disabled = false;
-                    }
-                });
-
-                function openCreateModal() {
-                    document.getElementById('id').value = null;
-                    document.getElementById('day').value = null;
-                    var courseSelect = document.getElementById('course_id');
-                    courseSelect.value = null;
-                    var teacherSelect = document.getElementById('teacher_id');
-                    teacherSelect.value = null;
-
-                    document.getElementById('time_slot').value = null;
-                    document.getElementById('start_time').value = null;
-                    document.getElementById('end_time').value = null;
-                    document.getElementById('start_date').value = null;
-                    document.getElementById('end_date').value = null;
-                    document.getElementById('discussion').checked = false;
-
-                    document.getElementById('save_btn').classList.remove('hidden');
-                    document.getElementById('delete_btn').classList.add('hidden');
-                    document.getElementById('update_btn').classList.add('hidden');
-
-                }
-
-                function openEditModal(id, day, courseId, teacherId, timeSlot, startTime, endTime, startDate, endDate) {
-                    document.getElementById('id').value = id;
-                    document.getElementById('day').value = day;
-                    var courseSelect = document.getElementById('course_id');
-                    courseSelect.value = courseId;
-                    var teacherSelect = document.getElementById('teacher_id');
-                    teacherSelect.value = teacherId;
-
-                    if (courseId == "" && teacherId == "") {
-                        document.getElementById('discussion').checked = true;
-                        courseSelect.disabled = true;
-                        teacherSelect.disabled = true;
-                        courseSelect.value = null;
-                        teacherSelect.value = null;
-                    } else {
+                        document.getElementById('time_slot').value = null;
+                        document.getElementById('start_time').value = null;
+                        document.getElementById('end_time').value = null;
+                        document.getElementById('start_date').value = null;
+                        document.getElementById('end_date').value = null;
                         document.getElementById('discussion').checked = false;
-                        courseSelect.disabled = false;
-                        teacherSelect.disabled = false;
+
+                        document.getElementById('save_btn').classList.remove('hidden');
+                        document.getElementById('delete_btn').classList.add('hidden');
+                        document.getElementById('update_btn').classList.add('hidden');
 
                     }
-                    document.getElementById('time_slot').value = timeSlot;
-                    document.getElementById('start_time').value = startTime;
-                    document.getElementById('end_time').value = endTime;
-                    // format date
-                    let formattedStartDate = startDate.split(' ')[0];
-                    let formattedEndDate = endDate.split(' ')[0];
-                    document.getElementById('start_date').value = formattedStartDate;
-                    document.getElementById('end_date').value = formattedEndDate;
-                    document.getElementById('save_btn').classList.add('hidden');
-                    document.getElementById('delete_btn').classList.remove('hidden');
-                    document.getElementById('update_btn').classList.remove('hidden');
-                    document.getElementById('delete_btn').setAttribute('href', 'delete.php?id=' + id);
-                }
+
+                    function openEditModal(id, day, courseId, teacherId, timeSlot, startTime, endTime, startDate, endDate) {
+                        document.getElementById('id').value = id;
+                        document.getElementById('day').value = day;
+                        var courseSelect = document.getElementById('course_id');
+                        courseSelect.value = courseId;
+                        var teacherSelect = document.getElementById('teacher_id');
+                        teacherSelect.value = teacherId;
+
+                        if (courseId == "" && teacherId == "") {
+                            document.getElementById('discussion').checked = true;
+                            courseSelect.disabled = true;
+                            teacherSelect.disabled = true;
+                            courseSelect.value = null;
+                            teacherSelect.value = null;
+                        } else {
+                            document.getElementById('discussion').checked = false;
+                            courseSelect.disabled = false;
+                            teacherSelect.disabled = false;
+
+                        }
+                        document.getElementById('time_slot').value = timeSlot;
+                        document.getElementById('start_time').value = startTime;
+                        document.getElementById('end_time').value = endTime;
+                        // format date
+                        let formattedStartDate = startDate.split(' ')[0];
+                        let formattedEndDate = endDate.split(' ')[0];
+                        document.getElementById('start_date').value = formattedStartDate;
+                        document.getElementById('end_date').value = formattedEndDate;
+                        document.getElementById('save_btn').classList.add('hidden');
+                        document.getElementById('delete_btn').classList.remove('hidden');
+                        document.getElementById('update_btn').classList.remove('hidden');
+                        document.getElementById('delete_btn').setAttribute('href', 'delete.php?id=' + id);
+                    }
                 </script>
 </body>
 

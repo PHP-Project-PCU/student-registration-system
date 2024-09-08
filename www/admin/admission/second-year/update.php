@@ -6,6 +6,12 @@ include '../../../../autoload.php';
 
 use controllers\StudentAdmissionController;
 use controllers\MailController;
+use core\helpers\HTTP;
+
+if (!isset($_SESSION['admin'])) {
+    HTTP::redirect("/login");
+    exit();
+}
 
 session_start();
 $id = $_GET['id'];

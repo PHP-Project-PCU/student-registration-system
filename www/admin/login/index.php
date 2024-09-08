@@ -1,5 +1,6 @@
 <?php
-include ('../../../autoload.php');
+include('../../../autoload.php');
+
 use controllers\AuthController;
 use core\helpers\HTTP;
 
@@ -23,7 +24,6 @@ if (isset($_POST['userName']) and isset($_POST['password'])) {
 
         HTTP::redirect("/");
         exit();
-
     }
 }
 
@@ -36,7 +36,7 @@ if (isset($_POST['userName']) and isset($_POST['password'])) {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - UCSPYAY ADMIN Dashboard</title>
+    <title>Login - UCSPYAY ADMIN</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" href="http://ucspyay.edu/utils/assets/css/tailwind.output.css" />
@@ -64,13 +64,13 @@ if (isset($_POST['userName']) and isset($_POST['password'])) {
                                 <span class="text-gray-700 dark:text-gray-400">Username</span>
                                 <input
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    placeholder="adminmyo" type='text' name='userName' />
+                                    placeholder="admin" type='text' name='userName' />
                             </label>
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">Password</span>
                                 <input
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    placeholder="***************" type="password" name='password' />
+                                    placeholder="" type="password" name='password' />
                             </label>
 
                             <!-- You should use a button here, as the anchor is only used for the example  -->
