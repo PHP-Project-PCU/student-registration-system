@@ -4,10 +4,20 @@ include '../../../autoload.php';
 
 $json = file_get_contents('http://ucspyay.edu/utils/assets/json/nrc.json');
 
-session_start();
 
 use Shuchkin\SimpleXLSX;
 use controllers\FresherController;
+
+session_start();
+
+
+if (isset($_POST['logout'])) {
+
+    unset($_SESSION['admin']);
+    // HTTP::redirect("/login");
+    header("location: /login");
+    exit();
+}
 
 $updateFlag = false;
 
@@ -83,7 +93,7 @@ if (isset($_POST['addMoreFresher'])) {
     $student_nrc_name = $_POST['student_nrc_name'];
     $student_nrc_type = $_POST['student_nrc_type'];
     $student_nrc_num = $_POST['student_nrc_num'];
-    $nrc_num = $student_nrc_code . $student_nrc_name . $student_nrc_type . $student_nrc_num;
+    $nrc_num = $student_nrc_code . "/" . $student_nrc_name . $student_nrc_type . $student_nrc_num;
 
 
     $matriculation_mark = $_POST['matriculation_mark'];

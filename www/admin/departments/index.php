@@ -6,6 +6,16 @@ include '../../../autoload.php';
 
 use controllers\DeptController;
 
+session_start();
+
+if (isset($_POST['logout'])) {
+
+    unset($_SESSION['admin']);
+    // HTTP::redirect("/login");
+    header("location: /login");
+    exit();
+}
+
 $deptController = new DeptController();
 $departments = $deptController->index();
 

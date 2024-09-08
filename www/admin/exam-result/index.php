@@ -13,7 +13,13 @@ use controllers\SectionController;
 use controllers\MailController;
 use controllers\StudentAdmissionController;
 
+if (isset($_POST['logout'])) {
 
+    unset($_SESSION['admin']);
+    // HTTP::redirect("/login");
+    header("location: /login");
+    exit();
+}
 
 $semesterController = new SemesterController();
 $semesters = $semesterController->index();
@@ -274,7 +280,7 @@ include("../../utils/components/admin/admin.links.php");
                                         </td>
                                     </tr>
 
-                                <?php $count++;
+                                    <?php $count++;
                                 endforeach; ?>
 
                             </tbody>
@@ -313,15 +319,13 @@ include("../../utils/components/admin/admin.links.php");
 
                             <label class="block text-sm mr-4">
                                 <span class="text-gray-800 font-semibold dark:text-gray-500">Roll Number</span>
-                                <input
-                                    type="number"
+                                <input type="number"
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                     name="roll_num" required placeholder="XXXXXX" />
                             </label>
                             <label class="block text-sm mr-4">
                                 <span class="text-gray-800 font-semibold dark:text-gray-500">Academic Year</span>
-                                <input
-                                    type="number"
+                                <input type="number"
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                                     name="academic_year" required placeholder="2023" />
                             </label>
@@ -368,7 +372,8 @@ include("../../utils/components/admin/admin.links.php");
                         <form action="" method="POST">
                             <div class="my-4">
                                 <p class="py-2">
-                                    ကျောင်းသားအားလုံးအား အောင်စာရင်းစစ်ရန် အကြောင်းကြားစာ Mail ပို့ရန် (အောင်စာရင်း data ထည့်ပြီးမှသာ)
+                                    ကျောင်းသားအားလုံးအား အောင်စာရင်းစစ်ရန် အကြောင်းကြားစာ Mail ပို့ရန် (အောင်စာရင်း data
+                                    ထည့်ပြီးမှသာ)
                                 </p>
                                 <button type="submit" name="sendMail"
                                     class=" px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
@@ -448,8 +453,7 @@ include("../../utils/components/admin/admin.links.php");
                         <select id="editSemester" name="semester"
                             class="form-input  w-full  bg-transparent dark:bg-slate-900 dark:text-slate-200 rounded outline-none border border-gray-200 focus:border-indigo-600 dark:border-gray-800 dark:focus:border-indigo-600 focus:ring-0">
                             <?php foreach ($semesters as $semester): ?>
-                                <option value="<?= $semester['id'] ?>"
-                                    <?= $selectedSemester == $semester['id'] ? 'selected' : '' ?>>
+                                <option value="<?= $semester['id'] ?>" <?= $selectedSemester == $semester['id'] ? 'selected' : '' ?>>
                                     <?= $semester['semester'] ?>
                                 </option>
                             <?php endforeach ?>

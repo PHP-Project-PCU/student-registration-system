@@ -77,7 +77,7 @@ function isActive($uri)
 
 
 
-            <li class="relative px-6 py-3 <?= isActive('posts') ?> ">
+            <!-- <li class="relative px-6 py-3 <?= isActive('posts') ?> ">
                 <a class=" inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     href="<?php echo $homeURL ?>posts">
                     <svg class="w-5 h-5" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round"
@@ -88,7 +88,7 @@ function isActive($uri)
                     </svg>
                     <span class="ml-4">Posts</span>
                 </a>
-            </li>
+            </li> -->
 
 
             <li class="relative px-6 py-3">

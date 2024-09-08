@@ -10,6 +10,15 @@ use core\helpers\HTTP;
 
 session_start();
 
+if (isset($_POST['logout'])) {
+
+
+    unset($_SESSION['admin']);
+    // // HTTP::redirect("/login");
+    header("Location: /login/");
+    exit();
+}
+
 if (!isset($_SESSION['admin'])) {
     HTTP::redirect("/login");
     exit();
