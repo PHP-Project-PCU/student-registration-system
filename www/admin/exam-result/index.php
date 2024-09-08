@@ -109,7 +109,7 @@ if (isset($_POST['addAchievement'])) {
         "semester" => $semester,
         "academic_year" => $academic_year,
     ];
-    var_dump($data);
+    // var_dump($data);
     $achievementController = new AchievementController($data, null, null, null, $semester, $year);
     $addingIndividualAchievementFlag = $achievementController->setIndividualAchievement();
 }
@@ -280,7 +280,7 @@ include("../../utils/components/admin/admin.links.php");
                                         </td>
                                     </tr>
 
-                                    <?php $count++;
+                                <?php $count++;
                                 endforeach; ?>
 
                             </tbody>

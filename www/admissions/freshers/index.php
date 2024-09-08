@@ -95,6 +95,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
                     <div class="lg:col-start-2 lg:col-span-10">
                         <div class="rounded-md shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
                             <form action="" method="POST">
+                                <p><a href="<?= $guideVideoUrl ?>"
+                                        class=" mb-8 text-sm text-indigo-600 hover:underline cursor-pointer"
+                                        target="_blank">လျှောက်လွှာဖြည့်နည်းလမ်းညွှန်(ကြည့်မည်)</a></p>
                                 <div class="grid lg:grid-cols-12 gap-6 pt-4">
                                     <div class="lg:col-span-6">
                                         <div class="text-start">

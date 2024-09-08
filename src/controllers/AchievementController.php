@@ -84,12 +84,13 @@ class AchievementController
             if ($result == true)
                 return $this->setStatus(1, $studentId);
         }
-        return false;
+        // return false;
     }
     public function setStatus($status, $studentId)
     {
         $achievementModel = new AchievementModel(new MYSQL());
-        return $achievementModel->setStatus(Constants::$STUDENT_SECTION_TBL, $status, $studentId);
+        $achievementModel->setStatus(Constants::$STUDENT_SECTION_TBL, $status, $studentId);
+        return true;
     }
 
     public function updateAchievement()

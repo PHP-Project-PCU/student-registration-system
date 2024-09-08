@@ -32,7 +32,6 @@ $isRegister = false;
 $found = true;
 $pass = true;
 $isFound = false;
-$isOddSem = false;
 
 $studentId = $_SESSION['studentId'];
 $studentAdmissionController = new StudentAdmissionController($data);
@@ -49,6 +48,7 @@ $sectionData = $sectionController->getByStudentId($studentId) ?? null;
 $semesterID = $sectionData[0]["semester_id"] ?? null;
 $checkStatus = $sectionData[0]["status"] ?? null;
 
+$isOddSem = $semesterID % 2 == 0 ?? false;
 
 // echo $rollNum;
 $checkData = [$rollNum, $semesterID, $academicYear, $studentId];
@@ -59,21 +59,27 @@ $checkData = [$rollNum, $semesterID, $academicYear, $studentId];
 if (isset($_POST['checkBtn'])) {
     $achievementController = new AchievementController();
     $validStudent = $achievementController->checkAchievement($checkData);
+    // $_SESSION['validStudent'] = $validStudent;
+    // echo $_SESSION['validStudent'];
+    // var_dump($validStudent);
 
     if ($validStudent == true) {
 
         if ($semesterID % 2 == 0 && $semesterID < 10) {
             $found = true;
             $pass = true; // Set pass to true if found is true
+            // header("location:/");
         } else {
             $isOddSem = true; // odd
             $found = true;
             $pass = true;
+            // header("location:/");
         }
     } else {
         $found = false;
         $pass = false;
     }
+
 
     // Make sure these variables are set for JavaScript
     echo '<script>let found = ' . json_encode($found) . '; let pass = ' . json_encode($pass) . ';</script>';
@@ -157,6 +163,9 @@ include("../utils/components/student/student.links.php");
                                     </section>
                                 <?php endif ?>
 
+
+
+
                                 <?php if ($checkStatus == 1): ?>
                                     <!-- Check Section-->
                                     <section class="relative md:py-24 py-16">
@@ -166,10 +175,19 @@ include("../utils/components/student/student.links.php");
                                     </section>
                                 <?php endif ?>
 
+                                <?php
+                                // var_dump($validStudent) . "hello sjhdfjlkhljh";
+                                // echo $isRegister;
+                                if ($validStudent  && $isOddSem && !in_array($semesterID, [1, 3, 5, 7, 9])   && !$isRegister): ?>
 
-
-
-                                <?php if ($validStudent && !$isOddSem  && !$isRegister): ?>
+                                    <?php if ($checkStatus == 1): ?>
+                                        <!-- Check Section-->
+                                        <section class="relative md:py-24 py-16">
+                                            <p
+                                                class="rounded-md text-center shadow dark:shadow-gray-800 bg-white dark:bg-slate-900 p-6">
+                                                စာမေးပွဲအောင်မြင်ပါသည်။</p>
+                                        </section>
+                                    <?php endif ?>
                                     <!-- Fresher Admission Form Section-->
                                     <section class="relative md:py-24 py-16">
                                         <div class="container relative">
@@ -304,7 +322,7 @@ include("../utils/components/student/student.links.php");
                                 <script src="http://ucspyay.edu/utils/assets/js/alertify.js"></script>
 
                                 <script>
-                                    <?php if ($found === false && $pass === false): ?>
+                                    <?php if ($found === false && $pass === false && $checkStatus == 0): ?>
                                         alertify.warning('စာမေးပွဲမအောင်မြင်ပါ။');
                                     <?php elseif ($isRegister): ?>
                                         alertify.success('လျှောက်လွှာတင်ပြီးပါပြီ။');
