@@ -107,36 +107,75 @@ include("../../utils/components/student/student.links.php");
                                             </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                                            <?php foreach ($timeTableData as $data): ?>
-                                                <?php
-                                                $teacherName = $studentTimetableController->getTeachers($data->teacher_id);
-                                                $courseCode = $studentTimetableController->getCourses($data->course_id);
-                                                ?>
+                                            <?php
+                                            // Group timetable data by day
+                                            $groupedData = [];
+                                            foreach ($timeTableData as $data) {
+                                                $groupedData[$data->day][] = $data;
+                                            }
+                                            ?>
+
+                                            <?php foreach ($groupedData as $day => $subjects): ?>
                                                 <tr class="text-gray-700 dark:text-gray-400">
+                                                    <!-- Display Day (only once per row) -->
                                                     <td class="px-4 py-3">
-                                                        <?= $data->day ?>
+                                                        <?= $day ?>
                                                     </td>
-                                                    <td class="px-4 py-3 text-sm" colspan="<?php if ($data->time_slot == 2)
-                                                                                                echo 2; ?>">
-                                                        <?= $courseCode->code ?>
-                                                    </td>
+
+                                                    <!-- Loop through the subjects for this day -->
+                                                    <?php foreach ($subjects as $subject): ?>
+                                                        <?php
+                                                        // Fetch teacher and course information
+                                                        $teacherName = $studentTimetableController->getTeachers($subject->teacher_id);
+                                                        $courseCode = $studentTimetableController->getCourses($subject->course_id);
+                                                        ?>
+
+                                                        <!-- Display each subject in its own cell -->
+                                                        <td class="px-4 py-3 text-sm"
+                                                            colspan="<?= ($subject->time_slot == 2) ? 2 : 1; ?>">
+                                                            <?= $courseCode->code ?>
+                                                        </td>
+                                                    <?php endforeach; ?>
+
+                                                    <!-- Fill empty cells if there are fewer than 6 subjects -->
+                                                    <?php for ($i = count($subjects); $i < 4; $i++): ?>
+                                                        <td class="px-4 py-3 text-sm"></td>
+                                                    <?php endfor; ?>
                                                 </tr>
-                                            <?php endforeach ?>
+                                            <?php endforeach; ?>
                                         </tbody>
+
                                     </table>
                                     <div class="grid grid-cols-3 gap-3 m-4">
                                         <div>Subject</div>
                                         <div></div>
                                         <div>Teacher</div>
-                                        <?php foreach ($timeTableData as $data): ?>
-                                            <?php
+                                        <?php
+                                        // Array to track displayed teacher and course combinations
+                                        $displayedTeachersCourses = [];
+
+                                        foreach ($timeTableData as $data):
+                                            // Get teacher and course data
                                             $teachers = $studentTimetableController->getTeachers($data->teacher_id);
                                             $courses = $studentTimetableController->getCourses($data->course_id);
-                                            ?>
-                                            <div><?= $courses->title ?></div>
-                                            <div><?= $courses->code ?></div>
-                                            <div><?= $teachers->teacher_name ?></div>
-                                        <?php endforeach; ?>
+
+                                            // Create a unique key for the teacher-course combination
+                                            $combinationKey = $courses->id . '-' . $teachers->id;
+
+                                            // Check if this combination has already been displayed
+                                            if (!in_array($combinationKey, $displayedTeachersCourses)) {
+                                                // Display course and teacher info
+                                                ?>
+                                                <div><?= $courses->title ?></div>
+                                                <div><?= $courses->code ?></div>
+                                                <div><?= $teachers->teacher_name ?></div>
+                                                <?php
+                                                // Add this combination to the displayed list
+                                                $displayedTeachersCourses[] = $combinationKey;
+                                            }
+                                        endforeach;
+                                        ?>
+
                                         <!-- <div>Myanmar</div>
                                     <div>M-1201</div>
                                     <div>
