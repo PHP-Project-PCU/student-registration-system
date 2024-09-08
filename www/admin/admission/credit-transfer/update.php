@@ -35,13 +35,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['approve_btn'])) {
         "email" => $email,
         "year" => $studentData['student']['year'],
         "password" => $_POST['password'],
+        "credit_transfer" => 1,
     ];
-    $result = $studentAdmissionController->approveOldStudent($data);
+
+    $result = $studentAdmissionController->approveFresher($data);
     if ($result) {
         $mailController = new MailController($data);
         $mailController->sendMail($data);
         $_SESSION['isApproved'] = true;
-        header("location:index.php");
+        // header("location:index.php");
     }
 }
 
@@ -59,22 +61,22 @@ include("../../../utils/components/admin/admin.links.php");
 ?>
 
 <style>
-    table,
-    th,
-    td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        text-align: center;
-    }
+table,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+}
 
-    td {
-        padding: 10px 5px;
-    }
+td {
+    padding: 10px 5px;
+}
 
-    .tbl,
-    .tbl td {
-        border: none;
-    }
+.tbl,
+.tbl td {
+    border: none;
+}
 </style>
 
 <body>
@@ -112,33 +114,33 @@ include("../../../utils/components/admin/admin.links.php");
                         <div class="grid grid-cols-1 lg:grid-cols-2">
                             <div class="text-center mx-auto">
                                 <img src="<?php if (!empty($studentData['files']['passport_photo'])) {
-                                                echo $imageBasePath . htmlspecialchars($studentData['files']['passport_photo']);
-                                            } else {
-                                                echo $logoImage;
-                                            } ?>" class="w-36 my-6" alt="Profile Image" onclick="openLightbox(this);">
+                                    echo $imageBasePath . htmlspecialchars($studentData['files']['passport_photo']);
+                                } else {
+                                    echo $logoImage;
+                                } ?>" class="w-36 my-6" alt="Profile Image" onclick="openLightbox(this);">
                             </div>
                             <div class=" w-full">
                                 <table class="w-full table-fixed">
                                     <tr>
                                         <td class="text-start">သင်တန်းနှစ်</td>
                                         <td class="text-indigo-600"><?php switch ($studentData['student']['year']) {
-                                                                        case 1:
-                                                                            echo "ပထမနှစ်";
-                                                                            break;
-                                                                        case 2:
-                                                                            echo "ဒုတိယနှစ်";
-                                                                            break;
-                                                                        case 3:
-                                                                            echo "တတိယနှစ်";
-                                                                            break;
-                                                                        case 4:
-                                                                            echo "စတုတ္ထနှစ်";
-                                                                            break;
-                                                                        case 5:
-                                                                            echo "ပဥ္စမနှစ်";
-                                                                            break;
-                                                                    }
-                                                                    ?></td>
+                                            case 1:
+                                                echo "ပထမနှစ်";
+                                                break;
+                                            case 2:
+                                                echo "ဒုတိယနှစ်";
+                                                break;
+                                            case 3:
+                                                echo "တတိယနှစ်";
+                                                break;
+                                            case 4:
+                                                echo "စတုတ္ထနှစ်";
+                                                break;
+                                            case 5:
+                                                echo "ပဥ္စမနှစ်";
+                                                break;
+                                        }
+                                        ?></td>
                                     </tr>
                                     <tr>
                                         <td class="text-start">အထူးပြုဘာသာ</td>

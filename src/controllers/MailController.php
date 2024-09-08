@@ -131,12 +131,20 @@ class MailController
          Assigning the incoming message to the $mail->body property.
        */
 
-      if ($data['year'] == 1) {
+      $years = [
+         "1" => "ပထမနှစ်",
+         "2" => "ဒုတိယနှစ်",
+         "3" => "တတိယနှစ်",
+         "4" => "စတုတ္ထနှစ်",
+         "5" => "ပဉ္စမနှစ်"
+      ];
+
+      if ($data['year'] == 1 || $data['credit_transfer'] == 1) {
          $mail->Body = "
       <div style='color:#000;'>
           <h2 style='color: #4CAF50;'>Congratulations!</h2>
           <p>
-              <strong>{$data['name']}</strong> ၏ ပထမနှစ်ကျောင်းဝင်ခ္ငင့်လျှောက်လွှာအား ကွန်ပျူတာတက္ကသိုလ်(ပြည်) ၊ ကျောင်းသားရေးရာမှ လက်ခံရရှိ၍ အတည်ပြုပြီးဖြစ်ပါသည်။<br>
+              <strong>{$data['name']}</strong> ၏ " . ($data['credit_transfer'] == 1 ? $years[$data['year']] : "ပထမနှစ်") . "ကျောင်းဝင်ခ္ငင့်လျှောက်လွှာအား ကွန်ပျူတာတက္ကသိုလ်(ပြည်) ၊ ကျောင်းသားရေးရာမှ လက်ခံရရှိ၍ အတည်ပြုပြီးဖြစ်ပါသည်။<br>
               အောက်ဖော်ပြပါ <strong>Edu mail</strong> နှင့် <strong>Password</strong> အားအသုံးပြု၍ UCSPyay Student Portal သို့ဝင်ရောက်အသုံးပြုနိုင်ပါသည်။
           </p>
           <ul style='list-style-type: none; padding: 0;'>

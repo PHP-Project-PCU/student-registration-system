@@ -69,13 +69,13 @@ if (isset($_POST['student_new_password']) and isset($_POST['student_confirm_pass
                                 <span class="text-gray-700 dark:text-gray-400">New Password</span>
                                 <input
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    placeholder="adminmyo" type='password' name='student_new_password' />
+                                    type='password' name='student_new_password' />
                             </label>
                             <label class="block mt-4 text-sm">
                                 <span class="text-gray-700 dark:text-gray-400">Confirm Password</span>
                                 <input
                                     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                                    placeholder="***************" type="password" name='student_confirm_password' />
+                                    type="password" name='student_confirm_password' />
                             </label>
 
                             <!-- You should use a button here, as the anchor is only used for the example  -->

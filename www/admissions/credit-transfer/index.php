@@ -16,7 +16,7 @@ $academicYear = $academicYears[0]['academic_year'];
 
 
 $heroImageFile = "../../utils/assets/img/ucspyay/ucsp-front-build.jpg";
-$guideVideoUrl = "";
+$guideVideoUrl = "https://youtu.be/-1mJWy30NNM";
 
 $data = [];
 
@@ -241,8 +241,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
                                 <div class="lg:col-span-4">
                                     <div class="text-start">
                                         <label for="matriculation_year">ခုနှစ်</label>
-                                        <input name="matriculation_year" id="matriculation_year" type="number"
-                                            value="" class=" form-input mt-3 w-full py-2 px-3 h-10 bg-transparent
+                                        <input name="matriculation_year" id="matriculation_year" type="number" value=""
+                                            class=" form-input mt-3 w-full py-2 px-3 h-10 bg-transparent
                                             dark:bg-slate-900 dark:text-slate-200 rounded outline-none border
                                             border-gray-200 focus:border-indigo-600 dark:border-gray-800
                                             dark:focus:border-indigo-600 focus:ring-0" placeholder="">
@@ -686,7 +686,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
                                                 <div id="accordion-collapse-body-2" class="hidden"
                                                     aria-labelledby="accordion-collapse-heading-1">
                                                     <div class="p-5">
-                                                        <img src="../../utils/assets/img/ucspyay/qrcode.jpg" alt="QR Code">
+                                                        <img src="../../utils/assets/img/ucspyay/qrcode.jpg"
+                                                            alt="QR Code">
                                                     </div>
                                                 </div>
                                             </div>
@@ -739,31 +740,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registerBtn'])) {
 
 
     <script>
-        <?php if ($isRegister != null && !$isRegister): ?>
-            alertify.warning('လျှောက်လွှာတင်ခြင်းမအောင်မြင်ပါ။');
-        <?php elseif ($isRegister): ?>
-            alertify.success('လျှောက်လွှာတင်ပြီးပါပြီ။');
-        <?php endif ?>
-        // Fetch NRC
-        fetch('../../utils/assets/json/nrc.json')
-            .then(response => response.json())
-            .then(data => {
-                setupNrcDropdowns('student_nrc_code', 'student_nrc_name', data);
-                setupNrcDropdowns('student_fath_nrc_code', 'student_fath_nrc_name', data);
-                setupNrcDropdowns('student_moth_nrc_code', 'student_moth_nrc_name', data);
-            })
-            .catch(error => console.error('Error fetching the JSON data:', error));
+    <?php if ($isRegister != null && !$isRegister): ?>
+    alertify.warning('လျှောက်လွှာတင်ခြင်းမအောင်မြင်ပါ။');
+    <?php elseif ($isRegister): ?>
+    alertify.success('လျှောက်လွှာတင်ပြီးပါပြီ။');
+    <?php endif ?>
+    // Fetch NRC
+    fetch('../../utils/assets/json/nrc.json')
+        .then(response => response.json())
+        .then(data => {
+            setupNrcDropdowns('student_nrc_code', 'student_nrc_name', data);
+            setupNrcDropdowns('student_fath_nrc_code', 'student_fath_nrc_name', data);
+            setupNrcDropdowns('student_moth_nrc_code', 'student_moth_nrc_name', data);
+        })
+        .catch(error => console.error('Error fetching the JSON data:', error));
 
 
-        // Fetch states
-        fetch('../../utils/assets/json/states.json')
-            .then(response => response.json())
-            .then(data => {
-                setupRegionTownshipSelect('student_region', 'student_township', data);
-                setupRegionTownshipSelect('student_fath_region', 'student_fath_township', data);
-                setupRegionTownshipSelect('student_moth_region', 'student_moth_township', data);
-            })
-            .catch(error => console.error('Error fetching the JSON data:', error));
+    // Fetch states
+    fetch('../../utils/assets/json/states.json')
+        .then(response => response.json())
+        .then(data => {
+            setupRegionTownshipSelect('student_region', 'student_township', data);
+            setupRegionTownshipSelect('student_fath_region', 'student_fath_township', data);
+            setupRegionTownshipSelect('student_moth_region', 'student_moth_township', data);
+        })
+        .catch(error => console.error('Error fetching the JSON data:', error));
     </script>
     <!-- JAVASCRIPTS -->
 </body>
