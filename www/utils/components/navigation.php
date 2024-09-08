@@ -103,7 +103,7 @@ function isActive($uri)
                                 href="<?php echo $homeURL ?>faculty-of-computer-system-and-technologies"
                                 class="sub-menu-item"> Faculty of Computer System and
                                 Technologies </a></li>
-                        <li class="<?php echo isActive('cs'); ?>"><a href="<?php echo $homeURL ?>cs"
+                        <li class="<?php echo isActive('faculty-of-computer-science'); ?>"><a href="<?php echo $homeURL ?>faculty-of-computer-science"
                                 class="sub-menu-item">Faculty of Computer Science</a>
                         </li>
                         <li class="<?php echo isActive('faculty-of-computing'); ?>"><a
@@ -115,14 +115,14 @@ function isActive($uri)
                         <li class="<?php echo isActive('faculty-of-it-Supporting-and-maintenance'); ?>"><a
                                 href="<?php echo $homeURL ?>faculty-of-it-Supporting-and-maintenance"
                                 class="sub-menu-item">Faculty of IT Supporting and Maintenance</a></li>
-                        <li class="<?php echo isActive($homeURL . 'myanmar'); ?>"><a
+                        <li class="<?php echo isActive('myanmar'); ?>"><a
                                 href="<?php echo $homeURL ?>myanmar" class="sub-menu-item">Myanmar</a></li>
                         <li class="<?php echo isActive('english'); ?>"><a href="<?php echo $homeURL ?>english"
                                 class="sub-menu-item">English</a></li>
                         <li class="<?php echo isActive('physics'); ?>"><a href="<?php echo $homeURL ?>physics"
                                 class="sub-menu-item">Physics</a></li>
-                        <li class="<?php echo isActive('adminstration'); ?>"><a
-                                href="<?php echo $homeURL ?>adminstration" class="sub-menu-item">Adminstration</a></li>
+                        <li class="<?php echo isActive('administration'); ?>"><a
+                                href="<?php echo $homeURL ?>administration" class="sub-menu-item">Administration</a></li>
                         <li class="<?php echo isActive('finance'); ?>"><a href="<?php echo $homeURL ?>finance"
                                 class="sub-menu-item">Finance</a></li>
                         <li class="<?php echo isActive('student-affiair'); ?>"><a
