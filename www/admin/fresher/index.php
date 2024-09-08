@@ -4,6 +4,8 @@ include '../../../autoload.php';
 
 use core\helpers\HTTP;
 
+session_start();
+
 if (!isset($_SESSION['admin'])) {
     HTTP::redirect("/login");
     exit();
@@ -16,7 +18,6 @@ $json = file_get_contents('http://ucspyay.edu/utils/assets/json/nrc.json');
 use Shuchkin\SimpleXLSX;
 use controllers\FresherController;
 
-session_start();
 
 
 if (isset($_POST['logout'])) {

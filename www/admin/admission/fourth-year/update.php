@@ -8,13 +8,13 @@ use controllers\StudentAdmissionController;
 use controllers\MailController;
 use core\helpers\HTTP;
 
+session_start();
+
 if (!isset($_SESSION['admin'])) {
     HTTP::redirect("/login");
     exit();
 }
 
-
-session_start();
 $id = $_GET['id'];
 $imageBasePath = "http://ucspyay.edu/utils/uploads/admission/$id/";
 $logoImage = "http://ucspyay.edu/utils/assets/img/ucspyay/ucsp-logo-light.jpg";

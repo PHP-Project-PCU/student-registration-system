@@ -14,13 +14,14 @@ use controllers\TimetableController;
 use controllers\TeacherController;
 use core\helpers\HTTP;
 
+session_start();
+
 if (!isset($_SESSION['admin'])) {
     HTTP::redirect("/login");
     exit();
 }
 
 
-session_start();
 
 if (isset($_POST['logout'])) {
 
@@ -32,7 +33,7 @@ if (isset($_POST['logout'])) {
 
 $academicYearController = new AcademicYearController();
 $academicYears = $academicYearController->index();
-$currentAcademicYear = $academicYears[0]['academic_year'];
+$currentAcademicYear = $academicYears[0]['academic_year'] ?? null;
 
 $teacherController = new TeacherController();
 $teachers = $teacherController->index();
