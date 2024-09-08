@@ -4,6 +4,14 @@
 require '../../../../vendor/autoload.php';
 include '../../../../autoload.php';
 
+use core\helpers\HTTP;
+
+if (!isset($_SESSION['admin'])) {
+    HTTP::redirect("/login");
+    exit();
+}
+
+
 use controllers\StudentAdmissionController;
 
 $id = $_GET['id'];

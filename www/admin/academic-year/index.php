@@ -5,6 +5,13 @@ require '../../../vendor/autoload.php';
 include '../../../autoload.php';
 
 use controllers\AcademicYearController;
+use core\helpers\HTTP;
+
+if (!isset($_SESSION['admin'])) {
+    HTTP::redirect("/login");
+    exit();
+}
+
 
 session_start();
 
@@ -101,7 +108,7 @@ include("../../utils/components/admin/admin.links.php");
                                     $count = 1;
                                     foreach ($academicYears as $acYear) {
 
-                                        ?>
+                                    ?>
                                         <tr class="text-gray-700 dark:text-gray-400">
                                             <td class="px-4 py-3">
                                                 <?= $count ?>
@@ -138,7 +145,7 @@ include("../../utils/components/admin/admin.links.php");
                                                 </div>
                                             </td>
                                         </tr>
-                                        <?php $count++;
+                                    <?php $count++;
                                     } ?>
                                 </tbody>
                             </table>

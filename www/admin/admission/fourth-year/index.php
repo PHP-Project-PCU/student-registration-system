@@ -6,6 +6,13 @@ include '../../../../autoload.php';
 
 use controllers\AcademicYearController;
 use controllers\StudentAdmissionController;
+use core\helpers\HTTP;
+
+if (!isset($_SESSION['admin'])) {
+    HTTP::redirect("/login");
+    exit();
+}
+
 
 $status = 0;
 

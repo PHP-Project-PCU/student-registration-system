@@ -8,6 +8,12 @@ use controllers\AcademicYearController;
 use controllers\StudentAdmissionController;
 use core\helpers\HTTP;
 
+// if (!isset($_SESSION['admin'])) {
+//     HTTP::redirect("/login");
+//     exit();
+// }
+
+
 session_start();
 
 if (isset($_POST['logout'])) {
@@ -26,7 +32,7 @@ if (!isset($_SESSION['admin'])) {
 
 $academicYearController = new AcademicYearController();
 $academicYears = $academicYearController->index();
-$academicYear = $academicYears[0]['academic_year'];
+$academicYear = $academicYears[0]['academic_year'] ?? null;
 
 $studentAdmissionController = new StudentAdmissionController();
 $studentsYears = $studentAdmissionController->getStudentsYear();
@@ -68,14 +74,22 @@ include("../utils/components/admin/admin.links.php");
             ?>
             <!-- Scrollable content section -->
             <div class="overflow-y-auto md:pt-16 px-4 pb-4 h-full">
-                <div class="p-4">
-                    <!--Div that will hold the pie chart-->
-                    <div id="chart_div" class="col-span-6" style="width: 50%;"></div>
-                    <div id="column_div" class="col-span-6" style="width: 50%;"></div>
-                    <div id="columnchart_material" style="width: 800px; height: 500px;"></div>
 
-                </div>
+                <?php if (isset($academicYear)): ?>
+                    <div class="p-4">
+                        <!--Div that will hold the pie chart-->
+                        <div id="chart_div" class="col-span-6" style="width: 50%;"></div>
+                        <div id="column_div" class="col-span-6" style="width: 50%;"></div>
+                        <div id="columnchart_material" style="width: 800px; height: 500px;"></div>
+                    </div>
+                <?php else: ?>
+                    <div class="flex items-center justify-center h-screen">
+                        <div id="lottie-animation" style="width: 300px; height: 300px;"></div>
+
+                    </div>
+                <?php endif ?>
             </div>
+        </div>
 
 
 </body>
@@ -168,6 +182,21 @@ include("../utils/components/admin/admin.links.php");
         //     chart.draw(data, google.charts.Bar.convertOptions(options));
         // }
     }
+</script>
+
+
+<!-- Lottie web library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.10.1/lottie.min.js"></script>
+
+<script>
+    // Load and play Lottie animation
+    var animation = lottie.loadAnimation({
+        container: document.getElementById('lottie-animation'), // the DOM element where the animation will be rendered
+        renderer: 'svg', // use 'svg' renderer for web
+        loop: true, // the animation will loop
+        autoplay: true, // animation will start playing automatically
+        path: '/utils/assets/lotties/no-data-found.json' // the path to your Lottie JSON file
+    });
 </script>
 
 

@@ -3,6 +3,13 @@ require '../../../vendor/autoload.php';
 include '../../../autoload.php';
 
 use controllers\AcademicYearController;
+use core\helpers\HTTP;
+
+if (!isset($_SESSION['admin'])) {
+    HTTP::redirect("/login");
+    exit();
+}
+
 
 
 $academicYearController = new AcademicYearController();
