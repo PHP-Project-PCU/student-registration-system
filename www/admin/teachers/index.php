@@ -8,13 +8,12 @@ use controllers\TeacherController;
 use controllers\DeptController;
 use core\helpers\HTTP;
 
+session_start();
+
 if (!isset($_SESSION['admin'])) {
     HTTP::redirect("/login");
     exit();
 }
-
-
-session_start();
 
 if (isset($_POST['logout'])) {
 

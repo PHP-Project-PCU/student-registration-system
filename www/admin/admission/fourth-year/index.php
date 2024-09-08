@@ -8,6 +8,8 @@ use controllers\AcademicYearController;
 use controllers\StudentAdmissionController;
 use core\helpers\HTTP;
 
+session_start();
+
 if (!isset($_SESSION['admin'])) {
     HTTP::redirect("/login");
     exit();
@@ -15,8 +17,6 @@ if (!isset($_SESSION['admin'])) {
 
 
 $status = 0;
-
-session_start();
 
 $academicYearController = new AcademicYearController();
 $academicYears = $academicYearController->index();

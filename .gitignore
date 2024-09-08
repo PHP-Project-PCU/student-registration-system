@@ -1,3 +1,4 @@
 /vendor/
 /www/utils/uploads/
+/src/core/db/DBConfig.php
 
