@@ -4,6 +4,7 @@ namespace controllers;
 
 use core\helpers\Constants;
 use controllers\StudentAdmissionController;
+use controllers\PaymentController;
 
 // Load Composer's autoloader
 require_once(Constants::$BASE_PATH . '\vendor\autoload.php');
@@ -131,6 +132,7 @@ class MailController
          Assigning the incoming message to the $mail->body property.
        */
 
+
       $years = [
          "1" => "ပထမနှစ်",
          "2" => "ဒုတိယနှစ်",
@@ -138,6 +140,9 @@ class MailController
          "4" => "စတုတ္ထနှစ်",
          "5" => "ပဉ္စမနှစ်"
       ];
+
+      $paymentController = new PaymentController();
+      $fees = $paymentController->getPaymentsBySemesterId(intval($_SESSION['semesterId']));
 
       if ($data['year'] == 1 || $data['credit_transfer'] == 1) {
          $mail->Body = "
