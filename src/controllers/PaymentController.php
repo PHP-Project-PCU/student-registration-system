@@ -24,4 +24,9 @@ class PaymentController
     {
         return $this->paymentModel->getAllPayments(Constants::$STUDENT_RECEIPT_TBL);
     }
+
+    public function getPaymentsBySemesterId($semesterId)
+    {
+        return $this->paymentModel->getPaymentsBySemesterId(Constants::$STUDENT_RECEIPT_TBL, $semesterId);
+    }
 }

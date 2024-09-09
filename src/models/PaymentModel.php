@@ -54,7 +54,7 @@ class PaymentModel
             $statement->execute([
                 "semester_id" => $semesterId
             ]);
-            $result = $statement->fetchAll();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
             return array_values($result);
         } catch (PDOException $e) {
             return $e->getMessage();
